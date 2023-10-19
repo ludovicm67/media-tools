@@ -11,6 +11,7 @@ let audioLevel = 0.0;
 // HTML elements from the page
 const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
+const audioLevelElement = document.getElementById('audioLevel');
 
 /**
  * Request the audio stream from the user.
@@ -18,7 +19,9 @@ const stopBtn = document.getElementById('stopBtn');
  * @returns {Promise<MediaStream>} The audio stream.
  */
 const getAudioStream = async () => {
-  const stream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+  const stream = await navigator.mediaDevices.getUserMedia({
+    video: false, audio: true,
+  });
   audioStream = stream;
   console.log("got audio stream", audioStream);
   return stream;
@@ -43,6 +46,8 @@ const handleAudioLevel = (stream) => {
     let sumSquares = 0.0;
     for (const amplitude of pcmData) { sumSquares += amplitude * amplitude; }
     audioLevel = Math.sqrt(sumSquares / pcmData.length);
+    // @ts-ignore
+    audioLevelElement.value = audioLevel;
     if (started) {
       window.requestAnimationFrame(onFrame);
     }
@@ -75,6 +80,9 @@ const handleStopBtnClick = async () => {
   started = false;
   audioLevel = 0.0;
   console.log('stopBtn clicked');
+
+  // @ts-ignore
+  audioLevelElement.value = 0.0;
 }
 
 // Add event listeners to the buttons.
@@ -83,10 +91,24 @@ stopBtn?.addEventListener('click', handleStopBtnClick);
 
 // Inspect the audio level every 100ms.
 let wasAudioMuted = null;
+let sameStateCount = 0;
+let isSpeaking = false;
 const audioLevelInterval = setInterval(() => {
   const audible = audioLevel > audioDetectionLevel;
-  if (audible !== wasAudioMuted) {
-    console.log('audio level changed', audible);
-    wasAudioMuted = audible;
+
+  if (audible) {
+    if (sameStateCount < 10) {
+      sameStateCount += 1;
+    } else {
+      isSpeaking = true;
+      console.log('is speaking:', isSpeaking);
+    }
+  } else {
+    if (sameStateCount > 0) {
+      sameStateCount -= 1;
+    } else {
+      isSpeaking = false;
+      console.log('is speaking:', isSpeaking);
+    }
   }
 }, 100);
