@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Audio recording app",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,5 +14,8 @@
   "license": "ISC",
   "devDependencies": {
     "vite": "^4.4.11"
+  },
+  "dependencies": {
+    "fastify": "^4.24.3"
   }
 }

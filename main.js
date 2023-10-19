@@ -7,6 +7,9 @@ const audioDetectionLevel = 0.01;
 let audioStream = null;
 let started = false;
 let audioLevel = 0.0;
+let mediaRecorder = null;
+let recordingInterval = null;
+let audioChunks = [];
 
 // HTML elements from the page
 const startBtn = document.getElementById('startBtn');
@@ -67,6 +70,15 @@ const handleStartBtnClick = async () => {
   console.log('startBtn clicked');
   const stream = await getAudioStream();
   handleAudioLevel(stream);
+
+  mediaRecorder = new MediaRecorder(stream);
+  mediaRecorder.addEventListener('dataavailable', (e) => {
+    audioChunks.push(e.data);
+  });
+  mediaRecorder.start();
+  recordingInterval = setInterval(() => {
+    mediaRecorder.requestData();
+  }, 1000);
 }
 
 /**
@@ -80,6 +92,18 @@ const handleStopBtnClick = async () => {
   started = false;
   audioLevel = 0.0;
   console.log('stopBtn clicked');
+
+  if (mediaRecorder) {
+    mediaRecorder.stop();
+    mediaRecorder = null;
+  }
+
+  if (recordingInterval) {
+    clearInterval(recordingInterval);
+    recordingInterval = null;
+  }
+
+  audioChunks = [];
 
   // @ts-ignore
   audioLevelElement.value = 0.0;
