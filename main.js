@@ -1,7 +1,17 @@
 // @ts-check
 
+import { monotonicFactory } from 'ulid';
+
+const ulid = monotonicFactory();
+
+const userId = ulid();
+console.log(`Current user ID=${userId}`);
+
 // Configurable variables
 const audioDetectionLevel = 0.01;
+const audioDetectionCounter = 5;
+const audioMinDetectionCounter = 2;
+const audioRequestDataInterval = 2000;
 
 // Internal variables
 let audioStream = null;
@@ -10,6 +20,7 @@ let audioLevel = 0.0;
 let mediaRecorder = null;
 let recordingInterval = null;
 let audioChunks = [];
+let firstChunk = null;
 
 // HTML elements from the page
 const startBtn = document.getElementById('startBtn');
@@ -30,6 +41,23 @@ const getAudioStream = async () => {
   return stream;
 }
 
+const handleSendAudio = async () => {
+  if (audioChunks.length < 1) {
+    console.log("no audio chunks to send");
+    return;
+  }
+
+  const body = new FormData();
+  const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+  body.append('audio', audioBlob, 'audio.webm');
+  const response = await fetch(`http://localhost:3000/audio/${userId}`, {
+    method: 'POST',
+    body,
+  });
+  console.log('response:', response);
+  audioChunks = [];
+};
+
 /**
  * Handle audio level from the audio stream.
  * This will update the global `audioLevel` variable.
@@ -47,11 +75,14 @@ const handleAudioLevel = (stream) => {
   const onFrame = () => {
     analyserNode.getFloatTimeDomainData(pcmData);
     let sumSquares = 0.0;
-    for (const amplitude of pcmData) { sumSquares += amplitude * amplitude; }
-    audioLevel = Math.sqrt(sumSquares / pcmData.length);
-    // @ts-ignore
-    audioLevelElement.value = audioLevel;
+    for (const amplitude of pcmData) {
+      sumSquares += amplitude * amplitude;
+    }
+
     if (started) {
+      audioLevel = Math.sqrt(sumSquares / pcmData.length);
+      // @ts-ignore
+      audioLevelElement.value = audioLevel;
       window.requestAnimationFrame(onFrame);
     }
   };
@@ -73,12 +104,19 @@ const handleStartBtnClick = async () => {
 
   mediaRecorder = new MediaRecorder(stream);
   mediaRecorder.addEventListener('dataavailable', (e) => {
+    // if (!firstChunk) {
+    //   console.log("FIRST CHUNK", e.data);
+    //   firstChunk = e.data;
+    //   return;
+    // }
     audioChunks.push(e.data);
+    handleSendAudio();
   });
   mediaRecorder.start();
+  // mediaRecorder.requestData();
   recordingInterval = setInterval(() => {
     mediaRecorder.requestData();
-  }, 1000);
+  }, audioRequestDataInterval);
 }
 
 /**
@@ -104,6 +142,7 @@ const handleStopBtnClick = async () => {
   }
 
   audioChunks = [];
+  firstChunk = null;
 
   // @ts-ignore
   audioLevelElement.value = 0.0;
@@ -121,18 +160,18 @@ const audioLevelInterval = setInterval(() => {
   const audible = audioLevel > audioDetectionLevel;
 
   if (audible) {
-    if (sameStateCount < 10) {
+    if (sameStateCount < audioDetectionCounter) {
       sameStateCount += 1;
-    } else {
+    }
+    if (sameStateCount >= audioMinDetectionCounter) {
       isSpeaking = true;
-      console.log('is speaking:', isSpeaking);
     }
   } else {
     if (sameStateCount > 0) {
       sameStateCount -= 1;
     } else {
       isSpeaking = false;
-      console.log('is speaking:', isSpeaking);
     }
   }
+  console.log('is speaking:', isSpeaking, sameStateCount);
 }, 100);
