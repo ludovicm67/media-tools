@@ -11,7 +11,7 @@ console.log(`Current user ID=${userId}`);
 const audioDetectionLevel = 0.01;
 const audioDetectionCounter = 5;
 const audioMinDetectionCounter = 2;
-const audioRequestDataInterval = 2000;
+const audioRequestDataInterval = 5000;
 
 // Internal variables
 let audioStream = null;
