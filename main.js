@@ -60,7 +60,7 @@ const handleSendAudio = async () => {
   resetDecoder({
     debug: false,
   });
-  const { decoded, decodedHeader, headerBuffer, lastStartBuffer } = decode(concatBuffer);
+  const { decoded, headerBuffer, lastStartBuffer } = decode(concatBuffer);
   previousChunk = Buffer.concat([headerBuffer, lastStartBuffer]);
   displayDecodedElements(decoded)
 
