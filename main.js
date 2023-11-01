@@ -1,6 +1,8 @@
 // @ts-check
-
+import { Buffer } from 'buffer/index.js';
 import { monotonicFactory } from 'ulid';
+import { decode, resetDecoder, displayDecodedElements } from './lib/ebml.js';
+import { blobToArrayBuffer } from './lib/utils.js';
 
 const ulid = monotonicFactory();
 
@@ -20,7 +22,7 @@ let audioLevel = 0.0;
 let mediaRecorder = null;
 let recordingInterval = null;
 let audioChunks = [];
-let firstChunk = null;
+let previousChunk = Buffer.from([]);
 
 // HTML elements from the page
 const startBtn = document.getElementById('startBtn');
@@ -43,13 +45,28 @@ const getAudioStream = async () => {
 
 const handleSendAudio = async () => {
   if (audioChunks.length < 1) {
-    console.log("no audio chunks to send");
+    console.warn("no audio chunks to send");
     return;
   }
 
-  const body = new FormData();
+  // Get a Buffer from the audio chunks
   const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-  body.append('audio', audioBlob, 'audio.webm');
+  const audioBuffer = await blobToArrayBuffer(audioBlob);
+
+  const concatBuffer = Buffer.concat([previousChunk, audioBuffer]);
+
+  // Decode the audio buffer
+  resetDecoder({
+    debug: false,
+  });
+  const { decoded, decodedHeader, headerBuffer, lastStartBuffer } = decode(concatBuffer);
+  previousChunk = Buffer.concat([headerBuffer, lastStartBuffer]);
+  displayDecodedElements(decoded)
+
+  const audioToSend = new Blob([concatBuffer], { type: 'audio/webm' });
+
+  const body = new FormData();
+  body.append('audio', audioToSend, 'audio.webm');
   const response = await fetch(`http://localhost:3000/audio/${userId}`, {
     method: 'POST',
     body,
@@ -142,7 +159,7 @@ const handleStopBtnClick = async () => {
   }
 
   audioChunks = [];
-  firstChunk = null;
+  previousChunk = Buffer.from([]);
 
   // @ts-ignore
   audioLevelElement.value = 0.0;
@@ -153,7 +170,6 @@ startBtn?.addEventListener('click', handleStartBtnClick);
 stopBtn?.addEventListener('click', handleStopBtnClick);
 
 // Inspect the audio level every 100ms.
-let wasAudioMuted = null;
 let sameStateCount = 0;
 let isSpeaking = false;
 const audioLevelInterval = setInterval(() => {
