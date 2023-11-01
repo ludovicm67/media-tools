@@ -4,6 +4,7 @@
   "description": "Audio recording app",
   "main": "index.js",
   "type": "module",
+  "bin": "cli/index.js",
   "scripts": {
     "start": "run-p dev server",
     "server": "node --watch server.js",
@@ -22,6 +23,7 @@
     "@fastify/cors": "^8.4.0",
     "@fastify/multipart": "^8.0.0",
     "buffer": "^6.0.3",
+    "commander": "^11.1.0",
     "fastify": "^4.24.3",
     "ulid": "^2.3.0"
   }
