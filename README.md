@@ -57,6 +57,12 @@ Additionally, we need to transfer the last block of the first chunk, even if it'
 The proposed solution is to concatenate the header and the last block of the first chunk with the next chunk.
 This operation ensures that the structural integrity of the audio file is maintained, making it playable without causing confusion for the audio player.
 
+## Command line tool
+
+The `cli` folder contains a command line tool that can be used to fix or merge chunks.
+
+Have a look at the [README](./cli/README.md) for more information.
+
 ## Future Improvements
 
 In order to enhance the functionality of the audio recorder and accommodate a wider range of browsers and network/system restrictions, the following future improvements are proposed:
