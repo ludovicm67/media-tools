@@ -1,23 +1,28 @@
 # Audio recorder
 
-## About the proof of concept
+## About the Proof of Concept
 
-This is a proof of concept of a simple audio recorder using the current web technologies.
+This is a proof of concept for a simple audio recorder using current web technologies.
 
-It comes with two parts:
+It consists of two parts:
 
-- a client (`main.js`): the web page that will record the audio using a [`MediaRecorder`](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder) after the user manually starts it. The audio data is then sent to the backend using POST requests. The data is sent in chunks.
-- a server (`server.js`): a simple NodeJS server that will receive the audio data and save it to multiple files
+- **Client** (`main.js`): The web page that records audio using a [`MediaRecorder`](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder) when manually initiated by the user. The recorded audio data is then sent to the backend in POST requests, transmitted in chunks.
+- **Server** (`server.js`): A basic NodeJS server that receives audio data and saves it to multiple files.
 
-To make sure that the backend gets audio data, the client will send a small chunk of audio every some seconds.
-The split leads to an issue: the first chunk is playable, but the following ones are not.
+To ensure a consistent flow of audio data to the backend, the client periodically sends small audio chunks.
+However, this segmentation creates an issue where the first chunk is playable, but subsequent ones are not.
 
-Here are some ways to solve this:
+Here are some potential solutions to address this issue:
 
-- the client sends the audio data in one big chunk, but if the client gets disconnected, we lose all the data, or we may face issues with the size of the data
-- the client sends the audio data in chunks, but the backend will merge them into one file: this will work, but if we want to do some "live" operations on the audio data, like transcribing it, we will have to wait for the recording to be finished.
-- same, but we "fix" the chunks files in the backend, so that they can be played individually: this is working, but if the backend gets a lot of data, it will use a lot of resources
-- same, but we "fix" the chunks files in the client directly: it will use a bit more resources in the client, but it's working fine
+1. The client sends audio data as one large chunk, but this approach risks data loss if the client disconnects or encounters data size issues.
+
+2. The client sends audio data in chunks, and the backend combines them into a single file. While this approach works, it may require waiting for the recording to finish for "live" audio data operations like transcription.
+
+3. Similarly, the backend can "fix" the chunked files, enabling individual playability. However, this method may consume substantial backend resources when handling large data volumes.
+
+4. Alternatively, the client can "fix" the chunked files directly, resulting in slightly higher resource usage on the client side but allowing for individual playability and functionality.
+
+These options offer different trade-offs in terms of data management and resource utilization for the audio recording proof of concept.
 
 ## Start the demo
 
@@ -33,9 +38,30 @@ Then open http://localhost:5173/ in your browser.
 Once you start the recording, the audio data will be sent to the backend, and you will be able to get the files in the `records` folder.
 They are named in a way that will allow you to play them in the correct order by sorting them.
 
-## Future improvements
+## How the chunks are fixed
 
-- use websockets instead of POST requests
-- use WebRTC to send the audio stream directly to the backend
+The audio format currently in use is WebM, which has become the standard today.
+However, there's an issue with these audio chunks because they lack crucial metadata.
+This essential metadata is stored in the first chunk, so we need to replicate it in the other chunks.
+The challenge here is that we can't simply extract the header bytes and append them to all other chunks, as each chunk is not an independent "block".
+They are interconnected, which can confuse the audio player.
 
-but make sure to have nice fallbacks for browsers that don't support these technologies or if they are using a network or a system that doesn't allow them.
+Since WebM is based on Matroska, we can use Matroska tools, available at [this link](https://www.bunkus.org/videotools/mkvtoolnix/), to examine the chunks and ensure they are structured correctly.
+Specifically, the [`mkvinfo` tool](https://mkvtoolnix.download/doc/mkvinfo.html) is employed to inspect these chunks.
+
+Matroska employs the EBML (Extensible Binary Meta Language) format, which is a binary format consisting of elements.
+To address the issue, we must parse the EBML format to identify the specific elements that need to be transferred from the first chunk to the subsequent ones.
+These elements include the header, which contains essential metadata such as the codec, sampling frequency, and track type.
+Additionally, we need to transfer the last block of the first chunk, even if it's incomplete, as we will get the end of the block in the next chunk.
+
+The proposed solution is to concatenate the header and the last block of the first chunk with the next chunk.
+This operation ensures that the structural integrity of the audio file is maintained, making it playable without causing confusion for the audio player.
+
+## Future Improvements
+
+In order to enhance the functionality of the audio recorder and accommodate a wider range of browsers and network/system restrictions, the following future improvements are proposed:
+
+- **Utilize Websockets:** Replace the current POST requests with Websockets. Websockets provide real-time, bidirectional communication and can significantly improve the recording process. However, it's essential to implement graceful fallback mechanisms for browsers that do not support Websockets or users on restricted networks/systems.
+- **Implement WebRTC:** Integrate WebRTC to enable the direct streaming of audio data to the backend. WebRTC offers efficient real-time communication capabilities. Similar to the Websockets approach, it's crucial to have robust fallback solutions for browsers that lack WebRTC support or for users facing network or system limitations.
+
+These improvements aim to leverage advanced web technologies for enhanced performance while ensuring compatibility and usability for a broad user base, including those with older browsers or restricted network/system environments.
