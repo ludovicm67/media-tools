@@ -25,9 +25,10 @@ let audioChunks = [];
 let previousChunk = Buffer.from([]);
 
 // HTML elements from the page
-const startBtn = document.getElementById('startBtn');
-const stopBtn = document.getElementById('stopBtn');
-const audioLevelElement = document.getElementById('audioLevel');
+const startBtn = /** @type {HTMLButtonElement} */ (document.getElementById('startBtn'));
+const stopBtn = /** @type {HTMLButtonElement} */ (document.getElementById('stopBtn'));
+const audioLevelElement = /** @type {HTMLProgressElement} */ (document.getElementById('audioLevel'));
+const enableTranscriptionsElement = /** @type {HTMLInputElement} */ (document.getElementById('enableTranscriptions'));
 
 /**
  * Request the audio stream from the user.
@@ -67,7 +68,8 @@ const handleSendAudio = async () => {
 
   const body = new FormData();
   body.append('audio', audioToSend, 'audio.webm');
-  const response = await fetch(`http://localhost:3000/audio/${userId}`, {
+  const apiCall = enableTranscriptionsElement.checked ? 'transcribe' : 'audio';
+  const response = await fetch(`http://localhost:3000/${apiCall}/${userId}`, {
     method: 'POST',
     body,
   });
@@ -98,7 +100,6 @@ const handleAudioLevel = (stream) => {
 
     if (started) {
       audioLevel = Math.sqrt(sumSquares / pcmData.length);
-      // @ts-ignore
       audioLevelElement.value = audioLevel;
       window.requestAnimationFrame(onFrame);
     }
@@ -116,21 +117,16 @@ const handleAudioLevel = (stream) => {
 const handleStartBtnClick = async () => {
   started = true;
   console.log('startBtn clicked');
+
   const stream = await getAudioStream();
   handleAudioLevel(stream);
 
   mediaRecorder = new MediaRecorder(stream);
   mediaRecorder.addEventListener('dataavailable', (e) => {
-    // if (!firstChunk) {
-    //   console.log("FIRST CHUNK", e.data);
-    //   firstChunk = e.data;
-    //   return;
-    // }
     audioChunks.push(e.data);
     handleSendAudio();
   });
   mediaRecorder.start();
-  // mediaRecorder.requestData();
   recordingInterval = setInterval(() => {
     mediaRecorder.requestData();
   }, audioRequestDataInterval);
@@ -161,7 +157,6 @@ const handleStopBtnClick = async () => {
   audioChunks = [];
   previousChunk = Buffer.from([]);
 
-  // @ts-ignore
   audioLevelElement.value = 0.0;
 }
 

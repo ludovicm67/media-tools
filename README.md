@@ -61,7 +61,7 @@ This operation ensures that the structural integrity of the audio file is mainta
 
 The `cli` folder contains a command line tool that can be used to fix or merge chunks.
 
-Have a look at the [README](./cli/README.md) for more information.
+Have a look at the [README of the CLI](./cli/README.md) for more information.
 
 ## Future Improvements
 

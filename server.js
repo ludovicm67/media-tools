@@ -23,6 +23,14 @@ server.get('/healthz', async (request, reply) => {
   reply.send('OK');
 });
 
+server.post('/transcribe/:userId', async (request, reply) => {
+  const userId = request.params.userId;
+  const data = await request.file();
+  const filename = `records/${userId}-${ulid()}.webm`;
+  await pipeline(data.file, createWriteStream(filename));
+  return reply.send('OK');
+});
+
 server.post('/audio/:userId', async (request, reply) => {
   const userId = request.params.userId;
   const data = await request.file();
