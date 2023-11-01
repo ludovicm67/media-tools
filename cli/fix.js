@@ -10,11 +10,12 @@ import { decode, resetDecoder, displayDecodedElements } from '../lib/ebml.js';
  *
  * @param {string} prevChunkPath The path to the previous (sane) chunk.
  * @param {string} brokenChunkPath The path to the broken chunk.
- * @param {string} outputPath The path where to write the fixed chunk.
- * @param {Record<string, any>} options options from the CLI.
+ * @param {Record<string, any>} options Options from the CLI.
  */
-const fix = async (prevChunkPath, brokenChunkPath, outputPath, options) => {
+const fix = async (prevChunkPath, brokenChunkPath, options) => {
   const debug = options.debug;
+  const outputPath = options.out;
+
   if (debug) {
     console.info('Debug mode enabled');
     console.log(`> Previous chunk path: ${prevChunkPath}`);
@@ -49,7 +50,7 @@ const fix = async (prevChunkPath, brokenChunkPath, outputPath, options) => {
     console.info(`\nWriting fixed chunk to file: '${outputPath}'`);
   }
 
-  writeFileSync(outputPath, newFile)
+  writeFileSync(outputPath, newFile);
 }
 
 export default fix;
