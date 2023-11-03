@@ -73,7 +73,11 @@ const handleSendAudio = async () => {
     method: 'POST',
     body,
   });
+  const text = await response.text();
+  console.log('\nGOT RESPONSE:');
   console.log('response:', response);
+  console.log('text:', text);
+  console.log('');
   audioChunks = [];
 };
 
@@ -121,7 +125,9 @@ const handleStartBtnClick = async () => {
   const stream = await getAudioStream();
   handleAudioLevel(stream);
 
-  mediaRecorder = new MediaRecorder(stream);
+  mediaRecorder = new MediaRecorder(stream, {
+    mimeType: 'audio/webm',
+  });
   mediaRecorder.addEventListener('dataavailable', (e) => {
     audioChunks.push(e.data);
     handleSendAudio();
