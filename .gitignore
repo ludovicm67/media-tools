@@ -1,6 +1,2 @@
 node_modules/
-records/*
-!records/.gitkeep
-
 .DS_Store
-*.webm
