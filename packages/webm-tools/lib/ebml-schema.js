@@ -10,8 +10,8 @@ const schema = new Map([
       minver: 1,
       webm: true,
       description:
-        'Contains all possible strings to use for the chapter display.',
-    },
+        'Contains all possible strings to use for the chapter display.'
+    }
   ],
   [
     0x83,
@@ -25,8 +25,8 @@ const schema = new Map([
       range: '1-254',
       description:
         'A set of track types coded on 8 bits (1: video, 2: audio, 3: complex, 0x10: logo, 0x11: subtitle, 0x12: buttons, 0x20: control).',
-      webm: false,
-    },
+      webm: false
+    }
   ],
   [
     0x85,
@@ -39,8 +39,8 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       webm: true,
-      description: 'Contains the string to use as the chapter atom.',
-    },
+      description: 'Contains the string to use as the chapter atom.'
+    }
   ],
   [
     0x86,
@@ -53,8 +53,8 @@ const schema = new Map([
       description:
         'An ID corresponding to the codec, see the codec page for more info.',
       multiple: false,
-      webm: false,
-    },
+      webm: false
+    }
   ],
   [
     0x88,
@@ -70,8 +70,8 @@ const schema = new Map([
       description:
         'Set if that track (audio, video or subs) SHOULD be active if no language found matches the user preference. (1 bit)',
       multiple: false,
-      webm: false,
-    },
+      webm: false
+    }
   ],
   [
     0x89,
@@ -85,8 +85,8 @@ const schema = new Map([
       webm: false,
       range: 'not 0',
       description:
-        'UID of the Track to apply this chapter too. In the absense of a control track, choosing this chapter will select the listed Tracks and deselect unlisted tracks. Absense of this element indicates that the Chapter should be applied to any currently used Tracks.',
-    },
+        'UID of the Track to apply this chapter too. In the absense of a control track, choosing this chapter will select the listed Tracks and deselect unlisted tracks. Absense of this element indicates that the Chapter should be applied to any currently used Tracks.'
+    }
   ],
   [
     0x91,
@@ -98,8 +98,8 @@ const schema = new Map([
       minver: 1,
       webm: true,
       description: 'Timestamp of the start of Chapter (not scaled).',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x92,
@@ -111,8 +111,8 @@ const schema = new Map([
       webm: false,
       description:
         'Timestamp of the end of Chapter (timestamp excluded, not scaled).',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x96,
@@ -124,8 +124,8 @@ const schema = new Map([
       minver: 2,
       webm: false,
       description: 'Timestamp of the referenced Block.',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x97,
@@ -138,8 +138,8 @@ const schema = new Map([
       description:
         'The Position of the Cluster containing the referenced Block.',
       minver: 0,
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x98,
@@ -154,8 +154,8 @@ const schema = new Map([
       range: '0-1',
       description:
         'If a chapter is hidden (1), it should not be available to the user interface (but still to Control Tracks; see flag notes). (1 bit)',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x4254,
@@ -171,8 +171,8 @@ const schema = new Map([
       del: ['1 - bzlib,', '2 - lzo1x'],
       description:
         'The compression algorithm used. Algorithms that have been specified so far are: 0 - zlib,   3 - Header Stripping',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x4255,
@@ -184,8 +184,8 @@ const schema = new Map([
       webm: false,
       description:
         'Settings that might be needed by the decompressor. For Header Stripping (ContentCompAlgo=3), the bytes that were removed from the beggining of each frames of the track.',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x4282,
@@ -199,8 +199,8 @@ const schema = new Map([
       description:
         "A string that describes the type of document that follows this EBML header. 'matroska' in our case or 'webm' for webm files.",
       multiple: false,
-      webm: false,
-    },
+      webm: false
+    }
   ],
   [
     0x4285,
@@ -214,8 +214,8 @@ const schema = new Map([
       description:
         'The minimum DocType version an interpreter has to support to read this file.',
       multiple: false,
-      webm: false,
-    },
+      webm: false
+    }
   ],
   [
     0x4286,
@@ -228,8 +228,8 @@ const schema = new Map([
       minver: 1,
       description: 'The version of EBML parser used to create the file.',
       multiple: false,
-      webm: false,
-    },
+      webm: false
+    }
   ],
   [
     0x4287,
@@ -243,8 +243,8 @@ const schema = new Map([
       description:
         'The version of DocType interpreter used to create the file.',
       multiple: false,
-      webm: false,
-    },
+      webm: false
+    }
   ],
   [
     0x4444,
@@ -257,8 +257,8 @@ const schema = new Map([
       webm: false,
       bytesize: 16,
       description:
-        'A randomly generated unique ID that all segments related to each other must use (128 bits).',
-    },
+        'A randomly generated unique ID that all segments related to each other must use (128 bits).'
+    }
   ],
   [
     0x4461,
@@ -270,8 +270,8 @@ const schema = new Map([
       description:
         'Date of the origin of timestamp (value 0), i.e. production date.',
       multiple: false,
-      webm: false,
-    },
+      webm: false
+    }
   ],
   [
     0x4484,
@@ -286,8 +286,8 @@ const schema = new Map([
       range: '0-1',
       description:
         'Indication to know if this is the default/original language to use for the given tag. (1 bit)',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x4485,
@@ -299,8 +299,8 @@ const schema = new Map([
       webm: false,
       description:
         'The values of the Tag if it is binary. Note that this cannot be used in the same SimpleTag as TagString.',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x4487,
@@ -311,8 +311,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description: 'The value of the Tag.',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x4489,
@@ -324,8 +324,8 @@ const schema = new Map([
       range: '> 0',
       description: 'Duration of the segment (based on TimecodeScale).',
       multiple: false,
-      webm: false,
-    },
+      webm: false
+    }
   ],
   [
     0x4598,
@@ -340,8 +340,8 @@ const schema = new Map([
       range: '0-1',
       description:
         'Specify wether the chapter is enabled. It can be enabled/disabled by a Control Track. When disabled, the movie should skip all the content between the TimeStart and TimeEnd of this chapter (see flag notes). (1 bit)',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x4660,
@@ -353,8 +353,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description: 'MIME type of the file.',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x4661,
@@ -364,8 +364,8 @@ const schema = new Map([
       type: 'u',
       divx: true,
       description: 'DivX font extension',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x4662,
@@ -375,8 +375,8 @@ const schema = new Map([
       type: 'u',
       divx: true,
       multiple: false,
-      description: 'DivX font extension',
-    },
+      description: 'DivX font extension'
+    }
   ],
   [
     0x4675,
@@ -387,8 +387,8 @@ const schema = new Map([
       webm: false,
       description:
         'A binary value that a track/codec can refer to when the attachment is needed.',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x5031,
@@ -402,8 +402,8 @@ const schema = new Map([
       default: 0,
       multiple: false,
       description:
-        'Tells when this modification was used during encoding/muxing starting with 0 and counting upwards. The decoder/demuxer has to start with the highest order number it finds and work its way down. This value has to be unique over all ContentEncodingOrder elements in the segment.',
-    },
+        'Tells when this modification was used during encoding/muxing starting with 0 and counting upwards. The decoder/demuxer has to start with the highest order number it finds and work its way down. This value has to be unique over all ContentEncodingOrder elements in the segment.'
+    }
   ],
   [
     0x5032,
@@ -419,8 +419,8 @@ const schema = new Map([
       br: ['', '', ''],
       description:
         "A bit field that describes which elements have been modified in this way. Values (big endian) can be OR'ed. Possible values: 1 - all frame contents, 2 - the track's private data, 4 - the next ContentEncoding (next ContentEncodingOrder. Either the data inside ContentCompression and/or ContentEncryption)",
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x5033,
@@ -435,8 +435,8 @@ const schema = new Map([
       br: ['', ''],
       description:
         'A value describing what kind of transformation has been done. Possible values: 0 - compression, 1 - encryption',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x5034,
@@ -448,8 +448,8 @@ const schema = new Map([
       webm: false,
       description:
         'Settings describing the compression used. Must be present if the value of ContentEncodingType is 0 and absent otherwise. Each block must be decompressable even if no previous block is available in order not to prevent seeking.',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x5035,
@@ -461,8 +461,8 @@ const schema = new Map([
       webm: false,
       description:
         'Settings describing the encryption used. Must be present if the value of ContentEncodingType is 1 and absent otherwise.',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x5378,
@@ -474,8 +474,8 @@ const schema = new Map([
       default: 1,
       range: 'not 0',
       description: 'Number of the Block in the specified Cluster.',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x5654,
@@ -488,8 +488,8 @@ const schema = new Map([
       webm: true,
       description:
         'A unique string ID to identify the Chapter. Use for WebVTT cue identifier storage.',
-      multiple: false,
-    },
+      multiple: false
+    }
   ],
   [
     0x5741,
@@ -500,8 +500,8 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       multiple: false,
-      description: 'Writing application ("mkvmerge-0.3.3").',
-    },
+      description: 'Writing application ("mkvmerge-0.3.3").'
+    }
   ],
   [
     0x5854,
@@ -514,8 +514,8 @@ const schema = new Map([
       multiple: false,
       webm: false,
       description:
-        'The list of tracks that are not used in that part of the stream. It is useful when using overlay tracks on seeking. Then you should decide what track to use.',
-    },
+        'The list of tracks that are not used in that part of the stream. It is useful when using overlay tracks on seeking. Then you should decide what track to use.'
+    }
   ],
   [
     0x6240,
@@ -528,8 +528,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'Settings for one content encoding like compression or encryption.',
-    },
+        'Settings for one content encoding like compression or encryption.'
+    }
   ],
   [
     0x6264,
@@ -541,8 +541,8 @@ const schema = new Map([
       minver: 1,
       range: 'not 0',
       multiple: false,
-      description: 'Bits per sample, mostly used for PCM.',
-    },
+      description: 'Bits per sample, mostly used for PCM.'
+    }
   ],
   [
     0x6532,
@@ -553,8 +553,8 @@ const schema = new Map([
       multiple: true,
       webm: false,
       description:
-        'An element ID whose data will be used to compute the signature.',
-    },
+        'An element ID whose data will be used to compute the signature.'
+    }
   ],
   [
     0x6624,
@@ -565,8 +565,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       webm: false,
-      description: 'The track identification for the given Chapter Codec.',
-    },
+      description: 'The track identification for the given Chapter Codec.'
+    }
   ],
   [
     0x6911,
@@ -578,8 +578,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       webm: false,
-      description: 'Contains all the commands associated to the Atom.',
-    },
+      description: 'Contains all the commands associated to the Atom.'
+    }
   ],
   [
     0x6922,
@@ -592,8 +592,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'Defines when the process command should be handled (0: during the whole chapter, 1: before starting playback, 2: after playback of the chapter).',
-    },
+        'Defines when the process command should be handled (0: during the whole chapter, 1: before starting playback, 2: after playback of the chapter).'
+    }
   ],
   [
     0x6924,
@@ -605,8 +605,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'A tuple of corresponding ID used by chapter codecs to represent this segment.',
-    },
+        'A tuple of corresponding ID used by chapter codecs to represent this segment.'
+    }
   ],
   [
     0x6933,
@@ -619,8 +619,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'Contains the command information. The data should be interpreted depending on the ChapProcessCodecID value. For ChapProcessCodecID = 1, the data correspond to the binary DVD cell pre/post commands.',
-    },
+        'Contains the command information. The data should be interpreted depending on the ChapProcessCodecID value. For ChapProcessCodecID = 1, the data correspond to the binary DVD cell pre/post commands.'
+    }
   ],
   [
     0x6944,
@@ -632,8 +632,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       webm: false,
-      description: 'Contains all the commands associated to the Atom.',
-    },
+      description: 'Contains all the commands associated to the Atom.'
+    }
   ],
   [
     0x6955,
@@ -647,8 +647,8 @@ const schema = new Map([
       webm: false,
       default: 0,
       description:
-        'Contains the type of the codec used for the processing. A value of 0 means native Matroska processing (to be defined), a value of 1 means the DVD command set is used. More codec IDs can be added later.',
-    },
+        'Contains the type of the codec used for the processing. A value of 0 means native Matroska processing (to be defined), a value of 1 means the DVD command set is used. More codec IDs can be added later.'
+    }
   ],
   [
     0x7373,
@@ -660,8 +660,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       webm: false,
-      description: 'Element containing elements specific to Tracks/Chapters.',
-    },
+      description: 'Element containing elements specific to Tracks/Chapters.'
+    }
   ],
   [
     0x7384,
@@ -671,8 +671,8 @@ const schema = new Map([
       type: '8',
       minver: 1,
       webm: false,
-      description: 'A filename corresponding to this segment.',
-    },
+      description: 'A filename corresponding to this segment.'
+    }
   ],
   [
     0x7446,
@@ -684,8 +684,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       range: 'not 0',
-      description: 'The UID of an attachment that is used by this codec.',
-    },
+      description: 'The UID of an attachment that is used by this codec.'
+    }
   ],
   [
     0x258688,
@@ -694,8 +694,8 @@ const schema = new Map([
       level: 3,
       type: '8',
       minver: 1,
-      description: 'A human-readable string specifying the codec.',
-    },
+      description: 'A human-readable string specifying the codec.'
+    }
   ],
   [
     0x18538067,
@@ -707,8 +707,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       description:
-        'This element contains all other top-level (level 1) elements. Typically a Matroska file is composed of 1 segment.',
-    },
+        'This element contains all other top-level (level 1) elements. Typically a Matroska file is composed of 1 segment.'
+    }
   ],
   [
     0x447a,
@@ -721,8 +721,8 @@ const schema = new Map([
       webm: false,
       default: 'und',
       description:
-        'Specifies the language of the tag specified, in the Matroska languages form.',
-    },
+        'Specifies the language of the tag specified, in the Matroska languages form.'
+    }
   ],
   [
     0x45a3,
@@ -733,8 +733,8 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       webm: false,
-      description: 'The name of the Tag that is going to be stored.',
-    },
+      description: 'The name of the Tag that is going to be stored.'
+    }
   ],
   [
     0x67c8,
@@ -748,8 +748,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       webm: false,
-      description: 'Contains general information about the target.',
-    },
+      description: 'Contains general information about the target.'
+    }
   ],
   [
     0x63c6,
@@ -762,8 +762,8 @@ const schema = new Map([
       webm: false,
       default: 0,
       description:
-        'A unique ID to identify the Attachment(s) the tags belong to. If the value is 0 at this level, the tags apply to all the attachments in the Segment.',
-    },
+        'A unique ID to identify the Attachment(s) the tags belong to. If the value is 0 at this level, the tags apply to all the attachments in the Segment.'
+    }
   ],
   [
     0x63c4,
@@ -776,8 +776,8 @@ const schema = new Map([
       webm: false,
       default: 0,
       description:
-        'A unique ID to identify the Chapter(s) the tags belong to. If the value is 0 at this level, the tags apply to all chapters in the Segment.',
-    },
+        'A unique ID to identify the Chapter(s) the tags belong to. If the value is 0 at this level, the tags apply to all chapters in the Segment.'
+    }
   ],
   [
     0x63c9,
@@ -790,8 +790,8 @@ const schema = new Map([
       webm: false,
       default: 0,
       description:
-        'A unique ID to identify the EditionEntry(s) the tags belong to. If the value is 0 at this level, the tags apply to all editions in the Segment.',
-    },
+        'A unique ID to identify the EditionEntry(s) the tags belong to. If the value is 0 at this level, the tags apply to all editions in the Segment.'
+    }
   ],
   [
     0x63c5,
@@ -804,8 +804,8 @@ const schema = new Map([
       webm: false,
       default: 0,
       description:
-        'A unique ID to identify the Track(s) the tags belong to. If the value is 0 at this level, the tags apply to all tracks in the Segment.',
-    },
+        'A unique ID to identify the Track(s) the tags belong to. If the value is 0 at this level, the tags apply to all tracks in the Segment.'
+    }
   ],
   [
     0x63ca,
@@ -818,8 +818,8 @@ const schema = new Map([
       webm: false,
       strong: 'informational',
       description:
-        'An  string that can be used to display the logical level of the target like "ALBUM", "TRACK", "MOVIE", "CHAPTER", etc (see TargetType).',
-    },
+        'An  string that can be used to display the logical level of the target like "ALBUM", "TRACK", "MOVIE", "CHAPTER", etc (see TargetType).'
+    }
   ],
   [
     0x68ca,
@@ -832,8 +832,8 @@ const schema = new Map([
       webm: false,
       default: 50,
       description:
-        'A number to indicate the logical level of the target (see TargetType).',
-    },
+        'A number to indicate the logical level of the target (see TargetType).'
+    }
   ],
   [
     0x63c0,
@@ -846,8 +846,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'Contain all UIDs where the specified meta data apply. It is empty to describe everything in the segment.',
-    },
+        'Contain all UIDs where the specified meta data apply. It is empty to describe everything in the segment.'
+    }
   ],
   [
     0x1254c367,
@@ -859,8 +859,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'Element containing elements specific to Tracks/Chapters. A list of valid tags can be found here.',
-    },
+        'Element containing elements specific to Tracks/Chapters. A list of valid tags can be found here.'
+    }
   ],
   [
     0x450d,
@@ -872,8 +872,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'Some optional data attached to the ChapProcessCodecID information. For ChapProcessCodecID = 1, it is the "DVD level" equivalent.',
-    },
+        'Some optional data attached to the ChapProcessCodecID information. For ChapProcessCodecID = 1, it is the "DVD level" equivalent.'
+    }
   ],
   [
     0x437e,
@@ -886,8 +886,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'The countries corresponding to the string, same 2 octets as in Internet domains.',
-    },
+        'The countries corresponding to the string, same 2 octets as in Internet domains.'
+    }
   ],
   [
     0x437c,
@@ -902,8 +902,8 @@ const schema = new Map([
       webm: true,
       default: 'eng',
       description:
-        'The languages corresponding to the string, in the bibliographic ISO-639-2 form.',
-    },
+        'The languages corresponding to the string, in the bibliographic ISO-639-2 form.'
+    }
   ],
   [
     0x8f,
@@ -914,8 +914,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'List of tracks on which the chapter applies. If this element is not present, all tracks apply',
-    },
+        'List of tracks on which the chapter applies. If this element is not present, all tracks apply'
+    }
   ],
   [
     0x63c3,
@@ -926,8 +926,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'Specify the physical equivalent of this ChapterAtom like "DVD" (60) or "SIDE" (50), see complete list of values.',
-    },
+        'Specify the physical equivalent of this ChapterAtom like "DVD" (60) or "SIDE" (50), see complete list of values.'
+    }
   ],
   [
     0x6ebc,
@@ -939,8 +939,8 @@ const schema = new Map([
       webm: false,
       range: 'not 0',
       description:
-        'The EditionUID to play from the segment linked in ChapterSegmentUID.',
-    },
+        'The EditionUID to play from the segment linked in ChapterSegmentUID.'
+    }
   ],
   [
     0x6e67,
@@ -953,8 +953,8 @@ const schema = new Map([
       range: '>0',
       bytesize: 16,
       description:
-        'A segment to play in place of this chapter. Edition ChapterSegmentEditionUID should be used for this segment, otherwise no edition is used.',
-    },
+        'A segment to play in place of this chapter. Edition ChapterSegmentEditionUID should be used for this segment, otherwise no edition is used.'
+    }
   ],
   [
     0x73c4,
@@ -966,8 +966,8 @@ const schema = new Map([
       minver: 1,
       webm: true,
       range: 'not 0',
-      description: 'A unique ID to identify the Chapter.',
-    },
+      description: 'A unique ID to identify the Chapter.'
+    }
   ],
   [
     0xb6,
@@ -981,8 +981,8 @@ const schema = new Map([
       minver: 1,
       webm: true,
       description:
-        'Contains the atom information to use as the chapter atom (apply to all tracks).',
-    },
+        'Contains the atom information to use as the chapter atom (apply to all tracks).'
+    }
   ],
   [
     0x45dd,
@@ -995,8 +995,8 @@ const schema = new Map([
       default: 0,
       range: '0-1',
       description:
-        'Specify if the chapters can be defined multiple times and the order to play them is enforced. (1 bit)',
-    },
+        'Specify if the chapters can be defined multiple times and the order to play them is enforced. (1 bit)'
+    }
   ],
   [
     0x45db,
@@ -1010,8 +1010,8 @@ const schema = new Map([
       default: 0,
       range: '0-1',
       description:
-        'If a flag is set (1) the edition should be used as the default one. (1 bit)',
-    },
+        'If a flag is set (1) the edition should be used as the default one. (1 bit)'
+    }
   ],
   [
     0x45bd,
@@ -1025,8 +1025,8 @@ const schema = new Map([
       default: 0,
       range: '0-1',
       description:
-        'If an edition is hidden (1), it should not be available to the user interface (but still to Control Tracks; see flag notes). (1 bit)',
-    },
+        'If an edition is hidden (1), it should not be available to the user interface (but still to Control Tracks; see flag notes). (1 bit)'
+    }
   ],
   [
     0x45bc,
@@ -1038,8 +1038,8 @@ const schema = new Map([
       webm: false,
       range: 'not 0',
       description:
-        "A unique ID to identify the edition. It's useful for tagging an edition.",
-    },
+        "A unique ID to identify the edition. It's useful for tagging an edition."
+    }
   ],
   [
     0x45b9,
@@ -1051,8 +1051,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       webm: true,
-      description: 'Contains all information about a segment edition.',
-    },
+      description: 'Contains all information about a segment edition.'
+    }
   ],
   [
     0x1043a770,
@@ -1063,8 +1063,8 @@ const schema = new Map([
       minver: 1,
       webm: true,
       description:
-        'A system to define basic menus and partition data. For more detailed information, look at the Chapters Explanation.',
-    },
+        'A system to define basic menus and partition data. For more detailed information, look at the Chapters Explanation.'
+    }
   ],
   [
     0x46ae,
@@ -1076,8 +1076,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       range: 'not 0',
-      description: 'Unique ID representing the file, as random as possible.',
-    },
+      description: 'Unique ID representing the file, as random as possible.'
+    }
   ],
   [
     0x465c,
@@ -1088,8 +1088,8 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       webm: false,
-      description: 'The data of the file.',
-    },
+      description: 'The data of the file.'
+    }
   ],
   [
     0x466e,
@@ -1100,8 +1100,8 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       webm: false,
-      description: 'Filename of the attached file.',
-    },
+      description: 'Filename of the attached file.'
+    }
   ],
   [
     0x467e,
@@ -1111,8 +1111,8 @@ const schema = new Map([
       type: '8',
       minver: 1,
       webm: false,
-      description: 'A human-friendly name for the attached file.',
-    },
+      description: 'A human-friendly name for the attached file.'
+    }
   ],
   [
     0x61a7,
@@ -1124,8 +1124,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       webm: false,
-      description: 'An attached file.',
-    },
+      description: 'An attached file.'
+    }
   ],
   [
     0x1941a469,
@@ -1135,8 +1135,8 @@ const schema = new Map([
       type: 'm',
       minver: 1,
       webm: false,
-      description: 'Contain attached files.',
-    },
+      description: 'Contain attached files.'
+    }
   ],
   [
     0xeb,
@@ -1147,8 +1147,8 @@ const schema = new Map([
       webm: false,
       default: 0,
       description:
-        'The position of the Codec State corresponding to this referenced element. 0 means that the data is taken from the initial Track Entry.',
-    },
+        'The position of the Codec State corresponding to this referenced element. 0 means that the data is taken from the initial Track Entry.'
+    }
   ],
   [
     0x535f,
@@ -1160,8 +1160,8 @@ const schema = new Map([
       default: 1,
       range: 'not 0',
       description:
-        'Number of the referenced Block of Track X in the specified Cluster.',
-    },
+        'Number of the referenced Block of Track X in the specified Cluster.'
+    }
   ],
   [
     0xdb,
@@ -1172,8 +1172,8 @@ const schema = new Map([
       multiple: true,
       minver: 2,
       webm: false,
-      description: 'The Clusters containing the required referenced Blocks.',
-    },
+      description: 'The Clusters containing the required referenced Blocks.'
+    }
   ],
   [
     0xea,
@@ -1185,8 +1185,8 @@ const schema = new Map([
       webm: false,
       default: 0,
       description:
-        'The position of the Codec State corresponding to this Cue element. 0 means that the data is taken from the initial Track Entry.',
-    },
+        'The position of the Codec State corresponding to this Cue element. 0 means that the data is taken from the initial Track Entry.'
+    }
   ],
   [
     0xb2,
@@ -1198,8 +1198,8 @@ const schema = new Map([
       minver: 4,
       webm: false,
       description:
-        "The duration of the block according to the segment time base. If missing the track's DefaultDuration does not apply and no duration information is available in terms of the cues.",
-    },
+        "The duration of the block according to the segment time base. If missing the track's DefaultDuration does not apply and no duration information is available in terms of the cues."
+    }
   ],
   [
     0xf0,
@@ -1211,8 +1211,8 @@ const schema = new Map([
       minver: 4,
       webm: false,
       description:
-        'The relative position of the referenced block inside the cluster with 0 being the first possible position for an element inside that cluster.',
-    },
+        'The relative position of the referenced block inside the cluster with 0 being the first possible position for an element inside that cluster.'
+    }
   ],
   [
     0xf1,
@@ -1222,8 +1222,8 @@ const schema = new Map([
       type: 'u',
       mandatory: true,
       minver: 1,
-      description: 'The position of the Cluster containing the required Block.',
-    },
+      description: 'The position of the Cluster containing the required Block.'
+    }
   ],
   [
     0xf7,
@@ -1234,8 +1234,8 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       range: 'not 0',
-      description: 'The track for which a position is given.',
-    },
+      description: 'The track for which a position is given.'
+    }
   ],
   [
     0xb7,
@@ -1247,8 +1247,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       description:
-        'Contain positions for different tracks corresponding to the timestamp.',
-    },
+        'Contain positions for different tracks corresponding to the timestamp.'
+    }
   ],
   [
     0xb3,
@@ -1258,8 +1258,8 @@ const schema = new Map([
       type: 'u',
       mandatory: true,
       minver: 1,
-      description: 'Absolute timestamp according to the segment time base.',
-    },
+      description: 'Absolute timestamp according to the segment time base.'
+    }
   ],
   [
     0xbb,
@@ -1271,8 +1271,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       description:
-        'Contains all information relative to a seek point in the segment.',
-    },
+        'Contains all information relative to a seek point in the segment.'
+    }
   ],
   [
     0x1c53bb6b,
@@ -1282,8 +1282,8 @@ const schema = new Map([
       type: 'm',
       minver: 1,
       description:
-        'A top-level element to speed seeking access. All entries are local to the segment. Should be mandatory for non "live" streams.',
-    },
+        'A top-level element to speed seeking access. All entries are local to the segment. Should be mandatory for non "live" streams.'
+    }
   ],
   [
     0x47e6,
@@ -1296,8 +1296,8 @@ const schema = new Map([
       default: 0,
       br: ['', ''],
       description:
-        "The hash algorithm used for the signature. A value of '0' means that the contents have not been signed but only encrypted. Predefined values: 1 - SHA1-160 2 - MD5",
-    },
+        "The hash algorithm used for the signature. A value of '0' means that the contents have not been signed but only encrypted. Predefined values: 1 - SHA1-160 2 - MD5"
+    }
   ],
   [
     0x47e5,
@@ -1310,8 +1310,8 @@ const schema = new Map([
       default: 0,
       br: '',
       description:
-        "The algorithm used for the signature. A value of '0' means that the contents have not been signed but only encrypted. Predefined values: 1 - RSA",
-    },
+        "The algorithm used for the signature. A value of '0' means that the contents have not been signed but only encrypted. Predefined values: 1 - RSA"
+    }
   ],
   [
     0x47e4,
@@ -1322,8 +1322,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'This is the ID of the private key the data was signed with.',
-    },
+        'This is the ID of the private key the data was signed with.'
+    }
   ],
   [
     0x47e3,
@@ -1333,8 +1333,8 @@ const schema = new Map([
       type: 'b',
       minver: 1,
       webm: false,
-      description: 'A cryptographic signature of the contents.',
-    },
+      description: 'A cryptographic signature of the contents.'
+    }
   ],
   [
     0x47e2,
@@ -1345,8 +1345,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'For public key algorithms this is the ID of the public key the the data was encrypted with.',
-    },
+        'For public key algorithms this is the ID of the public key the the data was encrypted with.'
+    }
   ],
   [
     0x47e1,
@@ -1359,8 +1359,8 @@ const schema = new Map([
       default: 0,
       br: '',
       description:
-        "The encryption algorithm used. The value '0' means that the contents have not been encrypted but only signed. Predefined values: 1 - DES, 2 - 3DES, 3 - Twofish, 4 - Blowfish, 5 - AES",
-    },
+        "The encryption algorithm used. The value '0' means that the contents have not been encrypted but only signed. Predefined values: 1 - DES, 2 - 3DES, 3 - Twofish, 4 - Blowfish, 5 - AES"
+    }
   ],
   [
     0x6d80,
@@ -1371,8 +1371,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'Settings for several content encoding mechanisms like compression or encryption.',
-    },
+        'Settings for several content encoding mechanisms like compression or encryption.'
+    }
   ],
   [
     0xc4,
@@ -1382,8 +1382,8 @@ const schema = new Map([
       type: 'b',
       divx: true,
       bytesize: 16,
-      description: 'DivX trick track extenstions',
-    },
+      description: 'DivX trick track extenstions'
+    }
   ],
   [
     0xc7,
@@ -1392,8 +1392,8 @@ const schema = new Map([
       level: 3,
       type: 'u',
       divx: true,
-      description: 'DivX trick track extenstions',
-    },
+      description: 'DivX trick track extenstions'
+    }
   ],
   [
     0xc6,
@@ -1403,8 +1403,8 @@ const schema = new Map([
       type: 'u',
       divx: true,
       default: 0,
-      description: 'DivX trick track extenstions',
-    },
+      description: 'DivX trick track extenstions'
+    }
   ],
   [
     0xc1,
@@ -1414,8 +1414,8 @@ const schema = new Map([
       type: 'b',
       divx: true,
       bytesize: 16,
-      description: 'DivX trick track extenstions',
-    },
+      description: 'DivX trick track extenstions'
+    }
   ],
   [
     0xc0,
@@ -1424,8 +1424,8 @@ const schema = new Map([
       level: 3,
       type: 'u',
       divx: true,
-      description: 'DivX trick track extenstions',
-    },
+      description: 'DivX trick track extenstions'
+    }
   ],
   [
     0xed,
@@ -1439,8 +1439,8 @@ const schema = new Map([
       webm: false,
       range: 'not 0',
       description:
-        'The trackUID number of a track whose blocks are used to create this virtual track.',
-    },
+        'The trackUID number of a track whose blocks are used to create this virtual track.'
+    }
   ],
   [
     0xe9,
@@ -1451,8 +1451,8 @@ const schema = new Map([
       minver: 3,
       webm: false,
       description:
-        'Contains the list of all tracks whose Blocks need to be combined to create this virtual track',
-    },
+        'Contains the list of all tracks whose Blocks need to be combined to create this virtual track'
+    }
   ],
   [
     0xe6,
@@ -1464,8 +1464,8 @@ const schema = new Map([
       minver: 3,
       webm: false,
       description:
-        'The kind of plane this track corresponds to (0: left eye, 1: right eye, 2: background).',
-    },
+        'The kind of plane this track corresponds to (0: left eye, 1: right eye, 2: background).'
+    }
   ],
   [
     0xe5,
@@ -1477,8 +1477,8 @@ const schema = new Map([
       minver: 3,
       webm: false,
       range: 'not 0',
-      description: 'The trackUID number of the track representing the plane.',
-    },
+      description: 'The trackUID number of the track representing the plane.'
+    }
   ],
   [
     0xe4,
@@ -1491,8 +1491,8 @@ const schema = new Map([
       minver: 3,
       webm: false,
       description:
-        'Contains a video plane track that need to be combined to create this 3D track',
-    },
+        'Contains a video plane track that need to be combined to create this 3D track'
+    }
   ],
   [
     0xe3,
@@ -1503,8 +1503,8 @@ const schema = new Map([
       minver: 3,
       webm: false,
       description:
-        'Contains the list of all video plane tracks that need to be combined to create this 3D track',
-    },
+        'Contains the list of all video plane tracks that need to be combined to create this 3D track'
+    }
   ],
   [
     0xe2,
@@ -1515,8 +1515,8 @@ const schema = new Map([
       minver: 3,
       webm: false,
       description:
-        'Operation that needs to be applied on tracks to create this virtual track. For more details look at the Specification Notes on the subject.',
-    },
+        'Operation that needs to be applied on tracks to create this virtual track. For more details look at the Specification Notes on the subject.'
+    }
   ],
   [
     0x7d7b,
@@ -1527,8 +1527,8 @@ const schema = new Map([
       type: 'b',
       webm: false,
       description:
-        'Table of horizontal angles for each successive channel, see appendix.',
-    },
+        'Table of horizontal angles for each successive channel, see appendix.'
+    }
   ],
   [
     0x9f,
@@ -1541,8 +1541,8 @@ const schema = new Map([
       minver: 1,
       default: 1,
       range: 'not 0',
-      description: 'Numbers of channels in the track.',
-    },
+      description: 'Numbers of channels in the track.'
+    }
   ],
   [
     0x78b5,
@@ -1555,8 +1555,8 @@ const schema = new Map([
       default: 'Sampling Frequency',
       range: '> 0',
       description:
-        'Real output sampling frequency in Hz (used for SBR techniques).',
-    },
+        'Real output sampling frequency in Hz (used for SBR techniques).'
+    }
   ],
   [
     0xb5,
@@ -1569,8 +1569,8 @@ const schema = new Map([
       minver: 1,
       default: '8000.0',
       range: '> 0',
-      description: 'Sampling frequency in Hz.',
-    },
+      description: 'Sampling frequency in Hz.'
+    }
   ],
   [
     0xe1,
@@ -1580,8 +1580,8 @@ const schema = new Map([
       level: 3,
       type: 'm',
       minver: 1,
-      description: 'Audio settings.',
-    },
+      description: 'Audio settings.'
+    }
   ],
   [
     0x2383e3,
@@ -1592,8 +1592,8 @@ const schema = new Map([
       type: 'f',
       range: '> 0',
       strong: 'Informational',
-      description: 'Number of frames per second.  only.',
-    },
+      description: 'Number of frames per second.  only.'
+    }
   ],
   [
     0x2fb523,
@@ -1604,8 +1604,8 @@ const schema = new Map([
       type: 'f',
       webm: false,
       range: '> 0',
-      description: 'Gamma Value.',
-    },
+      description: 'Gamma Value.'
+    }
   ],
   [
     0x2eb524,
@@ -1617,8 +1617,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       bytesize: 4,
-      description: 'Same value as in AVI (32 bits).',
-    },
+      description: 'Same value as in AVI (32 bits).'
+    }
   ],
   [
     0x54b3,
@@ -1630,8 +1630,8 @@ const schema = new Map([
       minver: 1,
       default: 0,
       description:
-        'Specify the possible modifications to the aspect ratio (0: free resizing, 1: keep aspect ratio, 2: fixed).',
-    },
+        'Specify the possible modifications to the aspect ratio (0: free resizing, 1: keep aspect ratio, 2: fixed).'
+    }
   ],
   [
     0x54b2,
@@ -1643,8 +1643,8 @@ const schema = new Map([
       minver: 1,
       default: 0,
       description:
-        'How DisplayWidth & DisplayHeight should be interpreted (0: pixels, 1: centimeters, 2: inches, 3: Display Aspect Ratio).',
-    },
+        'How DisplayWidth & DisplayHeight should be interpreted (0: pixels, 1: centimeters, 2: inches, 3: Display Aspect Ratio).'
+    }
   ],
   [
     0x54ba,
@@ -1657,8 +1657,8 @@ const schema = new Map([
       default: 'PixelHeight',
       range: 'not 0',
       description:
-        'Height of the video frames to display. The default value is only valid when DisplayUnit is 0.',
-    },
+        'Height of the video frames to display. The default value is only valid when DisplayUnit is 0.'
+    }
   ],
   [
     0x54b0,
@@ -1671,8 +1671,8 @@ const schema = new Map([
       default: 'PixelWidth',
       range: 'not 0',
       description:
-        'Width of the video frames to display. The default value is only valid when DisplayUnit is 0.',
-    },
+        'Width of the video frames to display. The default value is only valid when DisplayUnit is 0.'
+    }
   ],
   [
     0x54dd,
@@ -1684,8 +1684,8 @@ const schema = new Map([
       minver: 1,
       default: 0,
       description:
-        'The number of video pixels to remove on the right of the image.',
-    },
+        'The number of video pixels to remove on the right of the image.'
+    }
   ],
   [
     0x54cc,
@@ -1697,8 +1697,8 @@ const schema = new Map([
       minver: 1,
       default: 0,
       description:
-        'The number of video pixels to remove on the left of the image.',
-    },
+        'The number of video pixels to remove on the left of the image.'
+    }
   ],
   [
     0x54bb,
@@ -1710,8 +1710,8 @@ const schema = new Map([
       minver: 1,
       default: 0,
       description:
-        'The number of video pixels to remove at the top of the image.',
-    },
+        'The number of video pixels to remove at the top of the image.'
+    }
   ],
   [
     0x54aa,
@@ -1723,8 +1723,8 @@ const schema = new Map([
       minver: 1,
       default: 0,
       description:
-        'The number of video pixels to remove at the bottom of the image (for HDTV content).',
-    },
+        'The number of video pixels to remove at the bottom of the image (for HDTV content).'
+    }
   ],
   [
     0xba,
@@ -1736,8 +1736,8 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       range: 'not 0',
-      description: 'Height of the encoded video frames in pixels.',
-    },
+      description: 'Height of the encoded video frames in pixels.'
+    }
   ],
   [
     0xb0,
@@ -1749,8 +1749,8 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       range: 'not 0',
-      description: 'Width of the encoded video frames in pixels.',
-    },
+      description: 'Width of the encoded video frames in pixels.'
+    }
   ],
   [
     0x53b9,
@@ -1762,8 +1762,8 @@ const schema = new Map([
       webm: false,
       divx: false,
       description:
-        'DEPRECATED, DO NOT USE. Bogus StereoMode value used in old versions of libmatroska. (0: mono, 1: right eye, 2: left eye, 3: both eyes).',
-    },
+        'DEPRECATED, DO NOT USE. Bogus StereoMode value used in old versions of libmatroska. (0: mono, 1: right eye, 2: left eye, 3: both eyes).'
+    }
   ],
   [
     0x53c0,
@@ -1776,8 +1776,8 @@ const schema = new Map([
       webm: true,
       default: 0,
       description:
-        'Alpha Video Mode. Presence of this element indicates that the BlockAdditional element could contain Alpha data.',
-    },
+        'Alpha Video Mode. Presence of this element indicates that the BlockAdditional element could contain Alpha data.'
+    }
   ],
   [
     0x53b8,
@@ -1790,8 +1790,8 @@ const schema = new Map([
       webm: true,
       default: 0,
       description:
-        'Stereo-3D video mode (0: mono, 1: side by side (left eye is first), 2: top-bottom (right eye is first), 3: top-bottom (left eye is first), 4: checkboard (right is first), 5: checkboard (left is first), 6: row interleaved (right is first), 7: row interleaved (left is first), 8: column interleaved (right is first), 9: column interleaved (left is first), 10: anaglyph (cyan/red), 11: side by side (right eye is first), 12: anaglyph (green/magenta), 13 both eyes laced in one Block (left eye is first), 14 both eyes laced in one Block (right eye is first)) . There are some more details on 3D support in the Specification Notes.',
-    },
+        'Stereo-3D video mode (0: mono, 1: side by side (left eye is first), 2: top-bottom (right eye is first), 3: top-bottom (left eye is first), 4: checkboard (right is first), 5: checkboard (left is first), 6: row interleaved (right is first), 7: row interleaved (left is first), 8: column interleaved (right is first), 9: column interleaved (left is first), 10: anaglyph (cyan/red), 11: side by side (right eye is first), 12: anaglyph (green/magenta), 13 both eyes laced in one Block (left eye is first), 14 both eyes laced in one Block (right eye is first)) . There are some more details on 3D support in the Specification Notes.'
+    }
   ],
   [
     0x9a,
@@ -1805,8 +1805,8 @@ const schema = new Map([
       webm: true,
       default: 0,
       range: '0-1',
-      description: 'Set if the video is interlaced. (1 bit)',
-    },
+      description: 'Set if the video is interlaced. (1 bit)'
+    }
   ],
   [
     0xe0,
@@ -1816,8 +1816,8 @@ const schema = new Map([
       level: 3,
       type: 'm',
       minver: 1,
-      description: 'Video settings.',
-    },
+      description: 'Video settings.'
+    }
   ],
   [
     0x66a5,
@@ -1829,8 +1829,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'The binary value used to represent this track in the chapter codec data. The format depends on the ChapProcessCodecID used.',
-    },
+        'The binary value used to represent this track in the chapter codec data. The format depends on the ChapProcessCodecID used.'
+    }
   ],
   [
     0x66bf,
@@ -1842,8 +1842,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'The chapter codec using this ID (0: Matroska Script, 1: DVD-menu).',
-    },
+        'The chapter codec using this ID (0: Matroska Script, 1: DVD-menu).'
+    }
   ],
   [
     0x66fc,
@@ -1855,8 +1855,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'Specify an edition UID on which this translation applies. When not specified, it means for all editions found in the segment.',
-    },
+        'Specify an edition UID on which this translation applies. When not specified, it means for all editions found in the segment.'
+    }
   ],
   [
     0x56bb,
@@ -1870,8 +1870,8 @@ const schema = new Map([
       minver: 4,
       webm: true,
       description:
-        'After a discontinuity, SeekPreRoll is the duration in nanoseconds of the data the decoder must decode before the decoded data is valid.',
-    },
+        'After a discontinuity, SeekPreRoll is the duration in nanoseconds of the data the decoder must decode before the decoded data is valid.'
+    }
   ],
   [
     0x56aa,
@@ -1884,8 +1884,8 @@ const schema = new Map([
       minver: 4,
       webm: true,
       description:
-        'CodecDelay is The codec-built-in delay in nanoseconds. This value must be subtracted from each block timestamp in order to get the actual timestamp. The value should be small so the muxing of tracks with the same actual timestamp are in the same Cluster.',
-    },
+        'CodecDelay is The codec-built-in delay in nanoseconds. This value must be subtracted from each block timestamp in order to get the actual timestamp. The value should be small so the muxing of tracks with the same actual timestamp are in the same Cluster.'
+    }
   ],
   [
     0x6fab,
@@ -1897,8 +1897,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'Specify that this track is an overlay track for the Track specified (in the u-integer). That means when this track has a gap (see SilentTracks) the overlay track should be used instead. The order of multiple TrackOverlay matters, the first one is the one that should be used. If not found it should be the second, etc.',
-    },
+        'Specify that this track is an overlay track for the Track specified (in the u-integer). That means when this track has a gap (see SilentTracks) the overlay track should be used instead. The order of multiple TrackOverlay matters, the first one is the one that should be used. If not found it should be the second, etc.'
+    }
   ],
   [
     0xaa,
@@ -1911,8 +1911,8 @@ const schema = new Map([
       webm: false,
       default: 1,
       range: '0-1',
-      description: 'The codec can decode potentially damaged data (1 bit).',
-    },
+      description: 'The codec can decode potentially damaged data (1 bit).'
+    }
   ],
   [
     0x26b240,
@@ -1922,8 +1922,8 @@ const schema = new Map([
       type: 's',
       multiple: true,
       webm: false,
-      description: 'A URL to download about the codec used.',
-    },
+      description: 'A URL to download about the codec used.'
+    }
   ],
   [
     0x3b4040,
@@ -1933,8 +1933,8 @@ const schema = new Map([
       type: 's',
       multiple: true,
       webm: false,
-      description: 'A URL to find information about the codec used.',
-    },
+      description: 'A URL to find information about the codec used.'
+    }
   ],
   [
     0x3a9697,
@@ -1943,8 +1943,8 @@ const schema = new Map([
       level: 3,
       type: '8',
       webm: false,
-      description: 'A string describing the encoding setting used.',
-    },
+      description: 'A string describing the encoding setting used.'
+    }
   ],
   [
     0x63a2,
@@ -1953,8 +1953,8 @@ const schema = new Map([
       level: 3,
       type: 'b',
       minver: 1,
-      description: 'Private data only known to the codec.',
-    },
+      description: 'Private data only known to the codec.'
+    }
   ],
   [
     0x22b59c,
@@ -1966,8 +1966,8 @@ const schema = new Map([
       minver: 1,
       default: 'eng',
       description:
-        'Specifies the language of the track in the Matroska languages form.',
-    },
+        'Specifies the language of the track in the Matroska languages form.'
+    }
   ],
   [
     0x536e,
@@ -1977,8 +1977,8 @@ const schema = new Map([
       level: 3,
       type: '8',
       minver: 1,
-      description: 'A human-readable track name.',
-    },
+      description: 'A human-readable track name.'
+    }
   ],
   [
     0x55ee,
@@ -1990,8 +1990,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       default: 0,
-      description: 'The maximum value of BlockAdditions for this track.',
-    },
+      description: 'The maximum value of BlockAdditions for this track.'
+    }
   ],
   [
     0x537f,
@@ -2002,8 +2002,8 @@ const schema = new Map([
       webm: false,
       default: 0,
       description:
-        "A value to add to the Block's Timestamp. This can be used to adjust the playback offset of a track.",
-    },
+        "A value to add to the Block's Timestamp. This can be used to adjust the playback offset of a track."
+    }
   ],
   [
     0x23314f,
@@ -2018,8 +2018,8 @@ const schema = new Map([
       default: '1.0',
       range: '> 0',
       description:
-        'DEPRECATED, DO NOT USE. The scale to apply on this track to work at normal speed in relation with other tracks (mostly used to adjust video speed when the audio length differs).',
-    },
+        'DEPRECATED, DO NOT USE. The scale to apply on this track to work at normal speed in relation with other tracks (mostly used to adjust video speed when the audio length differs).'
+    }
   ],
   [
     0x234e7a,
@@ -2031,8 +2031,8 @@ const schema = new Map([
       minver: 4,
       range: 'not 0',
       description:
-        'The period in nanoseconds (not scaled by TimcodeScale)\nbetween two successive fields at the output of the decoding process (see the notes)',
-    },
+        'The period in nanoseconds (not scaled by TimcodeScale)\nbetween two successive fields at the output of the decoding process (see the notes)'
+    }
   ],
   [
     0x23e383,
@@ -2044,8 +2044,8 @@ const schema = new Map([
       minver: 1,
       range: 'not 0',
       description:
-        "Number of nanoseconds (not scaled via TimecodeScale) per frame ('frame' in the Matroska sense -- one element put into a (Simple)Block).",
-    },
+        "Number of nanoseconds (not scaled via TimecodeScale) per frame ('frame' in the Matroska sense -- one element put into a (Simple)Block)."
+    }
   ],
   [
     0x6df8,
@@ -2057,8 +2057,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'The maximum cache size required to store referenced frames in and the current frame. 0 means no cache is needed.',
-    },
+        'The maximum cache size required to store referenced frames in and the current frame. 0 means no cache is needed.'
+    }
   ],
   [
     0x6de7,
@@ -2072,8 +2072,8 @@ const schema = new Map([
       webm: false,
       default: 0,
       description:
-        'The minimum number of frames a player should be able to cache during playback. If set to 0, the reference pseudo-cache system is not used.',
-    },
+        'The minimum number of frames a player should be able to cache during playback. If set to 0, the reference pseudo-cache system is not used.'
+    }
   ],
   [
     0x9c,
@@ -2086,8 +2086,8 @@ const schema = new Map([
       minver: 1,
       default: 1,
       range: '0-1',
-      description: 'Set if the track may contain blocks using lacing. (1 bit)',
-    },
+      description: 'Set if the track may contain blocks using lacing. (1 bit)'
+    }
   ],
   [
     0x55aa,
@@ -2101,8 +2101,8 @@ const schema = new Map([
       default: 0,
       range: '0-1',
       description:
-        'Set if that track MUST be active during playback. There can be many forced track for a kind (audio, video or subs), the player should select the one which language matches the user preference or the default + forced track. Overlay MAY happen between a forced and non-forced track of the same kind. (1 bit)',
-    },
+        'Set if that track MUST be active during playback. There can be many forced track for a kind (audio, video or subs), the player should select the one which language matches the user preference or the default + forced track. Overlay MAY happen between a forced and non-forced track of the same kind. (1 bit)'
+    }
   ],
   [
     0xb9,
@@ -2116,8 +2116,8 @@ const schema = new Map([
       webm: true,
       default: 1,
       range: '0-1',
-      description: 'Set if the track is usable. (1 bit)',
-    },
+      description: 'Set if the track is usable. (1 bit)'
+    }
   ],
   [
     0x73c5,
@@ -2129,8 +2129,8 @@ const schema = new Map([
       minver: 1,
       range: 'not 0',
       description:
-        'A unique ID to identify the Track. This should be kept the same when making a direct stream copy of the Track to another file.',
-    },
+        'A unique ID to identify the Track. This should be kept the same when making a direct stream copy of the Track to another file.'
+    }
   ],
   [
     0xd7,
@@ -2142,8 +2142,8 @@ const schema = new Map([
       minver: 1,
       range: 'not 0',
       description:
-        'The track number as used in the Block Header (using more than 127 tracks is not encouraged, though the design allows an unlimited number).',
-    },
+        'The track number as used in the Block Header (using more than 127 tracks is not encouraged, though the design allows an unlimited number).'
+    }
   ],
   [
     0xae,
@@ -2154,8 +2154,8 @@ const schema = new Map([
       mandatory: true,
       multiple: true,
       minver: 1,
-      description: 'Describes a track with all elements.',
-    },
+      description: 'Describes a track with all elements.'
+    }
   ],
   [
     0x1654ae6b,
@@ -2166,8 +2166,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       description:
-        'A top-level block of information with many tracks described.',
-    },
+        'A top-level block of information with many tracks described.'
+    }
   ],
   [
     0xaf,
@@ -2177,8 +2177,8 @@ const schema = new Map([
       type: 'b',
       multiple: true,
       webm: false,
-      description: 'Similar to EncryptedBlock Structure)',
-    },
+      description: 'Similar to EncryptedBlock Structure)'
+    }
   ],
   [
     0xca,
@@ -2191,8 +2191,8 @@ const schema = new Map([
       minver: 0,
       webm: false,
       divx: true,
-      description: 'DivX trick track extenstions',
-    },
+      description: 'DivX trick track extenstions'
+    }
   ],
   [
     0xc9,
@@ -2205,8 +2205,8 @@ const schema = new Map([
       minver: 0,
       webm: false,
       divx: true,
-      description: 'DivX trick track extenstions',
-    },
+      description: 'DivX trick track extenstions'
+    }
   ],
   [
     0xc8,
@@ -2218,8 +2218,8 @@ const schema = new Map([
       minver: 0,
       webm: false,
       divx: true,
-      description: 'DivX trick track extenstions',
-    },
+      description: 'DivX trick track extenstions'
+    }
   ],
   [
     0xcf,
@@ -2228,8 +2228,8 @@ const schema = new Map([
       level: 5,
       type: 'u',
       default: 0,
-      description: 'The (scaled) duration to apply to the element.',
-    },
+      description: 'The (scaled) duration to apply to the element.'
+    }
   ],
   [
     0xce,
@@ -2239,8 +2239,8 @@ const schema = new Map([
       level: 5,
       type: 'u',
       default: 0,
-      description: 'The (scaled) delay to apply to the element.',
-    },
+      description: 'The (scaled) delay to apply to the element.'
+    }
   ],
   [
     0xcb,
@@ -2251,8 +2251,8 @@ const schema = new Map([
       type: 'u',
       default: 0,
       description:
-        'The ID of the BlockAdditional element (0 is the main Block).',
-    },
+        'The ID of the BlockAdditional element (0 is the main Block).'
+    }
   ],
   [
     0xcd,
@@ -2263,8 +2263,8 @@ const schema = new Map([
       type: 'u',
       default: 0,
       description:
-        'The number of the frame to generate from this lace with this delay (allow you to generate many frames from the same Block/Frame).',
-    },
+        'The number of the frame to generate from this lace with this delay (allow you to generate many frames from the same Block/Frame).'
+    }
   ],
   [
     0xcc,
@@ -2277,8 +2277,8 @@ const schema = new Map([
       default: 0,
       divx: false,
       description:
-        'The reverse number of the frame in the lace (0 is the last frame, 1 is the next to last, etc). While there are a few files in the wild with this element, it is no longer in use and has been deprecated. Being able to interpret this element is not required for playback.',
-    },
+        'The reverse number of the frame in the lace (0 is the last frame, 1 is the next to last, etc). While there are a few files in the wild with this element, it is no longer in use and has been deprecated. Being able to interpret this element is not required for playback.'
+    }
   ],
   [
     0xe8,
@@ -2290,8 +2290,8 @@ const schema = new Map([
       minver: 1,
       divx: false,
       description:
-        'Contains extra time information about the data contained in the Block. While there are a few files in the wild with this element, it is no longer in use and has been deprecated. Being able to interpret this element is not required for playback.',
-    },
+        'Contains extra time information about the data contained in the Block. While there are a few files in the wild with this element, it is no longer in use and has been deprecated. Being able to interpret this element is not required for playback.'
+    }
   ],
   [
     0x8e,
@@ -2301,8 +2301,8 @@ const schema = new Map([
       type: 'm',
       minver: 1,
       divx: false,
-      description: 'Contains slices description.',
-    },
+      description: 'Contains slices description.'
+    }
   ],
   [
     0x75a2,
@@ -2313,8 +2313,8 @@ const schema = new Map([
       minver: 4,
       webm: true,
       description:
-        'Duration in nanoseconds of the silent data added to the Block (padding at the end of the Block for positive value, at the beginning of the Block for negative value). The duration of DiscardPadding is not calculated in the duration of the TrackEntry and should be discarded during playback.',
-    },
+        'Duration in nanoseconds of the silent data added to the Block (padding at the end of the Block for positive value, at the beginning of the Block for negative value). The duration of DiscardPadding is not calculated in the duration of the TrackEntry and should be discarded during playback.'
+    }
   ],
   [
     0xa4,
@@ -2325,8 +2325,8 @@ const schema = new Map([
       minver: 2,
       webm: false,
       description:
-        'The new codec state to use. Data interpretation is private to the codec. This information should always be referenced by a seek entry.',
-    },
+        'The new codec state to use. Data interpretation is private to the codec. This information should always be referenced by a seek entry.'
+    }
   ],
   [
     0xfd,
@@ -2336,8 +2336,8 @@ const schema = new Map([
       type: 'i',
       webm: false,
       description:
-        'Relative position of the data that should be in position of the virtual block.',
-    },
+        'Relative position of the data that should be in position of the virtual block.'
+    }
   ],
   [
     0xfb,
@@ -2348,8 +2348,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       description:
-        "Timestamp of another frame used as a reference (ie: B or P frame). The timestamp is relative to the block it's attached to.",
-    },
+        "Timestamp of another frame used as a reference (ie: B or P frame). The timestamp is relative to the block it's attached to."
+    }
   ],
   [
     0xfa,
@@ -2363,8 +2363,8 @@ const schema = new Map([
       webm: false,
       default: 0,
       description:
-        'This frame is referenced and has the specified cache priority. In cache only a frame of the same or higher priority can replace this frame. A value of 0 means the frame is not referenced.',
-    },
+        'This frame is referenced and has the specified cache priority. In cache only a frame of the same or higher priority can replace this frame. A value of 0 means the frame is not referenced.'
+    }
   ],
   [
     0x9b,
@@ -2375,8 +2375,8 @@ const schema = new Map([
       minver: 1,
       default: 'TrackDuration',
       description:
-        'The duration of the Block (based on TimecodeScale). This element is mandatory when DefaultDuration is set for the track (but can be omitted as other default values). When not written and with no DefaultDuration, the value is assumed to be the difference between the timestamp of this Block and the timestamp of the next Block in "display" order (not coding order). This element can be useful at the end of a Track (as there is not other Block available), or when there is a break in a track like for subtitle tracks. When set to 0 that means the frame is not a keyframe.',
-    },
+        'The duration of the Block (based on TimecodeScale). This element is mandatory when DefaultDuration is set for the track (but can be omitted as other default values). When not written and with no DefaultDuration, the value is assumed to be the difference between the timestamp of this Block and the timestamp of the next Block in "display" order (not coding order). This element can be useful at the end of a Track (as there is not other Block available), or when there is a break in a track like for subtitle tracks. When set to 0 that means the frame is not a keyframe.'
+    }
   ],
   [
     0xa5,
@@ -2388,8 +2388,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'Interpreted by the codec as it wishes (using the BlockAddID).',
-    },
+        'Interpreted by the codec as it wishes (using the BlockAddID).'
+    }
   ],
   [
     0xee,
@@ -2402,8 +2402,8 @@ const schema = new Map([
       webm: false,
       default: 1,
       range: 'not 0',
-      description: 'An ID to identify the BlockAdditional level.',
-    },
+      description: 'An ID to identify the BlockAdditional level.'
+    }
   ],
   [
     0xa6,
@@ -2415,8 +2415,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       webm: false,
-      description: 'Contain the BlockAdditional and some parameters.',
-    },
+      description: 'Contain the BlockAdditional and some parameters.'
+    }
   ],
   [
     0x75a1,
@@ -2427,8 +2427,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'Contain additional blocks to complete the main one. An EBML parser that has no knowledge of the Block structure could still see and use/skip these data.',
-    },
+        'Contain additional blocks to complete the main one. An EBML parser that has no knowledge of the Block structure could still see and use/skip these data.'
+    }
   ],
   [
     0xa2,
@@ -2438,8 +2438,8 @@ const schema = new Map([
       type: 'b',
       webm: false,
       description:
-        'A Block with no data. It must be stored in the stream at the place the real Block should be in display order. (see Block Virtual)',
-    },
+        'A Block with no data. It must be stored in the stream at the place the real Block should be in display order. (see Block Virtual)'
+    }
   ],
   [
     0xa1,
@@ -2450,8 +2450,8 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       description:
-        'Block containing the actual data to be rendered and a timestamp relative to the Cluster Timecode. (see Block Structure)',
-    },
+        'Block containing the actual data to be rendered and a timestamp relative to the Cluster Timecode. (see Block Structure)'
+    }
   ],
   [
     0xa0,
@@ -2462,8 +2462,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       description:
-        'Basic container of information containing a single Block or BlockVirtual, and information specific to that Block/VirtualBlock.',
-    },
+        'Basic container of information containing a single Block or BlockVirtual, and information specific to that Block/VirtualBlock.'
+    }
   ],
   [
     0xa3,
@@ -2475,8 +2475,8 @@ const schema = new Map([
       minver: 2,
       webm: true,
       divx: true,
-      description: 'Similar to SimpleBlock Structure)',
-    },
+      description: 'Similar to SimpleBlock Structure)'
+    }
   ],
   [
     0xab,
@@ -2487,8 +2487,8 @@ const schema = new Map([
       type: 'u',
       minver: 1,
       description:
-        'Size of the previous Cluster, in octets. Can be useful for backward playing.',
-    },
+        'Size of the previous Cluster, in octets. Can be useful for backward playing.'
+    }
   ],
   [
     0xa7,
@@ -2500,8 +2500,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'The Position of the Cluster in the segment (0 in live broadcast streams). It might help to resynchronise offset on damaged streams.',
-    },
+        'The Position of the Cluster in the segment (0 in live broadcast streams). It might help to resynchronise offset on damaged streams.'
+    }
   ],
   [
     0x58d7,
@@ -2514,8 +2514,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'One of the track number that are not used from now on in the stream. It could change later if not specified as silent in a further Cluster.',
-    },
+        'One of the track number that are not used from now on in the stream. It could change later if not specified as silent in a further Cluster.'
+    }
   ],
   [
     0xe7,
@@ -2527,8 +2527,8 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       description:
-        'Absolute timestamp of the cluster (based on TimecodeScale).',
-    },
+        'Absolute timestamp of the cluster (based on TimecodeScale).'
+    }
   ],
   [
     0x1f43b675,
@@ -2539,8 +2539,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       description:
-        'The lower level element containing the (monolithic) Block structure.',
-    },
+        'The lower level element containing the (monolithic) Block structure.'
+    }
   ],
   [
     0x4d80,
@@ -2550,8 +2550,8 @@ const schema = new Map([
       type: '8',
       mandatory: true,
       minver: 1,
-      description: 'Muxing application or library ("libmatroska-0.4.3").',
-    },
+      description: 'Muxing application or library ("libmatroska-0.4.3").'
+    }
   ],
   [
     0x7ba9,
@@ -2561,8 +2561,8 @@ const schema = new Map([
       type: '8',
       minver: 1,
       webm: false,
-      description: 'General name of the segment.',
-    },
+      description: 'General name of the segment.'
+    }
   ],
   [
     0x2ad7b2,
@@ -2573,8 +2573,8 @@ const schema = new Map([
       mandatory: true,
       minver: 4,
       default: 1000000000,
-      description: 'Timestamp scale numerator, see TimecodeScale.',
-    },
+      description: 'Timestamp scale numerator, see TimecodeScale.'
+    }
   ],
   [
     0x2ad7b1,
@@ -2586,8 +2586,8 @@ const schema = new Map([
       minver: 1,
       default: 1000000,
       description:
-        'Timestamp scale in nanoseconds (1.000.000 means all timestamps in the segment are expressed in milliseconds).',
-    },
+        'Timestamp scale in nanoseconds (1.000.000 means all timestamps in the segment are expressed in milliseconds).'
+    }
   ],
   [
     0x69a5,
@@ -2599,8 +2599,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'The binary value used to represent this segment in the chapter codec data. The format depends on the ChapProcessCodecID used.',
-    },
+        'The binary value used to represent this segment in the chapter codec data. The format depends on the ChapProcessCodecID used.'
+    }
   ],
   [
     0x69bf,
@@ -2612,8 +2612,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'The chapter codec using this ID (0: Matroska Script, 1: DVD-menu).',
-    },
+        'The chapter codec using this ID (0: Matroska Script, 1: DVD-menu).'
+    }
   ],
   [
     0x69fc,
@@ -2625,8 +2625,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        'Specify an edition UID on which this correspondance applies. When not specified, it means for all editions found in the segment.',
-    },
+        'Specify an edition UID on which this correspondance applies. When not specified, it means for all editions found in the segment.'
+    }
   ],
   [
     0x3e83bb,
@@ -2636,8 +2636,8 @@ const schema = new Map([
       type: '8',
       minver: 1,
       webm: false,
-      description: 'An escaped filename corresponding to the next segment.',
-    },
+      description: 'An escaped filename corresponding to the next segment.'
+    }
   ],
   [
     0x3eb923,
@@ -2649,8 +2649,8 @@ const schema = new Map([
       webm: false,
       bytesize: 16,
       description:
-        'A unique ID to identify the next chained segment (128 bits).',
-    },
+        'A unique ID to identify the next chained segment (128 bits).'
+    }
   ],
   [
     0x3c83ab,
@@ -2660,8 +2660,8 @@ const schema = new Map([
       type: '8',
       minver: 1,
       webm: false,
-      description: 'An escaped filename corresponding to the previous segment.',
-    },
+      description: 'An escaped filename corresponding to the previous segment.'
+    }
   ],
   [
     0x3cb923,
@@ -2673,8 +2673,8 @@ const schema = new Map([
       webm: false,
       bytesize: 16,
       description:
-        'A unique ID to identify the previous chained segment (128 bits).',
-    },
+        'A unique ID to identify the previous chained segment (128 bits).'
+    }
   ],
   [
     0x73a4,
@@ -2687,8 +2687,8 @@ const schema = new Map([
       range: 'not 0',
       bytesize: 16,
       description:
-        'A randomly generated unique ID to identify the current segment between many others (128 bits).',
-    },
+        'A randomly generated unique ID to identify the current segment between many others (128 bits).'
+    }
   ],
   [
     0x1549a966,
@@ -2700,8 +2700,8 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       description:
-        'Contains miscellaneous general information and statistics on the file.',
-    },
+        'Contains miscellaneous general information and statistics on the file.'
+    }
   ],
   [
     0x53ac,
@@ -2712,8 +2712,8 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       description:
-        'The position of the element in the segment in octets (0 = first level 1 element).',
-    },
+        'The position of the element in the segment in octets (0 = first level 1 element).'
+    }
   ],
   [
     0x53ab,
@@ -2723,8 +2723,8 @@ const schema = new Map([
       type: 'b',
       mandatory: true,
       minver: 1,
-      description: 'The binary ID corresponding to the element name.',
-    },
+      description: 'The binary ID corresponding to the element name.'
+    }
   ],
   [
     0x4dbb,
@@ -2736,8 +2736,8 @@ const schema = new Map([
       mandatory: true,
       multiple: true,
       minver: 1,
-      description: 'Contains a single seek entry to an EBML element.',
-    },
+      description: 'Contains a single seek entry to an EBML element.'
+    }
   ],
   [
     0x114d9b74,
@@ -2748,8 +2748,8 @@ const schema = new Map([
       type: 'm',
       multiple: true,
       minver: 1,
-      description: 'Contains the position of other level 1 elements.',
-    },
+      description: 'Contains the position of other level 1 elements.'
+    }
   ],
   [
     0x7e7b,
@@ -2761,8 +2761,8 @@ const schema = new Map([
       webm: false,
       i: 'Cluster|Block|BlockAdditional',
       description:
-        'A list consists of a number of consecutive elements that represent one case where data is used in signature. Ex:  means that the BlockAdditional of all Blocks in all Clusters is used for encryption.',
-    },
+        'A list consists of a number of consecutive elements that represent one case where data is used in signature. Ex:  means that the BlockAdditional of all Blocks in all Clusters is used for encryption.'
+    }
   ],
   [
     0x7e5b,
@@ -2772,8 +2772,8 @@ const schema = new Map([
       type: 'm',
       webm: false,
       description:
-        'Contains elements that will be used to compute the signature.',
-    },
+        'Contains elements that will be used to compute the signature.'
+    }
   ],
   [
     0x7eb5,
@@ -2782,8 +2782,8 @@ const schema = new Map([
       level: 1,
       type: 'b',
       webm: false,
-      description: 'The signature of the data (until a new.',
-    },
+      description: 'The signature of the data (until a new.'
+    }
   ],
   [
     0x7ea5,
@@ -2793,8 +2793,8 @@ const schema = new Map([
       type: 'b',
       webm: false,
       description:
-        'The public key to use with the algorithm (in the case of a PKI-based signature).',
-    },
+        'The public key to use with the algorithm (in the case of a PKI-based signature).'
+    }
   ],
   [
     0x7e9a,
@@ -2803,8 +2803,8 @@ const schema = new Map([
       level: 1,
       type: 'u',
       webm: false,
-      description: 'Hash algorithm used (1=SHA1-160, 2=MD5).',
-    },
+      description: 'Hash algorithm used (1=SHA1-160, 2=MD5).'
+    }
   ],
   [
     0x7e8a,
@@ -2813,8 +2813,8 @@ const schema = new Map([
       level: 1,
       type: 'u',
       webm: false,
-      description: 'Signature algorithm used (1=RSA, 2=elliptic).',
-    },
+      description: 'Signature algorithm used (1=RSA, 2=elliptic).'
+    }
   ],
   [
     0x1b538667,
@@ -2824,8 +2824,8 @@ const schema = new Map([
       type: 'm',
       multiple: true,
       webm: false,
-      description: 'Contain signature of some (coming) elements in the stream.',
-    },
+      description: 'Contain signature of some (coming) elements in the stream.'
+    }
   ],
   [
     0xbf,
@@ -2836,8 +2836,8 @@ const schema = new Map([
       minver: 1,
       webm: false,
       description:
-        "The CRC is computed on all the data of the Master element it's in. The CRC element should be the first in it's parent master for easier reading. All level 1 elements should include a CRC-32. The CRC in use is the IEEE CRC32 Little Endian",
-    },
+        "The CRC is computed on all the data of the Master element it's in. The CRC element should be the first in it's parent master for easier reading. All level 1 elements should include a CRC-32. The CRC in use is the IEEE CRC32 Little Endian"
+    }
   ],
   [
     0xec,
@@ -2847,8 +2847,8 @@ const schema = new Map([
       type: 'b',
       minver: 1,
       description:
-        'Used to void damaged data, to avoid unexpected behaviors when using damaged data. The content is discarded. Also used to reserve space in a sub-element for later use.',
-    },
+        'Used to void damaged data, to avoid unexpected behaviors when using damaged data. The content is discarded. Also used to reserve space in a sub-element for later use.'
+    }
   ],
   [
     0x42f3,
@@ -2860,8 +2860,8 @@ const schema = new Map([
       default: 8,
       minver: 1,
       description:
-        "The maximum length of the sizes you'll find in this file (8 or less in Matroska). This does not override the element size indicated at the beginning of an element. Elements that have an indicated size which is larger than what is allowed by EBMLMaxSizeLength shall be considered invalid.",
-    },
+        "The maximum length of the sizes you'll find in this file (8 or less in Matroska). This does not override the element size indicated at the beginning of an element. Elements that have an indicated size which is larger than what is allowed by EBMLMaxSizeLength shall be considered invalid."
+    }
   ],
   [
     0x42f2,
@@ -2873,8 +2873,8 @@ const schema = new Map([
       default: 4,
       minver: 1,
       description:
-        "The maximum length of the IDs you'll find in this file (4 or less in Matroska).",
-    },
+        "The maximum length of the IDs you'll find in this file (4 or less in Matroska)."
+    }
   ],
   [
     0x42f7,
@@ -2886,8 +2886,8 @@ const schema = new Map([
       default: 1,
       minver: 1,
       description:
-        'The minimum EBML version a parser has to support to read this file.',
-    },
+        'The minimum EBML version a parser has to support to read this file.'
+    }
   ],
   [
     0x1a45dfa3,
@@ -2899,9 +2899,9 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       description:
-        'Set the EBML characteristics of the data to follow. Each EBML document has to start with this.',
-    },
-  ],
-]);
+        'Set the EBML characteristics of the data to follow. Each EBML document has to start with this.'
+    }
+  ]
+])
 
-export default schema;
+export default schema

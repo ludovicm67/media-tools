@@ -1,30 +1,31 @@
 {
-  "name": "audio-recorder",
+  "name": "media-tools",
+  "private": true,
   "version": "0.0.0",
-  "description": "Audio recording app",
-  "main": "index.js",
+  "description": "Root package to handle all media-tools packages",
   "type": "module",
-  "bin": "cli/index.js",
   "scripts": {
-    "start": "run-p dev server",
-    "server": "node --watch server.js",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint . --quiet --ignore-path .gitignore",
+    "test": "npm run test --workspaces",
+    "release": "changeset publish",
+    "prepare": "husky install"
   },
-  "author": "",
-  "license": "ISC",
+  "workspaces": [
+    "packages/*"
+  ],
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix --quiet"
+    ]
+  },
   "devDependencies": {
-    "npm-run-all": "^4.1.5",
-    "vite": "^4.4.11"
-  },
-  "dependencies": {
-    "@fastify/cors": "^8.4.0",
-    "@fastify/multipart": "^8.0.0",
-    "buffer": "^6.0.3",
-    "commander": "^11.1.0",
-    "fastify": "^4.24.3",
-    "ulid": "^2.3.0"
+    "@changesets/cli": "^2.26.2",
+    "eslint": "^8.53.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-n": "^16.3.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.1.0"
   }
 }

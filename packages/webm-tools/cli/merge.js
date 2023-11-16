@@ -1,7 +1,7 @@
 // @ts-check
-import { writeFileSync } from 'node:fs';
-import { readFile } from 'node:fs/promises';
-import { decode, resetDecoder, displayDecodedElements } from '../lib/ebml.js';
+import { writeFileSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
+import { decode, resetDecoder, displayDecodedElements } from '../lib/ebml.js'
 
 /**
  * Merge WebM chunks together.
@@ -13,51 +13,51 @@ import { decode, resetDecoder, displayDecodedElements } from '../lib/ebml.js';
  * @param {Record<string, any>} options Options from the CLI.
  */
 const merge = async (firstChunkPath, secondChunkPath, otherChunksPaths, options) => {
-  const debug = options.debug;
-  const outputPath = options.out;
+  const debug = options.debug
+  const outputPath = options.out
 
   if (debug) {
-    console.info('Debug mode enabled');
-    console.log(`> First chunk path: ${firstChunkPath}`);
-    console.log(`> Second chunk path: ${secondChunkPath}`);
-    console.log(`> Other chunks paths: ${otherChunksPaths}`);
-    console.log(`> Output path: ${outputPath}`);
-    console.log('');
+    console.info('Debug mode enabled')
+    console.log(`> First chunk path: ${firstChunkPath}`)
+    console.log(`> Second chunk path: ${secondChunkPath}`)
+    console.log(`> Other chunks paths: ${otherChunksPaths}`)
+    console.log(`> Output path: ${outputPath}`)
+    console.log('')
   }
 
-  const firstChunk = await readFile(firstChunkPath);
+  const firstChunk = await readFile(firstChunkPath)
   resetDecoder({
-    debug: false,
-  });
-  const { decoded } = decode(firstChunk);
+    debug: false
+  })
+  const { decoded } = decode(firstChunk)
   if (debug) {
-    console.info("\nDecoded first chunk:");
-    displayDecodedElements(decoded);
-    console.log('');
+    console.info('\nDecoded first chunk:')
+    displayDecodedElements(decoded)
+    console.log('')
   }
 
-  const otherChunks = [];
-  const secondChunk = await readFile(secondChunkPath);
-  otherChunks.push(secondChunk);
+  const otherChunks = []
+  const secondChunk = await readFile(secondChunkPath)
+  otherChunks.push(secondChunk)
   for (const otherChunkPath of otherChunksPaths) {
-    const otherChunk = await readFile(otherChunkPath);
-    otherChunks.push(otherChunk);
+    const otherChunk = await readFile(otherChunkPath)
+    otherChunks.push(otherChunk)
   }
 
-  const newFile = Buffer.concat([firstChunk, ...otherChunks]);
+  const newFile = Buffer.concat([firstChunk, ...otherChunks])
   resetDecoder({
-    debug: false,
-  });
-  const { decoded: newFileDecoded } = decode(newFile);
+    debug: false
+  })
+  const { decoded: newFileDecoded } = decode(newFile)
   if (debug) {
-    console.info("\nDecoded merged chunk (if it looks great, the merge was sucessful):");
-    displayDecodedElements(newFileDecoded);
-    console.log('');
+    console.info('\nDecoded merged chunk (if it looks great, the merge was sucessful):')
+    displayDecodedElements(newFileDecoded)
+    console.log('')
 
-    console.info(`\nWriting merged chunk to file: '${outputPath}'`);
+    console.info(`\nWriting merged chunk to file: '${outputPath}'`)
   }
 
-  writeFileSync(outputPath, newFile);
+  writeFileSync(outputPath, newFile)
 }
 
-export default merge;
+export default merge

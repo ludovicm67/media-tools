@@ -1,15 +1,13 @@
 // @ts-check
-import { Command } from 'commander';
-import info from '../package.json' assert { type: 'json' };
-import fix from './fix.js';
-import merge from './merge.js';
+import { Command } from 'commander'
+import fix from './fix.js'
+import merge from './merge.js'
 
-const program = new Command();
+const program = new Command()
 
 program
   .name('webm-tools')
   .description('A set of tools for working with WebM files')
-  .version(info.version);
 
 program.command('fix')
   .description('Fix a WebM file using the previous chunk')
@@ -17,7 +15,7 @@ program.command('fix')
   .argument('<broken chunk>', 'path to the WebM file to fix (broken chunk)')
   .requiredOption('-o, --out <output path>', 'path to export the fixed WebM chunk to')
   .option('--debug', 'show debug information')
-  .action(fix);
+  .action(fix)
 
 program.command('merge')
   .description('Merge WebM chunks together. The first chunk should be a sane chunk.')
@@ -26,6 +24,6 @@ program.command('merge')
   .argument('[other chunks...]', 'other chunks to merge together')
   .requiredOption('-o, --out <output path>', 'path to export the fixed WebM chunk to')
   .option('--debug', 'show debug information')
-  .action(merge);
+  .action(merge)
 
-program.parse(process.argv);
+program.parse(process.argv)
