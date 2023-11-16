@@ -6,8 +6,8 @@
   "type": "module",
   "bin": "cli/index.js",
   "scripts": {
-    "build": "",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepack": "",
+    "test": "true"
   },
   "repository": {
     "type": "git",
