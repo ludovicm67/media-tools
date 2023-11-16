@@ -6,7 +6,10 @@
   "type": "module",
   "bin": "cli/index.js",
   "scripts": {
-    "prepack": "",
+    "typings": "tsc",
+    "clean": "rimraf *.tgz **/*.d.ts*",
+    "prepack": "npm run clean && npm run typings",
+    "postpublish": "npm run clean",
     "test": "true"
   },
   "repository": {
@@ -25,5 +28,10 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.0",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.2.2"
   }
 }

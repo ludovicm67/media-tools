@@ -8,3 +8,6 @@ parserOptions:
   sourceType: module
 rules:
   no-console: off
+ignorePatterns:
+  - "*.d.ts"
+  - "*.d.ts.map"
