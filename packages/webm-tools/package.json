@@ -1,0 +1,29 @@
+{
+  "name": "@ludovicm67/webm-tools",
+  "version": "0.0.0",
+  "description": "WebM tools",
+  "main": "index.js",
+  "type": "module",
+  "bin": "cli/index.js",
+  "scripts": {
+    "build": "",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ludovicm67/media-tools.git",
+    "directory": "packages/webm-tools"
+  },
+  "author": {
+    "name": "Ludovic Muller",
+    "url": "https://ludovic-muller.fr/"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "commander": "^11.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
