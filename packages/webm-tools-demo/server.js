@@ -20,7 +20,7 @@ await server.register(fastifyMultipart, {
 })
 
 // Health check route
-server.get('/healthz', async (request, reply) => {
+server.get('/healthz', async (_request, reply) => {
   reply.send('OK')
 })
 
