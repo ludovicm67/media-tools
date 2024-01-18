@@ -1,6 +1,6 @@
 {
   "name": "@ludovicm67/media-tools",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Media tools",
   "main": "index.js",
   "type": "module",
