@@ -22,16 +22,21 @@
     "name": "Ludovic Muller",
     "url": "https://ludovic-muller.fr/"
   },
+  "keywords": [
+    "audio",
+    "recording",
+    "demo"
+  ],
   "license": "MIT",
-  "devDependencies": {
-    "npm-run-all": "^4.1.5",
-    "vite": "^5.0.11"
-  },
   "dependencies": {
-    "@fastify/cors": "^8.4.1",
-    "@fastify/multipart": "^8.0.0",
+    "@fastify/cors": "^8.5.0",
+    "@fastify/multipart": "^8.1.0",
     "@ludovicm67/webm-tools": "^0.1.0",
     "fastify": "^4.25.2",
     "ulid": "^2.3.0"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "vite": "^5.0.11"
   }
 }
