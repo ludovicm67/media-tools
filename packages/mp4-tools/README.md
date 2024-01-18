@@ -19,12 +19,8 @@ MP4 files are structured into several different box types, each serving a specif
 - **`moov` (Movie Box):** Contains all metadata about the video, like tracks, duration, etc. It includes sub-boxes:
   - `mvhd` (Movie Header Box): Global information about the movie.
   - `trak` (Track Box): A container for a single track (audio, video, etc.), with sub-boxes like `tkhd` (Track Header) and `mdia` (Media).
+- **`moof` (Movie Fragment Box):** Contains all metadata about a single fragment of the movie, with sub-boxes like `mfhd` (Movie Fragment Header) and `traf` (Track Fragment).
 - **`mdat` (Media Data Box):** Contains the actual media data, such as video frames and audio samples.
-- **`mdia` (Media Box):** Located within the `trak` box, it includes media-specific information with sub-boxes like `mdhd` (Media Header), `hdlr` (Handler Reference), and `minf` (Media Information).
-- **`minf` (Media Information Box):** Provides detailed information about the media data with sub-boxes like `vmhd`, `smhd`, `hmhd`, `nmhd` for headers, and `dinf` (Data Information) pointing to the media data.
-- **`stbl` (Sample Table Box):** A sub-box of `minf`, it contains time and data indexing of the media. Key sub-boxes include `stsd` (Sample Description), `stts` (Decoding Time to Sample), `stsc` (Sample to Chunk), `stsz` (Sample Size), and `stco` (Chunk Offset).
-- **`udta` (User Data Box):** An optional box containing user-defined data such as metadata tags.
-- **`stsd` (Sample Descriptions Box):** Found within `stbl`, it provides detailed information about each sample in the media stream.
 
 ## Command line tool
 
