@@ -31,6 +31,9 @@ These options offer different trade-offs in terms of data management and resourc
 npm install
 # Start the demo: client and server
 npm start
+
+# If you want to support transcriptions, you can start a Whisper instance
+docker compose up -d
 ```
 
 Then open http://localhost:5173/ in your browser.
