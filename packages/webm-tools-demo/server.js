@@ -27,14 +27,19 @@ server.get('/healthz', async (request, reply) => {
 server.post('/transcribe/:userId', async (request, reply) => {
   const { userId } = request.params
   const data = await request.file()
-  const filename = `records/${userId}-${ulid()}.webm`
+  const baseFileName = `records/${userId}-${ulid()}`
+  let extension = 'webm'
+  if (data.mimetype.toLocaleLowerCase().includes('mp4')) {
+    extension = 'mp4'
+  }
+  const filename = `${baseFileName}.${extension}`
   await pipeline(data.file, createWriteStream(filename))
 
   const fileContent = await readFile(filename)
-  const blob = new Blob([fileContent], { type: 'audio/webm' })
+  const blob = new Blob([fileContent], { type: `audio/${extension}` })
 
   const body = new FormData()
-  body.append('audio_file', blob, 'audio.webm')
+  body.append('audio_file', blob, `audio.${extension}`)
 
   const transcriptionRequest = await fetch('http://localhost:9000/asr?task=transcribe&encode=true&output=txt', {
     method: 'POST',
@@ -52,7 +57,12 @@ server.post('/transcribe/:userId', async (request, reply) => {
 server.post('/audio/:userId', async (request, reply) => {
   const { userId } = request.params
   const data = await request.file()
-  const filename = `records/${userId}-${ulid()}.webm`
+  const baseFileName = `records/${userId}-${ulid()}`
+  let extension = 'webm'
+  if (data.mimetype.toLocaleLowerCase().includes('mp4')) {
+    extension = 'mp4'
+  }
+  const filename = `${baseFileName}.${extension}`
   await pipeline(data.file, createWriteStream(filename))
   return reply.send('OK')
 })

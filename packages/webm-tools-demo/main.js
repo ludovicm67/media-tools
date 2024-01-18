@@ -22,6 +22,11 @@ let recordingInterval = null
 let audioChunks = []
 let previousChunk = Buffer.from([])
 
+// Check if the browser supports WebM format ; else we try to fallback to MP4
+const isMp4 = !MediaRecorder.isTypeSupported('audio/webm')
+const mimeType = isMp4 ? 'audio/mp4' : 'audio/webm'
+const extension = isMp4 ? 'mp4' : 'webm'
+
 // HTML elements from the page
 const startBtn = /** @type {HTMLButtonElement} */ (document.getElementById('startBtn'))
 const stopBtn = /** @type {HTMLButtonElement} */ (document.getElementById('stopBtn'))
@@ -49,23 +54,32 @@ const handleSendAudio = async () => {
   }
 
   // Get a Buffer from the audio chunks
-  const audioBlob = new Blob(audioChunks, { type: 'audio/webm' })
-  const audioBuffer = await utils.blobToArrayBuffer(audioBlob)
+  const audioBlob = new Blob(audioChunks, { type: mimeType })
 
-  const concatBuffer = Buffer.concat([previousChunk, audioBuffer])
+  let audioToSend
 
-  // Decode the audio buffer
-  ebml.resetDecoder({
-    debug: false
-  })
-  const { decoded, headerBuffer, lastStartBuffer } = ebml.decode(concatBuffer)
-  previousChunk = Buffer.concat([headerBuffer, lastStartBuffer])
-  ebml.displayDecodedElements(decoded)
+  if (isMp4) {
+    // MP4 format
+    audioToSend = audioBlob
+  } else {
+    // WebM format
+    const audioBuffer = await utils.blobToArrayBuffer(audioBlob)
 
-  const audioToSend = new Blob([concatBuffer], { type: 'audio/webm' })
+    const concatBuffer = Buffer.concat([previousChunk, audioBuffer])
+
+    // Decode the audio buffer
+    ebml.resetDecoder({
+      debug: false
+    })
+    const { decoded, headerBuffer, lastStartBuffer } = ebml.decode(concatBuffer)
+    previousChunk = Buffer.concat([headerBuffer, lastStartBuffer])
+    ebml.displayDecodedElements(decoded)
+
+    audioToSend = new Blob([concatBuffer], { type: mimeType })
+  }
 
   const body = new FormData()
-  body.append('audio', audioToSend, 'audio.webm')
+  body.append('audio', audioToSend, `audio.${extension}`)
   const apiCall = enableTranscriptionsElement.checked ? 'transcribe' : 'audio'
   const response = await fetch(`http://localhost:3000/${apiCall}/${userId}`, {
     method: 'POST',
@@ -121,7 +135,7 @@ const handleStartBtnClick = async () => {
   handleAudioLevel(stream)
 
   mediaRecorder = new MediaRecorder(stream, {
-    mimeType: 'audio/webm'
+    mimeType
   })
   mediaRecorder.addEventListener('dataavailable', (e) => {
     audioChunks.push(e.data)
