@@ -1,5 +1,13 @@
 # @ludovicm67/webm-tools
 
+## 0.2.1
+
+### Patch Changes
+
+- c943838: Include types
+- Updated dependencies [c943838]
+  - @ludovicm67/media-tools-utils@0.1.1
+
 ## 0.2.0
 
 ### Minor Changes
