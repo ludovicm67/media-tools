@@ -1,5 +1,5 @@
 {
-  "name": "@ludovicm67/audio-tools-demo",
+  "name": "@ludovicm67/media-tools-demo",
   "private": true,
   "version": "0.0.0",
   "description": "Audio recording demo app",
@@ -16,7 +16,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ludovicm67/media-tools.git",
-    "directory": "packages/audio-tools-demo"
+    "directory": "packages/media-tools-demo"
   },
   "author": {
     "name": "Ludovic Muller",
