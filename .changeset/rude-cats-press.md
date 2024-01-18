@@ -1,5 +1,5 @@
 ---
-"@ludovicm67/mp4-tools": major
+"@ludovicm67/mp4-tools": minor
 ---
 
 Initial release
