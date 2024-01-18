@@ -1,0 +1,40 @@
+{
+  "name": "@ludovicm67/media-tools-utils",
+  "version": "0.0.0",
+  "description": "Media tools utils",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "typings": "tsc",
+    "clean": "rimraf *.tgz **/*.d.ts*",
+    "prepack": "npm run clean && npm run typings",
+    "postpublish": "npm run clean",
+    "test": "true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ludovicm67/media-tools.git",
+    "directory": "packages/media-tools-utils"
+  },
+  "author": {
+    "name": "Ludovic Muller",
+    "url": "https://ludovic-muller.fr/"
+  },
+  "keywords": [
+    "media",
+    "tools",
+    "utils"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "buffer": "^6.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3"
+  }
+}
