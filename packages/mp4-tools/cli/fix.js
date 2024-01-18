@@ -1,7 +1,8 @@
 // @ts-check
+
 import { writeFileSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
-import { buildFile, parse } from '../lib/mp4.js'
+import { buildFile, parse } from '../index.js'
 
 /**
  * Fix a MP4 file using the previous chunk.
@@ -30,7 +31,6 @@ const fix = async (prevChunkPath, brokenChunkPath, options) => {
   const parsedPrevChunk = parse(prevChunk)
   const parsedBrokenChunk = parse(brokenChunk)
 
-  console.log('Parsed content:', parsedPrevChunk)
   const { filedata, rest } = buildFile(parsedBrokenChunk, parsedPrevChunk)
 
   if (debug) {

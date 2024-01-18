@@ -7,7 +7,7 @@
   "bin": "cli/index.js",
   "scripts": {
     "typings": "tsc",
-    "clean": "rimraf *.tgz **/*.d.ts*",
+    "clean": "rimraf *.tgz *.d.ts* **/*.d.ts*",
     "prepack": "npm run clean && npm run typings",
     "postpublish": "npm run clean",
     "test": "true"
@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "buffer": "^6.0.3",
+    "@ludovicm67/media-tools-utils": "^0.0.0",
     "commander": "^11.1.0"
   },
   "publishConfig": {

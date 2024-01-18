@@ -1,5 +1,6 @@
 // @ts-check
-import { Buffer } from 'buffer/index.js'
+
+import { Buffer } from '@ludovicm67/media-tools-utils'
 import schema from './ebml-schema.js'
 
 // Logic and some parts from: https://github.com/node-ebml/node-ebml

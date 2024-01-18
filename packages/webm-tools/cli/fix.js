@@ -1,4 +1,5 @@
 // @ts-check
+
 import { writeFileSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { decode, resetDecoder, displayDecodedElements } from '../lib/ebml.js'

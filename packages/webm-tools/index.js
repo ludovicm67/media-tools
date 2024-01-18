@@ -1,10 +1,7 @@
 // @ts-check
 
-// Common types, that can be useful to expose
-export { Buffer } from 'buffer/index.js'
-
-// Some useful utilities
-export * as utils from './lib/utils.js'
+// Export some utils
+export { Buffer, utils } from '@ludovicm67/media-tools-utils'
 
 // EBML tools
 export { default as ebmlSchema } from './lib/ebml-schema.js'

@@ -1,5 +1,6 @@
 // @ts-check
-import { Buffer } from 'buffer/index.js'
+
+export { Buffer } from 'buffer/index.js'
 
 /**
  * Convert a Blob to a Buffer.
@@ -11,4 +12,8 @@ export const blobToArrayBuffer = async (blob) => {
   const arrayBuffer = await blob.arrayBuffer()
   const buffer = Buffer.from(arrayBuffer)
   return buffer
+}
+
+export const utils = {
+  blobToArrayBuffer
 }
