@@ -14,6 +14,8 @@ The following is also exposed:
 - `utils.blobToArrayBuffer`: a function to convert a Blob to an ArrayBuffer
 - `mp4`: MP4 tools
 - `webm`: WebM tools
+- `fix`: the function to use to fix a chunk by using the previous one
+- `MediaTypes`: an enum with the different media types
 
 ## Angular
 

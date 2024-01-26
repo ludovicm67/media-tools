@@ -10,6 +10,7 @@ The following is exposed:
 
 - `Buffer`: Buffer that works on both Node.js and browsers
 - `utils.blobToArrayBuffer`: a function to convert a Blob to an ArrayBuffer
+- `fix`: the function to use to fix a chunk by using the previous one
 
 ## MP4 structure
 

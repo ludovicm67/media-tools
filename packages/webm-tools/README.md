@@ -15,6 +15,7 @@ The following is exposed:
   - `resetDecoder`: reset the decoder state
   - `decode`: decode an EBML element
   - `displayDecodedElements`: display the decoded elements using `console.log`
+- `fix`: the function to use to fix a chunk by using the previous one
 
 ## How the chunks are fixed
 
