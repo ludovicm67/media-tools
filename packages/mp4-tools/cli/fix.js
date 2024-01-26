@@ -29,7 +29,9 @@ const fix = async (prevChunkPath, brokenChunkPath, options) => {
   const brokenChunk = await readFile(brokenChunkPath)
 
   const parsedPrevChunk = parse(prevChunk)
-  const parsedBrokenChunk = parse(brokenChunk)
+  const prevChunkRest = parsedPrevChunk.rest || Buffer.alloc(0)
+  const brokenChunkMerge = Buffer.concat([prevChunkRest, brokenChunk])
+  const parsedBrokenChunk = parse(brokenChunkMerge)
 
   const { filedata, rest } = buildFile(parsedBrokenChunk, parsedPrevChunk)
 
