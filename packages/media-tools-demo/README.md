@@ -36,7 +36,9 @@ npm start
 docker compose up -d
 ```
 
-Then open http://localhost:5173/ in your browser.
+Then open https://localhost:5173/ in your browser.
+
+The backend will be available at http://localhost:3000/, and will be proxied here: https://localhost:5173/backend/
 
 Once you start the recording, the audio data will be sent to the backend, and you will be able to get the files in the `records` folder.
 They are named in a way that will allow you to play them in the correct order by sorting them.
