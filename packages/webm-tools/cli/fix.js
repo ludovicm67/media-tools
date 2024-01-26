@@ -2,7 +2,7 @@
 
 import { writeFileSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
-import { decode, resetDecoder, displayDecodedElements } from '../lib/ebml.js'
+import { fix as fixWebMChunk } from '../lib/index.js'
 
 /**
  * Fix a WebM file using the previous chunk.
@@ -28,28 +28,7 @@ const fix = async (prevChunkPath, brokenChunkPath, options) => {
   const prevChunk = await readFile(prevChunkPath)
   const brokenChunk = await readFile(brokenChunkPath)
 
-  resetDecoder({
-    debug: false
-  })
-  const { decoded, headerBuffer, lastStartBuffer } = decode(prevChunk)
-  if (debug) {
-    console.info('\nDecoded previous chunk:')
-    displayDecodedElements(decoded)
-    console.log('')
-  }
-
-  const newFile = Buffer.concat([headerBuffer, lastStartBuffer, brokenChunk])
-  resetDecoder({
-    debug: false
-  })
-  const { decoded: newFileDecoded } = decode(newFile)
-  if (debug) {
-    console.info('\nDecoded fixed chunk:')
-    displayDecodedElements(newFileDecoded)
-    console.log('')
-
-    console.info(`\nWriting fixed chunk to file: '${outputPath}'`)
-  }
+  const newFile = await fixWebMChunk(prevChunk, brokenChunk, { debug })
 
   writeFileSync(outputPath, newFile)
 }
