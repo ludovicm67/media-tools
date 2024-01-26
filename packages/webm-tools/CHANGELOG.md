@@ -1,5 +1,11 @@
 # @ludovicm67/webm-tools
 
+## 0.3.0
+
+### Minor Changes
+
+- 8fe8bb7: Export a `fix` function that can be used to fix a chunk using the previous chunk.
+
 ## 0.2.1
 
 ### Patch Changes
