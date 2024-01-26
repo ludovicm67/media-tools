@@ -68,7 +68,7 @@ server.post('/audio/:userId', async (request, reply) => {
 })
 
 // Run the server!
-server.listen({ port: 3000 }, (err, _address) => {
+server.listen({ port: 3000, host: '0.0.0.0' }, (err, _address) => {
   if (err) {
     // @ts-ignore
     fastify.log.error(err)
