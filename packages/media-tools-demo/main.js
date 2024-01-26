@@ -1,6 +1,6 @@
 // @ts-check
 import { monotonicFactory } from 'ulid/dist/index.js'
-import { Buffer, utils, ebml } from '@ludovicm67/webm-tools'
+import { MediaTypes, fix as mediaToolsChunkFix, utils, Buffer } from '@ludovicm67/media-tools'
 
 const ulid = monotonicFactory()
 
@@ -20,7 +20,7 @@ let audioLevel = 0.0
 let mediaRecorder = null
 let recordingInterval = null
 let audioChunks = []
-let previousChunk = Buffer.from([])
+let previousChunk = null
 
 // Check if the browser supports WebM format ; else we try to fallback to MP4
 const isMp4 = !MediaRecorder.isTypeSupported('audio/webm')
@@ -55,28 +55,18 @@ const handleSendAudio = async () => {
 
   // Get a Buffer from the audio chunks
   const audioBlob = new Blob(audioChunks, { type: mimeType })
+  const audioBuffer = await utils.blobToArrayBuffer(audioBlob)
 
-  let audioToSend
-
-  if (isMp4) {
-    // MP4 format
-    audioToSend = audioBlob
-  } else {
-    // WebM format
-    const audioBuffer = await utils.blobToArrayBuffer(audioBlob)
-
-    const concatBuffer = Buffer.concat([previousChunk, audioBuffer])
-
-    // Decode the audio buffer
-    ebml.resetDecoder({
-      debug: false
+  if (previousChunk) {
+    previousChunk = mediaToolsChunkFix(previousChunk, audioBuffer, {
+      mediaType: isMp4 ? MediaTypes.MP4 : MediaTypes.WEBM,
+      debug: true
     })
-    const { decoded, headerBuffer, lastStartBuffer } = ebml.decode(concatBuffer)
-    previousChunk = Buffer.concat([headerBuffer, lastStartBuffer])
-    ebml.displayDecodedElements(decoded)
-
-    audioToSend = new Blob([concatBuffer], { type: mimeType })
+  } else {
+    previousChunk = audioBuffer
   }
+
+  const audioToSend = new Blob([previousChunk], { type: mimeType })
 
   const body = new FormData()
   body.append('audio', audioToSend, `audio.${extension}`)

@@ -12,7 +12,7 @@ import { readBoxSize, readBoxType } from './base.js'
 /**
  * Parse a 'ftyp' box.
  *
- * @param {Buffer} buffer The buffer to read from.
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} buffer The buffer to read from.
  * @param {number} index The index at which to start reading.
  * @param {number} size The size of the box.
  * @returns {FtypBox} The parsed box.
@@ -54,7 +54,7 @@ export const parseFtypBox = (buffer, index, size) => {
 /**
  * Pase a 'moov' box.
  *
- * @param {Buffer} buffer The buffer to read from.
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} buffer The buffer to read from.
  * @param {number} index The index at which to start reading.
  * @param {number} size The size of the box.
  * @returns {MoovBox} The parsed box.
@@ -86,7 +86,7 @@ export const parseMoovBox = (buffer, index, size) => {
 /**
  * Parse a 'mdat' box.
  *
- * @param {Buffer} _buffer The buffer to read from.
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} _buffer The buffer to read from.
  * @param {number} index The index at which to start reading.
  * @param {number} size The size of the box.
  * @returns {MdatBox} The parsed box.
@@ -110,7 +110,7 @@ export const parseMdatBox = (_buffer, index, size) => {
 /**
  * Parse a 'moof' box.
  *
- * @param {Buffer} buffer The buffer to read from.
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} buffer The buffer to read from.
  * @param {number} index The index at which to start reading.
  * @param {number} size The size of the box.
  * @returns {MoofBox} The parsed box.

@@ -25,8 +25,8 @@ const fix = async (prevChunkPath, brokenChunkPath, options) => {
     console.log('')
   }
 
-  const prevChunk = await readFile(prevChunkPath)
-  const brokenChunk = await readFile(brokenChunkPath)
+  const prevChunk = /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (/** @type {unknown} */ (await readFile(prevChunkPath)))
+  const brokenChunk = /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (/** @type {unknown} */ (await readFile(brokenChunkPath)))
 
   const filedata = fixMP4Chunk(prevChunk, brokenChunk, { debug })
 

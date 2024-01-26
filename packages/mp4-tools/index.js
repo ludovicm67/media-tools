@@ -2,19 +2,19 @@
 
 import { readBoxSize, readBoxType } from './lib/base.js'
 
+import { Buffer, utils } from '@ludovicm67/media-tools-utils'
+
 export { readBoxSize, readBoxType } from './lib/base.js'
 export { parseFtypBox, parseMoovBox, parseMoofBox, parseMdatBox } from './lib/boxes.js'
-
-export { Buffer, utils } from '@ludovicm67/media-tools-utils'
 
 /**
  * Internal representation of a MP4 file.
  *
  * @typedef {Object} MP4ParsedFile
- * @property {Buffer} ftyp The ftyp box.
- * @property {Buffer} moov The moov box.
- * @property {Array<{ type: string, data: Buffer }>} chunks The chunks of the file.
- * @property {Buffer} rest The rest of the file.
+ * @property {import('@ludovicm67/media-tools-utils').Buffer} ftyp The ftyp box.
+ * @property {import('@ludovicm67/media-tools-utils').Buffer} moov The moov box.
+ * @property {Array<{ type: string, data: import('@ludovicm67/media-tools-utils').Buffer }>} chunks The chunks of the file.
+ * @property {import('@ludovicm67/media-tools-utils').Buffer} rest The rest of the file.
  */
 
 /**
@@ -24,7 +24,7 @@ export { Buffer, utils } from '@ludovicm67/media-tools-utils'
  *
  * @param {MP4ParsedFile} data The data to build the file from.
  * @param {MP4ParsedFile?} [context={}] The context to use to build the file, usually the previous parsed chunk.
- * @returns {{ filedata: Buffer, rest: Buffer }} The built file and the rest of the file.
+ * @returns {{ filedata: Buffer, rest: import('@ludovicm67/media-tools-utils').Buffer }} The built file and the rest of the file.
  */
 export const buildFile = (data, context) => {
   let { ftyp, moov, chunks, rest } = data
@@ -85,7 +85,7 @@ export const buildFile = (data, context) => {
 /**
  * Parse a MP4 file from a Buffer.
  *
- * @param {Buffer} fileBuffer The file to parse as a Buffer.
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} fileBuffer The file to parse as a Buffer.
  * @returns {MP4ParsedFile} The parsed file.
  */
 export const parse = (fileBuffer) => {
@@ -148,16 +148,16 @@ export const parse = (fileBuffer) => {
  * The previous chunk should be a sane chunk.
  * It should be the one that is right before the broken chunk.
  *
- * @param {Buffer} prevChunk Content of the previous (sane) chunk.
- * @param {Buffer} brokenChunk Content of the broken chunk.
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} prevChunk Content of the previous (sane) chunk.
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} brokenChunk Content of the broken chunk.
  * @param {LibOptions?} options Options.
- * @returns {Buffer} The fixed chunk.
+ * @returns {import('@ludovicm67/media-tools-utils').Buffer} The fixed chunk.
  */
 export const fix = (prevChunk, brokenChunk, options) => {
   const { debug } = options || {}
 
   const parsedPrevChunk = parse(prevChunk)
-  const prevChunkRest = parsedPrevChunk.rest || Buffer.alloc(0)
+  const prevChunkRest = parsedPrevChunk.rest || Buffer.from([])
   const brokenChunkMerge = Buffer.concat([prevChunkRest, brokenChunk])
   const parsedBrokenChunk = parse(brokenChunkMerge)
   const { filedata, rest } = buildFile(parsedBrokenChunk, parsedPrevChunk)
@@ -167,4 +167,9 @@ export const fix = (prevChunk, brokenChunk, options) => {
   }
 
   return filedata
+}
+
+export {
+  utils,
+  Buffer
 }

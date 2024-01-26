@@ -1,7 +1,7 @@
 // @ts-check
 
 import { resetDecoder, decode, displayDecodedElements } from './ebml.js'
-export { Buffer } from '@ludovicm67/media-tools-utils'
+import { Buffer } from '@ludovicm67/media-tools-utils'
 
 /**
  * @typedef {Object} LibOptions
@@ -13,10 +13,10 @@ export { Buffer } from '@ludovicm67/media-tools-utils'
  * The previous chunk should be a sane chunk.
  * It should be the one that is right before the broken chunk.
  *
- * @param {Buffer} prevChunk Content of the previous (sane) chunk.
- * @param {Buffer} brokenChunk Content of the broken chunk.
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} prevChunk Content of the previous (sane) chunk.
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} brokenChunk Content of the broken chunk.
  * @param {LibOptions?} options Options.
- * @returns {Buffer} The fixed chunk.
+ * @returns {import('@ludovicm67/media-tools-utils').Buffer} The fixed chunk.
  */
 export const fix = (prevChunk, brokenChunk, options) => {
   const { debug } = options || {}

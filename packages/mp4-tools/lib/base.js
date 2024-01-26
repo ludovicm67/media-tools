@@ -3,7 +3,7 @@
 /**
  * Read the size of a box from the given buffer.
  *
- * @param {Buffer} buffer The buffer to read from.
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} buffer The buffer to read from.
  * @param {number} index The index at which to start reading.
  * @returns {number} The size of the box.
  */
@@ -25,7 +25,7 @@ export const readBoxSize = (buffer, index) => {
 /**
  * Read the type of a box from the given buffer.
  *
- * @param {Buffer} buffer The buffer to read from.
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} buffer The buffer to read from.
  * @param {number} index The index at which to start reading.
  * @returns {string} The type of the box.
  */
