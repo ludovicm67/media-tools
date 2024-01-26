@@ -5,7 +5,7 @@ export { Buffer } from '@ludovicm67/media-tools-utils'
 
 /**
  * @typedef {Object} LibOptions
- * @property {boolean} debug Whether to enable debug mode or not.
+ * @property {boolean?} debug Whether to enable debug mode or not.
  */
 
 /**
@@ -15,11 +15,11 @@ export { Buffer } from '@ludovicm67/media-tools-utils'
  *
  * @param {Buffer} prevChunk Content of the previous (sane) chunk.
  * @param {Buffer} brokenChunk Content of the broken chunk.
- * @param {LibOptions} options Options.
+ * @param {LibOptions?} options Options.
  * @returns {Buffer} The fixed chunk.
  */
 export const fix = (prevChunk, brokenChunk, options) => {
-  const { debug } = options
+  const { debug } = options || {}
 
   resetDecoder({
     debug: false

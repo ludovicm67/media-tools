@@ -140,7 +140,7 @@ export const parse = (fileBuffer) => {
 
 /**
  * @typedef {Object} LibOptions
- * @property {boolean} debug Whether to enable debug mode or not.
+ * @property {boolean?} debug Whether to enable debug mode or not.
  */
 
 /**
@@ -150,11 +150,11 @@ export const parse = (fileBuffer) => {
  *
  * @param {Buffer} prevChunk Content of the previous (sane) chunk.
  * @param {Buffer} brokenChunk Content of the broken chunk.
- * @param {LibOptions} options Options.
+ * @param {LibOptions?} options Options.
  * @returns {Buffer} The fixed chunk.
  */
 export const fix = (prevChunk, brokenChunk, options) => {
-  const { debug } = options
+  const { debug } = options || {}
 
   const parsedPrevChunk = parse(prevChunk)
   const prevChunkRest = parsedPrevChunk.rest || Buffer.alloc(0)
