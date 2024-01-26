@@ -137,3 +137,34 @@ export const parse = (fileBuffer) => {
 
   return data
 }
+
+/**
+ * @typedef {Object} LibOptions
+ * @property {boolean} debug Whether to enable debug mode or not.
+ */
+
+/**
+ * Fix a MP4 file using the previous chunk.
+ * The previous chunk should be a sane chunk.
+ * It should be the one that is right before the broken chunk.
+ *
+ * @param {Buffer} prevChunk Content of the previous (sane) chunk.
+ * @param {Buffer} brokenChunk Content of the broken chunk.
+ * @param {LibOptions} options Options.
+ * @returns {Buffer} The fixed chunk.
+ */
+export const fix = (prevChunk, brokenChunk, options) => {
+  const { debug } = options
+
+  const parsedPrevChunk = parse(prevChunk)
+  const prevChunkRest = parsedPrevChunk.rest || Buffer.alloc(0)
+  const brokenChunkMerge = Buffer.concat([prevChunkRest, brokenChunk])
+  const parsedBrokenChunk = parse(brokenChunkMerge)
+  const { filedata, rest } = buildFile(parsedBrokenChunk, parsedPrevChunk)
+
+  if (debug) {
+    console.log('Rest:', rest)
+  }
+
+  return filedata
+}

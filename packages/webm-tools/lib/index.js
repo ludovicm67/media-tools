@@ -16,8 +16,9 @@ export { Buffer } from '@ludovicm67/media-tools-utils'
  * @param {Buffer} prevChunk Content of the previous (sane) chunk.
  * @param {Buffer} brokenChunk Content of the broken chunk.
  * @param {LibOptions} options Options.
+ * @returns {Buffer} The fixed chunk.
  */
-export const fix = async (prevChunk, brokenChunk, options) => {
+export const fix = (prevChunk, brokenChunk, options) => {
   const { debug } = options
 
   resetDecoder({

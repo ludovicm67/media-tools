@@ -2,7 +2,7 @@
 
 import { writeFileSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
-import { buildFile, parse } from '../index.js'
+import { fix as fixMP4Chunk } from '../index.js'
 
 /**
  * Fix a MP4 file using the previous chunk.
@@ -28,15 +28,9 @@ const fix = async (prevChunkPath, brokenChunkPath, options) => {
   const prevChunk = await readFile(prevChunkPath)
   const brokenChunk = await readFile(brokenChunkPath)
 
-  const parsedPrevChunk = parse(prevChunk)
-  const prevChunkRest = parsedPrevChunk.rest || Buffer.alloc(0)
-  const brokenChunkMerge = Buffer.concat([prevChunkRest, brokenChunk])
-  const parsedBrokenChunk = parse(brokenChunkMerge)
-
-  const { filedata, rest } = buildFile(parsedBrokenChunk, parsedPrevChunk)
+  const filedata = fixMP4Chunk(prevChunk, brokenChunk, { debug })
 
   if (debug) {
-    console.log('Rest:', rest)
     console.info(`\nWriting fixed chunk to file: '${outputPath}'`)
   }
 

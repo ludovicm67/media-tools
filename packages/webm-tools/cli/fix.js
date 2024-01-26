@@ -28,7 +28,7 @@ const fix = async (prevChunkPath, brokenChunkPath, options) => {
   const prevChunk = await readFile(prevChunkPath)
   const brokenChunk = await readFile(brokenChunkPath)
 
-  const newFile = await fixWebMChunk(prevChunk, brokenChunk, { debug })
+  const newFile = fixWebMChunk(prevChunk, brokenChunk, { debug })
 
   writeFileSync(outputPath, newFile)
 }
