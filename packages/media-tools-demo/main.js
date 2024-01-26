@@ -39,15 +39,16 @@ const getBackendUrl = (originalUrl) => {
   const urlObject = new URL(originalUrl)
   urlObject.hostname = window.location.hostname // Replace the hostname
   urlObject.port = newPort // Set the port to 3000
+  urlObject.protocol = 'http:'
 
   return urlObject.href
 }
 
 /**
-   * Request the audio stream from the user.
-   *
-   * @returns {Promise<MediaStream>} The audio stream.
-   */
+ * Request the audio stream from the user.
+ *
+ * @returns {Promise<MediaStream>} The audio stream.
+ */
 const getAudioStream = async () => {
   const stream = await navigator.mediaDevices.getUserMedia({
     video: false, audio: true
