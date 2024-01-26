@@ -1,6 +1,6 @@
 // @ts-check
 import { monotonicFactory } from 'ulid/dist/index.js'
-import { MediaTypes, fix as mediaToolsChunkFix, utils, Buffer } from '@ludovicm67/media-tools'
+import { MediaTypes, fix as mediaToolsChunkFix, utils } from '@ludovicm67/media-tools'
 
 const ulid = monotonicFactory()
 
@@ -32,17 +32,6 @@ const startBtn = /** @type {HTMLButtonElement} */ (document.getElementById('star
 const stopBtn = /** @type {HTMLButtonElement} */ (document.getElementById('stopBtn'))
 const audioLevelElement = /** @type {HTMLProgressElement} */ (document.getElementById('audioLevel'))
 const enableTranscriptionsElement = /** @type {HTMLInputElement} */ (document.getElementById('enableTranscriptions'))
-
-const getBackendUrl = (originalUrl) => {
-  const newPort = '3000'
-
-  const urlObject = new URL(originalUrl)
-  urlObject.hostname = window.location.hostname // Replace the hostname
-  urlObject.port = newPort // Set the port to 3000
-  urlObject.protocol = 'http:'
-
-  return urlObject.href
-}
 
 /**
  * Request the audio stream from the user.
@@ -82,7 +71,7 @@ const handleSendAudio = async () => {
   const body = new FormData()
   body.append('audio', audioToSend, `audio.${extension}`)
   const apiCall = enableTranscriptionsElement.checked ? 'transcribe' : 'audio'
-  const response = await fetch(`${getBackendUrl('http://localhost:3000/')}${apiCall}/${userId}`, {
+  const response = await fetch(`/backend/${apiCall}/${userId}`, {
     method: 'POST',
     body
   })
@@ -95,12 +84,12 @@ const handleSendAudio = async () => {
 }
 
 /**
-   * Handle audio level from the audio stream.
-   * This will update the global `audioLevel` variable.
-   * This will be running on a loop until `started` is set to false.
-   *
-   * @param {MediaStream} stream The audio stream to analyze.
-   */
+ * Handle audio level from the audio stream.
+ * This will update the global `audioLevel` variable.
+ * This will be running on a loop until `started` is set to false.
+ *
+ * @param {MediaStream} stream The audio stream to analyze.
+ */
 const handleAudioLevel = (stream) => {
   const audioContext = new AudioContext()
   const mediaStreamAudioSourceNode = audioContext.createMediaStreamSource(stream)
@@ -122,12 +111,12 @@ const handleAudioLevel = (stream) => {
 }
 
 /**
-   * Handle the start button click.
-   * This will request the audio stream.
-   * This will start the audio level detection loop.
-   *
-   * @returns {Promise<void>}
-   */
+ * Handle the start button click.
+ * This will request the audio stream.
+ * This will start the audio level detection loop.
+ *
+ * @returns {Promise<void>}
+ */
 const handleStartBtnClick = async () => {
   started = true
   console.log('startBtn clicked')
@@ -149,12 +138,12 @@ const handleStartBtnClick = async () => {
 }
 
 /**
-   * Handle the stop button click.
-   * This will stop the audio level detection loop.
-   * This will also stop the audio stream.
-   *
-   * @returns {Promise<void>}
-   */
+ * Handle the stop button click.
+ * This will stop the audio level detection loop.
+ * This will also stop the audio stream.
+ *
+ * @returns {Promise<void>}
+ */
 const handleStopBtnClick = async () => {
   started = false
   audioLevel = 0.0
@@ -171,7 +160,7 @@ const handleStopBtnClick = async () => {
   }
 
   audioChunks = []
-  previousChunk = Buffer.from([])
+  previousChunk = null
 
   audioLevelElement.value = 0.0
 }

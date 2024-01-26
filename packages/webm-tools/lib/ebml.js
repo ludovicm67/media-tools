@@ -8,7 +8,7 @@ import schema from './ebml-schema.js'
 /**
  * read variable length integer per
  * https://www.matroska.org/technical/specs/index.html#EBML_ex
- * @param {Buffer} buffer containing input
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} buffer containing input
  * @param {Number} [start=0] position in buffer
  * @returns {{length: Number, value: number} | null}  value / length object
  */
@@ -39,7 +39,7 @@ const readVint = (buffer, start = 0) => {
 
 /**
  * get a hex text string from Buff[start,end)
- * @param {Buffer} buff from which to read the string
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} buff from which to read the string
  * @param {Number} [start=0] starting point (default 0)
  * @param {Number} [end=buff.byteLength] ending point (default the whole buffer)
  * @returns {string} the hex string
@@ -53,9 +53,9 @@ const readHexString = (buff, start = 0, end = buff.byteLength) => {
 /**
    * *
    * concatenate two arrays of bytes
-   * @param {Buffer} a1  First array
-   * @param {Buffer} a2  Second array
-   * @returns  {Buffer} concatenated arrays
+   * @param {import('@ludovicm67/media-tools-utils').Buffer} a1  First array
+   * @param {import('@ludovicm67/media-tools-utils').Buffer} a2  Second array
+   * @returns  {import('@ludovicm67/media-tools-utils').Buffer} concatenated arrays
    */
 const concatenate = (a1, a2) => {
   // both null or undefined
@@ -74,7 +74,7 @@ const concatenate = (a1, a2) => {
 
 /**
  * tries to read out a UTF-8 encoded string
- * @param  {Buffer} buff the buffer to attempt to read from
+ * @param  {import('@ludovicm67/media-tools-utils').Buffer} buff the buffer to attempt to read from
  * @return {string|null}      the decoded text, or null if unable to
  */
 const readUtf8 = (buff) => {
@@ -87,7 +87,7 @@ const readUtf8 = (buff) => {
 
 /**
  * get an unsigned number from a buffer
- * @param {Buffer} buff from which to read variable-length unsigned number
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} buff from which to read variable-length unsigned number
  * @returns {number|string} result (in hex for lengths > 6)
  */
 const readUnsigned = (buff) => {
@@ -111,7 +111,7 @@ const readUnsigned = (buff) => {
 
 /**
  * get an signed number from a buffer
- * @param {Buffer} buff from which to read variable-length signed number
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} buff from which to read variable-length signed number
  * @returns {number} result
  */
 const readSigned = (buff) => {
@@ -130,7 +130,7 @@ const readSigned = (buff) => {
 
 /**
  * get an floating-point number from a buffer
- * @param {Buffer} buff from which to read variable-length floating-point number
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} buff from which to read variable-length floating-point number
  * @returns {number} result
  */
 const readFloat = (buff) => {
@@ -147,7 +147,7 @@ const readFloat = (buff) => {
 
 /**
  * get a date from a buffer
- * @param  {Buffer} buff from which to read the date
+ * @param  {import('@ludovicm67/media-tools-utils').Buffer} buff from which to read the date
  * @return {Date}      result
  */
 const readDate = (buff) => {
