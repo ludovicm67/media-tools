@@ -2,13 +2,38 @@
 import { monotonicFactory } from 'ulid/dist/index.js'
 import { MediaTypes, fix as mediaToolsChunkFix, utils } from '@ludovicm67/media-tools'
 
+const initSources = async () => {
+  await navigator.mediaDevices.getUserMedia({ audio: true })
+  const mediaDevices = await navigator.mediaDevices.enumerateDevices()
+  const audioSources = mediaDevices.filter((device) => device.kind === 'audioinput')
+  console.log('audioSources:', audioSources)
+  return audioSources
+}
+
+const audioSourceSelect = /** @type {HTMLSelectElement} */ (document.getElementById('audioSource'))
+const audioSources = await initSources()
+// Remove all options from the select
+while (audioSourceSelect.firstChild) {
+  audioSourceSelect.removeChild(audioSourceSelect.firstChild)
+}
+// Add the new options
+audioSources.forEach(mic => {
+  const option = document.createElement('option')
+  option.value = mic.deviceId
+  option.textContent = mic.label || `Microphone (${mic.deviceId.substring(0, 8)}...)`
+  audioSourceSelect.appendChild(option)
+})
+if (audioSources.length > 0) {
+  audioSourceSelect.disabled = false
+}
+
 const ulid = monotonicFactory()
 
 const userId = ulid()
 console.log(`Current user ID=${userId}`)
 
 // Configurable variables
-const audioDetectionLevel = 0.01
+const audioDetectionLevel = 0.005
 const audioDetectionCounter = 5
 const audioMinDetectionCounter = 2
 const audioRequestDataInterval = 5000
@@ -33,6 +58,8 @@ const stopBtn = /** @type {HTMLButtonElement} */ (document.getElementById('stopB
 const audioLevelElement = /** @type {HTMLProgressElement} */ (document.getElementById('audioLevel'))
 const enableTranscriptionsElement = /** @type {HTMLInputElement} */ (document.getElementById('enableTranscriptions'))
 
+stopBtn.style.display = 'none'
+
 /**
  * Request the audio stream from the user.
  *
@@ -40,7 +67,9 @@ const enableTranscriptionsElement = /** @type {HTMLInputElement} */ (document.ge
  */
 const getAudioStream = async () => {
   const stream = await navigator.mediaDevices.getUserMedia({
-    video: false, audio: true
+    audio: {
+      deviceId: audioSourceSelect.value
+    }
   })
   audioStream = stream
   console.log('got audio stream', audioStream)
@@ -120,6 +149,10 @@ const handleAudioLevel = (stream) => {
 const handleStartBtnClick = async () => {
   started = true
   console.log('startBtn clicked')
+  stopBtn.style.display = 'block'
+  startBtn.style.display = 'none'
+  audioSourceSelect.disabled = true
+  enableTranscriptionsElement.disabled = true
 
   const stream = await getAudioStream()
   handleAudioLevel(stream)
@@ -148,6 +181,8 @@ const handleStopBtnClick = async () => {
   started = false
   audioLevel = 0.0
   console.log('stopBtn clicked')
+  stopBtn.disabled = true
+  stopBtn.innerText = 'Refresh to restart the demo! Recorded files are in the "records" folder.'
 
   if (mediaRecorder) {
     mediaRecorder.stop()

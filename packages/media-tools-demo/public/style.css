@@ -1,6 +1,7 @@
 body {
   background-color: #212121;
   color: #fff;
+  font-family: sans-serif;
 }
 
 .container {
@@ -8,4 +9,34 @@ body {
   text-align: center;
   padding: 20px;
   margin: 0 auto;
+}
+
+#audioSource {
+  display: block;
+  padding: 18px;
+  margin: 24px auto;
+  font-size: 18px;
+}
+
+label[for="enableTranscriptions"] {
+  display: block;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#audioLevel {
+  display: block;
+  padding: 18px;
+  margin: 24px auto;
+  font-size: 18px;
+  width: 100%;
+}
+
+button {
+  display: block;
+  padding: 18px;
+  margin: 24px auto;
+  font-size: 18px;
+  width: 100%;
+  cursor: pointer;
 }
