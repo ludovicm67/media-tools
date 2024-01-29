@@ -29,7 +29,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@fastify/cors": "^8.5.0",
+    "@fastify/cors": "^9.0.0",
     "@fastify/multipart": "^8.1.0",
     "@ludovicm67/webm-tools": "^0.3.0",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
