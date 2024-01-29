@@ -186,12 +186,18 @@ const handleStopBtnClick = async () => {
 
   if (mediaRecorder) {
     mediaRecorder.stop()
-    mediaRecorder = null
   }
 
   if (recordingInterval) {
     clearInterval(recordingInterval)
     recordingInterval = null
+  }
+
+  // Just wait a bit to be sure the last chunk can be sent.
+  await new Promise((resolve) => { setTimeout(resolve, 1000) })
+
+  if (mediaRecorder) {
+    mediaRecorder = null
   }
 
   audioChunks = []
