@@ -109,6 +109,19 @@ const handleSendAudio = async () => {
   console.log('response:', response)
   console.log('text:', text)
   console.log('')
+
+  // Send the audio to the debug endpoint
+  const debugBody = new FormData()
+  debugBody.append('audio', audioBlob, `audio.${extension}`)
+  const debugRequest = await fetch(`/backend/debug/${userId}`, {
+    method: 'POST',
+    body: debugBody
+  })
+  const debugResponse = await debugRequest.text()
+  console.log('\nGOT DEBUG RESPONSE:')
+  console.log('debugResponse:', debugResponse)
+  console.log('')
+
   audioChunks = []
 }
 

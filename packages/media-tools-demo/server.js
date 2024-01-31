@@ -67,6 +67,19 @@ server.post('/audio/:userId', async (request, reply) => {
   return reply.send('OK')
 })
 
+server.post('/debug/:userId', async (request, reply) => {
+  const { userId } = request.params
+  const data = await request.file()
+  const baseFileName = `records/debug-${userId}-${ulid()}`
+  let extension = 'webm'
+  if (data.mimetype.toLocaleLowerCase().includes('mp4')) {
+    extension = 'mp4'
+  }
+  const filename = `${baseFileName}.${extension}`
+  await pipeline(data.file, createWriteStream(filename))
+  return reply.send('OK')
+})
+
 // Run the server!
 server.listen({ port: 3000, host: '0.0.0.0' }, (err, _address) => {
   if (err) {
