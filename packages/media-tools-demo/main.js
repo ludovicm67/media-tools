@@ -2,30 +2,36 @@
 import { monotonicFactory } from 'ulid/dist/index.js'
 import { MediaTypes, fix as mediaToolsChunkFix, utils } from '@ludovicm67/media-tools'
 
+const audioSourceSelect = /** @type {HTMLSelectElement} */ (document.getElementById('audioSource'))
+const getSourceBtn = /** @type {HTMLButtonElement} */ (document.getElementById('getSources'))
+
 const initSources = async () => {
-  await navigator.mediaDevices.getUserMedia({ audio: true })
+  console.log('initSources')
+  const mediaDevicesInfos = await navigator.mediaDevices.getUserMedia({ audio: true })
+  console.log('got audio stream', mediaDevicesInfos)
   const mediaDevices = await navigator.mediaDevices.enumerateDevices()
   const audioSources = mediaDevices.filter((device) => device.kind === 'audioinput')
   console.log('audioSources:', audioSources)
-  return audioSources
+
+  // Remove all options from the select
+  while (audioSourceSelect.firstChild) {
+    audioSourceSelect.removeChild(audioSourceSelect.firstChild)
+  }
+
+  // Add the new options
+  audioSources.forEach(mic => {
+    const option = document.createElement('option')
+    option.value = mic.deviceId
+    option.textContent = mic.label || `Microphone (${mic.deviceId.substring(0, 8)}...)`
+    audioSourceSelect.appendChild(option)
+  })
+  if (audioSources.length > 0) {
+    audioSourceSelect.disabled = false
+  }
 }
 
-const audioSourceSelect = /** @type {HTMLSelectElement} */ (document.getElementById('audioSource'))
-const audioSources = await initSources()
-// Remove all options from the select
-while (audioSourceSelect.firstChild) {
-  audioSourceSelect.removeChild(audioSourceSelect.firstChild)
-}
-// Add the new options
-audioSources.forEach(mic => {
-  const option = document.createElement('option')
-  option.value = mic.deviceId
-  option.textContent = mic.label || `Microphone (${mic.deviceId.substring(0, 8)}...)`
-  audioSourceSelect.appendChild(option)
-})
-if (audioSources.length > 0) {
-  audioSourceSelect.disabled = false
-}
+await initSources()
+getSourceBtn.addEventListener('click', initSources)
 
 const ulid = monotonicFactory()
 
