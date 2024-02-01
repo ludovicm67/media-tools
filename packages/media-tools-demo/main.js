@@ -90,6 +90,11 @@ const handleSendAudio = async () => {
 
   // Get a Buffer from the audio chunks
   const audioBlob = new Blob(audioChunks, { type: mimeType })
+  if (audioBlob.size < 1) {
+    console.warn('audio blob is empty')
+    return
+  }
+
   const audioBuffer = await utils.blobToArrayBuffer(audioBlob)
 
   if (previousChunk) {
