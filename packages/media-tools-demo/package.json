@@ -11,8 +11,7 @@
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "true",
-    "prepack": "npm run build"
+    "test": "true"
   },
   "repository": {
     "type": "git",
