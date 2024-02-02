@@ -14,5 +14,8 @@ export default {
         rewrite: (path) => path.replace(/^\/backend/, '')
       }
     }
+  },
+  build: {
+    target: 'ES2022'
   }
 }

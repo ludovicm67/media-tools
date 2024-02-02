@@ -3,3 +3,4 @@ records/*
 *.webm
 *.mp4
 *.wav
+dist/
