@@ -9,7 +9,6 @@
     "typings": "tsc",
     "clean": "rimraf *.tgz **/*.d.ts*",
     "build": "yarn clean && yarn typings",
-    "prepack": "yarn build",
     "postpublish": "yarn clean",
     "test": "true"
   },
