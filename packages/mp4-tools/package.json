@@ -1,6 +1,6 @@
 {
   "name": "@ludovicm67/mp4-tools",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "MP4 tools",
   "main": "index.js",
   "type": "module",
@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@ludovicm67/media-tools-utils": "^0.1.2",
+    "@ludovicm67/media-tools-utils": "^0.1.3",
     "commander": "^11.1.0"
   },
   "publishConfig": {
