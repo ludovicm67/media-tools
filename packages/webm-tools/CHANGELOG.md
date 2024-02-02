@@ -1,5 +1,13 @@
 # @ludovicm67/webm-tools
 
+## 0.3.3
+
+### Patch Changes
+
+- c0a4cea: Replace NPM with Yarn
+- Updated dependencies [c0a4cea]
+  - @ludovicm67/media-tools-utils@0.1.4
+
 ## 0.3.2
 
 ### Patch Changes
