@@ -1,5 +1,15 @@
 # @ludovicm67/media-tools
 
+## 0.2.1
+
+### Patch Changes
+
+- 230dd15: Upgrade dependencies
+- Updated dependencies [230dd15]
+  - @ludovicm67/media-tools-utils@0.1.2
+  - @ludovicm67/webm-tools@0.3.1
+  - @ludovicm67/mp4-tools@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes
