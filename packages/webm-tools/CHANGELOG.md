@@ -1,5 +1,13 @@
 # @ludovicm67/webm-tools
 
+## 0.3.2
+
+### Patch Changes
+
+- 786fee9: Change how packages are built
+- Updated dependencies [786fee9]
+  - @ludovicm67/media-tools-utils@0.1.3
+
 ## 0.3.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @ludovicm67/media-tools-utils
 
+## 0.1.3
+
+### Patch Changes
+
+- 786fee9: Change how packages are built
+
 ## 0.1.2
 
 ### Patch Changes
