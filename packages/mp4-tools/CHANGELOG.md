@@ -1,5 +1,13 @@
 # @ludovicm67/mp4-tools
 
+## 0.2.4
+
+### Patch Changes
+
+- 76084c1: Remove types
+- Updated dependencies [76084c1]
+  - @ludovicm67/media-tools-utils@0.1.5
+
 ## 0.2.3
 
 ### Patch Changes

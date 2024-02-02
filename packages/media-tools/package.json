@@ -1,6 +1,6 @@
 {
   "name": "@ludovicm67/media-tools",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Media tools",
   "main": "index.js",
   "type": "module",
@@ -27,9 +27,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@ludovicm67/media-tools-utils": "^0.1.4",
-    "@ludovicm67/mp4-tools": "^0.2.3",
-    "@ludovicm67/webm-tools": "^0.3.3",
+    "@ludovicm67/media-tools-utils": "^0.1.5",
+    "@ludovicm67/mp4-tools": "^0.2.4",
+    "@ludovicm67/webm-tools": "^0.3.4",
     "buffer": "^6.0.3"
   },
   "publishConfig": {
