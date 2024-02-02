@@ -1,5 +1,11 @@
 # @ludovicm67/media-tools-utils
 
+## 0.1.5
+
+### Patch Changes
+
+- 76084c1: Remove types
+
 ## 0.1.4
 
 ### Patch Changes

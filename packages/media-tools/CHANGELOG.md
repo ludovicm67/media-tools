@@ -1,5 +1,15 @@
 # @ludovicm67/media-tools
 
+## 0.2.4
+
+### Patch Changes
+
+- 76084c1: Remove types
+- Updated dependencies [76084c1]
+  - @ludovicm67/media-tools-utils@0.1.5
+  - @ludovicm67/webm-tools@0.3.4
+  - @ludovicm67/mp4-tools@0.2.4
+
 ## 0.2.3
 
 ### Patch Changes
