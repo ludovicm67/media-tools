@@ -1,0 +1,37 @@
+{
+  "name": "@ludovicm67/ogg-tools",
+  "version": "0.0.0",
+  "description": "OGG tools",
+  "main": "index.js",
+  "type": "module",
+  "bin": "cli/index.js",
+  "scripts": {
+    "typings": "tsc",
+    "clean": "rimraf *.tgz *.d.ts* **/*.d.ts*",
+    "build": "npm run clean && npm run typings",
+    "postpublish": "npm run clean",
+    "test": "true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ludovicm67/media-tools.git",
+    "directory": "packages/ogg-tools"
+  },
+  "author": {
+    "name": "Ludovic Muller",
+    "url": "https://ludovic-muller.fr/"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@ludovicm67/media-tools-utils": "^0.1.4",
+    "commander": "^11.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.16",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3"
+  }
+}
