@@ -1,5 +1,13 @@
 # @ludovicm67/mp4-tools
 
+## 0.2.7
+
+### Patch Changes
+
+- db5d22e: Improve the way types are generated
+- Updated dependencies [db5d22e]
+  - @ludovicm67/media-tools-utils@0.1.8
+
 ## 0.2.6
 
 ### Patch Changes

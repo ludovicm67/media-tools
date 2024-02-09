@@ -1,5 +1,11 @@
 # @ludovicm67/media-tools-utils
 
+## 0.1.8
+
+### Patch Changes
+
+- db5d22e: Improve the way types are generated
+
 ## 0.1.7
 
 ### Patch Changes
