@@ -45,5 +45,3 @@ jobs:
         run: npm ci
       - name: Run build of each package
         run: npm run build
-      - name: Display result of a built file
-        run: cat packages/media-tools/dist/index.d.ts

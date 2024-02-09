@@ -9,7 +9,7 @@
   "scripts": {
     "typings": "tsc",
     "clean": "rimraf dist/",
-    "build": "npm run clean && npm run typings",
+    "build": "npm run typings",
     "prepack": "npm run build",
     "test": "true"
   },
