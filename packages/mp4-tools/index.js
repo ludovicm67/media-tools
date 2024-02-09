@@ -23,7 +23,7 @@ export { parseFtypBox, parseMoovBox, parseMoofBox, parseMdatBox } from './lib/bo
  * If the data is complete, the rest will be empty.
  *
  * @param {MP4ParsedFile} data The data to build the file from.
- * @param {MP4ParsedFile?} [context={}] The context to use to build the file, usually the previous parsed chunk.
+ * @param {MP4ParsedFile} [context={}] The context to use to build the file, usually the previous parsed chunk.
  * @returns {{ filedata: import('@ludovicm67/media-tools-utils').Buffer, rest: import('@ludovicm67/media-tools-utils').Buffer }} The built file and the rest of the file.
  */
 export const buildFile = (data, context) => {
@@ -140,7 +140,7 @@ export const parse = (fileBuffer) => {
 
 /**
  * @typedef {Object} LibOptions
- * @property {boolean?} debug Whether to enable debug mode or not.
+ * @property {boolean} [debug] Whether to enable debug mode or not.
  */
 
 /**
@@ -150,7 +150,7 @@ export const parse = (fileBuffer) => {
  *
  * @param {import('@ludovicm67/media-tools-utils').Buffer} prevChunk Content of the previous (sane) chunk.
  * @param {import('@ludovicm67/media-tools-utils').Buffer} brokenChunk Content of the broken chunk.
- * @param {LibOptions?} options Options.
+ * @param {LibOptions} [options={}] Options.
  * @returns {import('@ludovicm67/media-tools-utils').Buffer} The fixed chunk.
  */
 export const fix = (prevChunk, brokenChunk, options) => {

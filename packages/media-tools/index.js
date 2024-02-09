@@ -20,8 +20,8 @@ const MediaTypes = {
 
 /**
  * @typedef {Object} MediaToolsOptions
- * @property {boolean?} debug Whether to enable debug mode or not.
- * @property {MediaTypes?} mediaType The media type to use.
+ * @property {boolean} [debug] Whether to enable debug mode or not.
+ * @property {MediaTypes} [mediaType] The media type to use.
  */
 
 /**

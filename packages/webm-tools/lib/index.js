@@ -5,7 +5,7 @@ import { Buffer } from '@ludovicm67/media-tools-utils'
 
 /**
  * @typedef {Object} LibOptions
- * @property {boolean?} debug Whether to enable debug mode or not.
+ * @property {boolean} [debug] Whether to enable debug mode or not.
  */
 
 /**
@@ -15,7 +15,7 @@ import { Buffer } from '@ludovicm67/media-tools-utils'
  *
  * @param {import('@ludovicm67/media-tools-utils').Buffer} prevChunk Content of the previous (sane) chunk.
  * @param {import('@ludovicm67/media-tools-utils').Buffer} brokenChunk Content of the broken chunk.
- * @param {LibOptions?} options Options.
+ * @param {LibOptions} [options={}] Options.
  * @returns {import('@ludovicm67/media-tools-utils').Buffer} The fixed chunk.
  */
 export const fix = (prevChunk, brokenChunk, options) => {
