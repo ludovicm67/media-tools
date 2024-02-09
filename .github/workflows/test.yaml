@@ -43,5 +43,7 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm ci
+      - name: "Install rollup (temporary fix for: https://github.com/npm/cli/issues/4828)"
+        run: npm i -O @rollup/rollup-linux-x64-gnu
       - name: Run build of each package
         run: npm run build
