@@ -1,5 +1,13 @@
 # @ludovicm67/media-tools
 
+## 0.3.3
+
+### Patch Changes
+
+- 9ff6a94: Include @ludovicm67/ogg-tools package as dependency
+- Updated dependencies [9ff6a94]
+  - @ludovicm67/media-tools-utils@0.1.9
+
 ## 0.3.2
 
 ### Patch Changes
