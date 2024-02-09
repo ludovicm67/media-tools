@@ -1,5 +1,19 @@
 # @ludovicm67/media-tools
 
+## 0.3.0
+
+### Minor Changes
+
+- e4ce2ed: Add support for OGG files
+
+### Patch Changes
+
+- e4ce2ed: Improve typings
+- Updated dependencies [e4ce2ed]
+  - @ludovicm67/media-tools-utils@0.1.6
+  - @ludovicm67/webm-tools@0.3.5
+  - @ludovicm67/mp4-tools@0.2.5
+
 ## 0.2.4
 
 ### Patch Changes

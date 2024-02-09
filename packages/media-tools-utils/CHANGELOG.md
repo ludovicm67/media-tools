@@ -1,5 +1,11 @@
 # @ludovicm67/media-tools-utils
 
+## 0.1.6
+
+### Patch Changes
+
+- e4ce2ed: Improve typings
+
 ## 0.1.5
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @ludovicm67/webm-tools
 
+## 0.3.5
+
+### Patch Changes
+
+- e4ce2ed: Improve typings
+- Updated dependencies [e4ce2ed]
+  - @ludovicm67/media-tools-utils@0.1.6
+
 ## 0.3.4
 
 ### Patch Changes
