@@ -15,6 +15,7 @@
     "esModuleInterop": true,
     "moduleResolution": "NodeNext",
     "module": "NodeNext",
-    "outDir": "dist"
+    "outDir": "dist",
+    "composite": true
   }
 }
