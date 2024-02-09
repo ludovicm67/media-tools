@@ -1,5 +1,11 @@
 # @ludovicm67/media-tools-utils
 
+## 0.1.9
+
+### Patch Changes
+
+- 9ff6a94: Improve build
+
 ## 0.1.8
 
 ### Patch Changes
