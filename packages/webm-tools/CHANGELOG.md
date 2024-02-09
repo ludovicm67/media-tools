@@ -1,5 +1,11 @@
 # @ludovicm67/webm-tools
 
+## 0.3.8
+
+### Patch Changes
+
+- e425a7f: Improve handling of optional types
+
 ## 0.3.7
 
 ### Patch Changes

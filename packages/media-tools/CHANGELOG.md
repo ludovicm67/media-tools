@@ -1,5 +1,15 @@
 # @ludovicm67/media-tools
 
+## 0.3.5
+
+### Patch Changes
+
+- e425a7f: Improve handling of optional types
+- Updated dependencies [e425a7f]
+  - @ludovicm67/webm-tools@0.3.8
+  - @ludovicm67/mp4-tools@0.2.8
+  - @ludovicm67/ogg-tools@0.1.3
+
 ## 0.3.4
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @ludovicm67/ogg-tools
 
+## 0.1.3
+
+### Patch Changes
+
+- e425a7f: Improve handling of optional types
+
 ## 0.1.2
 
 ### Patch Changes
