@@ -28,13 +28,13 @@ jobs:
           node-version: 20
 
       - name: Install Dependencies
-        run: yarn
+        run: npm ci
 
       - name: Create release Pull Request or publish to NPM
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: yarn release
+          publish: npm run release
           commit: "chore: release"
           title: "Merge to release"
         env:

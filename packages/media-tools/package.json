@@ -7,8 +7,8 @@
   "scripts": {
     "typings": "tsc",
     "clean": "rimraf *.tgz **/*.d.ts*",
-    "build": "yarn clean && yarn typings",
-    "postpublish": "yarn clean",
+    "build": "npm run clean && npm run typings",
+    "postpublish": "npm run clean",
     "test": "true"
   },
   "repository": {

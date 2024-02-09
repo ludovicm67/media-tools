@@ -6,10 +6,10 @@
   "type": "module",
   "scripts": {
     "lint": "eslint . --quiet --ignore-path .gitignore",
-    "test": "yarn workspaces run test",
+    "test": "wsrun --report -msc test",
     "release": "changeset publish",
     "prepare": "husky",
-    "build": "yarn workspaces run build"
+    "build": "wsrun --report -msc build"
   },
   "workspaces": [
     "packages/*"
@@ -27,6 +27,7 @@
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
     "husky": "^9.0.10",
-    "lint-staged": "^15.2.1"
+    "lint-staged": "^15.2.1",
+    "wsrun": "^5.2.4"
   }
 }

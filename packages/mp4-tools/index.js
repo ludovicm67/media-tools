@@ -24,7 +24,7 @@ export { parseFtypBox, parseMoovBox, parseMoofBox, parseMdatBox } from './lib/bo
  *
  * @param {MP4ParsedFile} data The data to build the file from.
  * @param {MP4ParsedFile?} [context={}] The context to use to build the file, usually the previous parsed chunk.
- * @returns {{ filedata: Buffer, rest: import('@ludovicm67/media-tools-utils').Buffer }} The built file and the rest of the file.
+ * @returns {{ filedata: import('@ludovicm67/media-tools-utils').Buffer, rest: import('@ludovicm67/media-tools-utils').Buffer }} The built file and the rest of the file.
  */
 export const buildFile = (data, context) => {
   let { ftyp, moov, chunks, rest } = data
