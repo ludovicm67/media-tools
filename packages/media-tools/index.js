@@ -5,7 +5,7 @@ import * as ogg from '@ludovicm67/ogg-tools'
 import * as webm from '@ludovicm67/webm-tools'
 
 // Export some utils
-export { Buffer, utils } from '@ludovicm67/media-tools-utils'
+import { Buffer, utils } from '@ludovicm67/media-tools-utils'
 
 /**
  * Enum for supported MediaTypes.
@@ -53,5 +53,7 @@ export {
   MediaTypes,
   mp4,
   ogg,
-  webm
+  webm,
+  Buffer,
+  utils
 }
