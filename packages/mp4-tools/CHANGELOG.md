@@ -1,5 +1,11 @@
 # @ludovicm67/mp4-tools
 
+## 0.2.8
+
+### Patch Changes
+
+- e425a7f: Improve handling of optional types
+
 ## 0.2.7
 
 ### Patch Changes
