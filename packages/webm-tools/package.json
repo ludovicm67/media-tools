@@ -1,6 +1,6 @@
 {
   "name": "@ludovicm67/webm-tools",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "WebM tools",
   "main": "index.js",
   "type": "module",
@@ -31,7 +31,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@ludovicm67/media-tools-utils": "^0.1.6",
+    "@ludovicm67/media-tools-utils": "^0.1.7",
     "commander": "^12.0.0"
   },
   "publishConfig": {

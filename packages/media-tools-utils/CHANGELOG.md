@@ -1,5 +1,11 @@
 # @ludovicm67/media-tools-utils
 
+## 0.1.7
+
+### Patch Changes
+
+- 98d7fc9: Regenerate types
+
 ## 0.1.6
 
 ### Patch Changes

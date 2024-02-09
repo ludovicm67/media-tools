@@ -1,5 +1,13 @@
 # @ludovicm67/webm-tools
 
+## 0.3.6
+
+### Patch Changes
+
+- 98d7fc9: Regenerate types
+- Updated dependencies [98d7fc9]
+  - @ludovicm67/media-tools-utils@0.1.7
+
 ## 0.3.5
 
 ### Patch Changes
