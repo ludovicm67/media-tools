@@ -4,11 +4,12 @@
   "description": "Media tools utils",
   "main": "index.js",
   "type": "module",
+  "types": "dist/index.d.ts",
   "scripts": {
     "typings": "tsc",
-    "clean": "rimraf *.tgz *.d.ts* **/*.d.ts*",
+    "clean": "rimraf dist/",
     "build": "npm run clean && npm run typings",
-    "postpublish": "npm run clean",
+    "prepack": "npm run build",
     "test": "true"
   },
   "repository": {
@@ -20,6 +21,11 @@
     "name": "Ludovic Muller",
     "url": "https://ludovic-muller.fr/"
   },
+  "files": [
+    "dist",
+    "index.js",
+    "CHANGELOG.md"
+  ],
   "keywords": [
     "media",
     "tools",

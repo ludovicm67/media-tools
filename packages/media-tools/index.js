@@ -1,6 +1,7 @@
 // @ts-check
 
 import * as mp4 from '@ludovicm67/mp4-tools'
+import * as ogg from '@ludovicm67/ogg-tools'
 import * as webm from '@ludovicm67/webm-tools'
 
 // Export some utils
@@ -13,6 +14,7 @@ export { Buffer, utils } from '@ludovicm67/media-tools-utils'
  */
 const MediaTypes = {
   MP4: 'mp4',
+  OGG: 'ogg',
   WEBM: 'webm'
 }
 
@@ -29,7 +31,7 @@ const MediaTypes = {
  *
  * @param {import('@ludovicm67/media-tools-utils').Buffer} prevChunk Content of the previous (sane) chunk.
  * @param {import('@ludovicm67/media-tools-utils').Buffer} brokenChunk Content of the broken chunk.
- * @param {MediaToolsOptions?} options Options.
+ * @param {MediaToolsOptions} [options={}] Options.
  * @returns {import('@ludovicm67/media-tools-utils').Buffer} The fixed chunk.
  */
 export const fix = (prevChunk, brokenChunk, options) => {
@@ -38,6 +40,8 @@ export const fix = (prevChunk, brokenChunk, options) => {
   switch (mediaType) {
     case MediaTypes.MP4:
       return mp4.fix(prevChunk, brokenChunk, { debug })
+    case MediaTypes.OGG:
+      return ogg.fix(prevChunk, brokenChunk, { debug })
     case MediaTypes.WEBM:
       return webm.fix(prevChunk, brokenChunk, { debug })
     default:
@@ -48,5 +52,6 @@ export const fix = (prevChunk, brokenChunk, options) => {
 export {
   MediaTypes,
   mp4,
+  ogg,
   webm
 }

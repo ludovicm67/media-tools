@@ -1,2 +1,4 @@
 *.d.ts
 *.d.ts.map
+*.webm
+dist/

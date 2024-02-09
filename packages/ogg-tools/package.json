@@ -4,12 +4,13 @@
   "description": "OGG tools",
   "main": "index.js",
   "type": "module",
+  "types": "dist/index.d.ts",
   "bin": "cli/index.js",
   "scripts": {
     "typings": "tsc",
-    "clean": "rimraf *.tgz *.d.ts* **/*.d.ts*",
+    "clean": "rimraf dist/",
     "build": "npm run clean && npm run typings",
-    "postpublish": "npm run clean",
+    "prepack": "npm run build",
     "test": "true"
   },
   "repository": {
@@ -21,6 +22,12 @@
     "name": "Ludovic Muller",
     "url": "https://ludovic-muller.fr/"
   },
+  "files": [
+    "cli",
+    "dist",
+    "index.js",
+    "CHANGELOG.md"
+  ],
   "license": "MIT",
   "dependencies": {
     "@ludovicm67/media-tools-utils": "^0.1.4",

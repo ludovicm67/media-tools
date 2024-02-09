@@ -7,9 +7,10 @@
   "scripts": {
     "lint": "eslint . --quiet --ignore-path .gitignore",
     "test": "wsrun --report -msc test",
+    "clean": "wsrun --report -mc clean",
     "release": "changeset publish",
     "prepare": "husky",
-    "build": "wsrun --report -msc build"
+    "build": "npm run clean && wsrun --report -msc build"
   },
   "workspaces": [
     "packages/*"
