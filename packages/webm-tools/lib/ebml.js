@@ -509,6 +509,7 @@ const formatMilliseconds = (milliseconds) => {
 
 export const displayDecodedElements = (decodedElements) => {
   let indent = 0
+  let lastTimecodeValue = 0
   for (const item of decodedElements) {
     const [kind, element] = item
 
@@ -518,11 +519,22 @@ export const displayDecodedElements = (decodedElements) => {
 
     const indentString = '  '.repeat(indent)
 
-    if (element.name === 'SimpleBlock' || element.name === 'Block') {
-      console.log(`${indentString}${kind}: ${element.name} - track number ${element.track}, timestamp ${formatMilliseconds(element.value)}`)
-    } else {
-      console.log(`${indentString}${kind}: ${element.name}`)
+    let additionalInfo = ''
+
+    switch (element.name) {
+      case 'Timecode':
+        additionalInfo = `timestamp ${formatMilliseconds(element.value)}`
+        lastTimecodeValue = element.value
+        break
+      case 'SimpleBlock':
+      case 'Block':
+        additionalInfo = `track number ${element.track}, timestamp ${formatMilliseconds(lastTimecodeValue + element.value)}`
+        break
+      default:
+        break
     }
+
+    console.log(`${indentString}${kind}: ${element.name}${additionalInfo ? ` - ${additionalInfo}` : ''}`)
 
     if (kind === 'start') {
       indent++
