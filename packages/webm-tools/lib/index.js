@@ -44,3 +44,17 @@ export const fix = (prevChunk, brokenChunk, options) => {
 
   return newFile
 }
+
+/**
+ * Display information of a WebM file.
+ *
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} fileBuffer Content of the file to display.
+ * @returns {void}
+ */
+export const display = (fileBuffer) => {
+  resetDecoder({
+    debug: false
+  })
+  const { decoded } = decode(fileBuffer)
+  displayDecodedElements(decoded)
+}

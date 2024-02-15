@@ -3,6 +3,7 @@
 import { Command } from 'commander'
 import fix from './fix.js'
 import merge from './merge.js'
+import display from './display.js'
 
 const program = new Command()
 
@@ -26,5 +27,11 @@ program.command('merge')
   .requiredOption('-o, --out <output path>', 'path to export the fixed WebM chunk to')
   .option('--debug', 'show debug information')
   .action(merge)
+
+program.command('display')
+  .description('Display information about a WebM file')
+  .argument('<file name>', 'path to the WebM file')
+  .option('--debug', 'show debug information')
+  .action(display)
 
 program.parse(process.argv)

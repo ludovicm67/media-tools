@@ -27,13 +27,12 @@ Usage: webm-tools [options] [command]
 A set of tools for working with WebM files
 
 Options:
-  -V, --version                                                   output the version number
   -h, --help                                                      display help for command
 
 Commands:
   fix [options] <previous chunk> <broken chunk>                   Fix a WebM file using the previous chunk
-  merge [options] <first chunk> <second chunk> [other chunks...]  Merge WebM chunks together. The first chunk should
-                                                                  be a sane chunk.
+  merge [options] <first chunk> <second chunk> [other chunks...]  Merge WebM chunks together. The first chunk should be a sane chunk.
+  display [options] <file name>                                   Display information about a WebM file
   help [command]                                                  display help for command
 ```
 
@@ -72,4 +71,19 @@ Options:
   -o, --out <output path>  path to export the fixed WebM chunk to
   --debug                  show debug information
   -h, --help               display help for command
+```
+
+## Display information about a WebM file
+
+```
+Usage: webm-tools display [options] <file name>
+
+Display information about a WebM file
+
+Arguments:
+  file name   path to the WebM file
+
+Options:
+  --debug     show debug information
+  -h, --help  display help for command
 ```
