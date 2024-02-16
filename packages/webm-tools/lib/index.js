@@ -22,7 +22,8 @@ export const fix = (prevChunk, brokenChunk, options) => {
   const { debug } = options || {}
 
   resetDecoder({
-    debug: false
+    debug: false,
+    fixTimestamps: true
   })
   const { decoded, headerBuffer, lastStartBuffer } = decode(prevChunk)
   if (debug) {
@@ -33,7 +34,8 @@ export const fix = (prevChunk, brokenChunk, options) => {
 
   const newFile = Buffer.concat([headerBuffer, lastStartBuffer, brokenChunk])
   resetDecoder({
-    debug: false
+    debug: false,
+    fixTimestamps: true
   })
   const { decoded: newFileDecoded } = decode(newFile)
   if (debug) {
@@ -53,7 +55,8 @@ export const fix = (prevChunk, brokenChunk, options) => {
  */
 export const display = (fileBuffer) => {
   resetDecoder({
-    debug: false
+    debug: false,
+    fixTimestamps: false
   })
   const { decoded } = decode(fileBuffer)
   displayDecodedElements(decoded)

@@ -51,12 +51,11 @@ const readHexString = (buff, start = 0, end = buff.byteLength) => {
 }
 
 /**
-   * *
-   * concatenate two arrays of bytes
-   * @param {import('@ludovicm67/media-tools-utils').Buffer} a1  First array
-   * @param {import('@ludovicm67/media-tools-utils').Buffer} a2  Second array
-   * @returns  {import('@ludovicm67/media-tools-utils').Buffer} concatenated arrays
-   */
+ * concatenate two arrays of bytes
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} a1  First array
+ * @param {import('@ludovicm67/media-tools-utils').Buffer} a2  Second array
+ * @returns  {import('@ludovicm67/media-tools-utils').Buffer} concatenated arrays
+ */
 const concatenate = (a1, a2) => {
   // both null or undefined
   if (!a1 && !a2) {
@@ -240,6 +239,12 @@ let debug = false
 let initialBuffer = null
 let headerBuffer = null
 let lastStart = 0
+let fixTimestamps = false
+let lastTimeCodeValue = 0
+let lastTimestampValue = 0
+let isFirstBlock = true
+let firstBlockDelay = 0
+let timestampDelta = 60 // 60ms ; a good default value, but will be recalculated
 
 export const resetDecoder = (options = {}) => {
   mBuffer = null
@@ -248,15 +253,28 @@ export const resetDecoder = (options = {}) => {
   mCursor = 0
   mTotal = 0
 
-  if (options && options.debug) {
-    debug = options.debug
+  fixTimestamps = false
+
+  if (options) {
+    if (options.debug) {
+      debug = options.debug
+    }
+    if (options.fixTimestamps) {
+      fixTimestamps = options.fixTimestamps
+    }
   }
+
   decoded = []
   isHeader = false
   decodedHeader = []
   initialBuffer = null
   headerBuffer = null
   lastStart = 0
+  lastTimeCodeValue = 0
+  lastTimestampValue = 0
+  isFirstBlock = true
+  firstBlockDelay = 0
+  timestampDelta = 60
 }
 
 /**
@@ -270,20 +288,47 @@ const debugLog = (...args) => {
   }
 }
 
+const fixElementTimestamp = (element) => {
+  if (!fixTimestamps) {
+    return element
+  }
+
+  if (element.name === 'Block' || element.name === 'SimpleBlock') {
+    if (isFirstBlock) {
+      isFirstBlock = false
+      firstBlockDelay = element.value - lastTimeCodeValue
+    }
+    element.value = element.value - firstBlockDelay
+    timestampDelta = element.value - lastTimestampValue
+    lastTimestampValue = element.value
+  }
+
+  if (element.name === 'Timecode') {
+    element.value = isFirstBlock ? lastTimestampValue : (lastTimestampValue + timestampDelta)
+    lastTimeCodeValue = element.value
+    lastTimestampValue = element.value
+    firstBlockDelay = 0
+  }
+
+  return element
+}
+
 /**
  * Handle EBML element.
  *
  * @param {any} element EBML element.
  */
 const handleEBMLElement = (element) => {
-  const [kind, e] = element
+  const [kind, unfixedElement] = element
+  const e = fixElementTimestamp(unfixedElement)
+  const fixedElement = [kind, e]
   if (kind === 'start' && e.name === 'EBML') {
     isHeader = true
   }
-  debugLog(element)
-  decoded.push(element)
+  debugLog(fixedElement)
+  decoded.push(fixedElement)
   if (isHeader) {
-    decodedHeader.push(element)
+    decodedHeader.push(fixedElement)
   }
   if (isHeader && kind === 'end' && e.name === 'Cluster') {
     isHeader = false
@@ -360,7 +405,8 @@ export const decode = (chunk) => {
     decoded,
     decodedHeader,
     headerBuffer,
-    lastStartBuffer
+    lastStartBuffer,
+    lastTimestampValue
   }
 }
 
