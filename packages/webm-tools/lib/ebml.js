@@ -196,12 +196,30 @@ const readDataFromTag = (tagObj, data) => {
       break
   }
 
+  if (fixTimestamps && name === 'Timecode') {
+    value = isFirstBlock ? lastTimestampValue : (lastTimestampValue + timestampDelta)
+    lastTimeCodeValue = value
+    lastTimestampValue = value
+    firstBlockDelay = 0
+  }
+
   if (name === 'SimpleBlock' || name === 'Block') {
     let p = 0
     const { length, value: trak } = readVint(data, p) || { length: 0, value: null }
     p += length
     track = trak
     value = readSigned(data.subarray(p, p + 2))
+
+    if (fixTimestamps) {
+      if (isFirstBlock) {
+        isFirstBlock = false
+        firstBlockDelay = value - lastTimeCodeValue
+      }
+      value = value - firstBlockDelay
+      timestampDelta = value - lastTimestampValue
+      lastTimestampValue = value
+    }
+
     p += 2
     if (name === 'SimpleBlock') {
       keyframe = Boolean(data[length + 2] & 0x80)
@@ -288,39 +306,13 @@ const debugLog = (...args) => {
   }
 }
 
-const fixElementTimestamp = (element) => {
-  if (!fixTimestamps) {
-    return element
-  }
-
-  if (element.name === 'Block' || element.name === 'SimpleBlock') {
-    if (isFirstBlock) {
-      isFirstBlock = false
-      firstBlockDelay = element.value - lastTimeCodeValue
-    }
-    element.value = element.value - firstBlockDelay
-    timestampDelta = element.value - lastTimestampValue
-    lastTimestampValue = element.value
-  }
-
-  if (element.name === 'Timecode') {
-    element.value = isFirstBlock ? lastTimestampValue : (lastTimestampValue + timestampDelta)
-    lastTimeCodeValue = element.value
-    lastTimestampValue = element.value
-    firstBlockDelay = 0
-  }
-
-  return element
-}
-
 /**
  * Handle EBML element.
  *
  * @param {any} element EBML element.
  */
 const handleEBMLElement = (element) => {
-  const [kind, unfixedElement] = element
-  const e = fixElementTimestamp(unfixedElement)
+  const [kind, e] = element
   const fixedElement = [kind, e]
   if (kind === 'start' && e.name === 'EBML') {
     isHeader = true
