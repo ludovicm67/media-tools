@@ -1,6 +1,7 @@
 // @ts-check
 
-import { resetDecoder, decode, displayDecodedElements } from './ebml.js'
+import { displayDecodedElements } from './tools.js'
+import { decode } from './decoder.js'
 import { Buffer } from '@ludovicm67/media-tools-utils'
 
 /**
@@ -21,10 +22,6 @@ import { Buffer } from '@ludovicm67/media-tools-utils'
 export const fix = (prevChunk, brokenChunk, options) => {
   const { debug } = options || {}
 
-  resetDecoder({
-    debug: false,
-    fixTimestamps: true
-  })
   const { decoded, headerBuffer, lastStartBuffer } = decode(prevChunk)
   if (debug) {
     console.info('\nDecoded previous chunk:')
@@ -33,18 +30,14 @@ export const fix = (prevChunk, brokenChunk, options) => {
   }
 
   const newFile = Buffer.concat([headerBuffer, lastStartBuffer, brokenChunk])
-  resetDecoder({
-    debug: false,
-    fixTimestamps: true
-  })
-  const { decoded: newFileDecoded } = decode(newFile)
+  const { decoded: newFileDecoded, buffer: newFileBuffer } = decode(newFile, { fixTimestamps: true })
   if (debug) {
     console.info('\nDecoded fixed chunk:')
     displayDecodedElements(newFileDecoded)
     console.log('')
   }
 
-  return newFile
+  return newFileBuffer
 }
 
 /**
@@ -54,10 +47,6 @@ export const fix = (prevChunk, brokenChunk, options) => {
  * @returns {void}
  */
 export const display = (fileBuffer) => {
-  resetDecoder({
-    debug: false,
-    fixTimestamps: false
-  })
   const { decoded } = decode(fileBuffer)
   displayDecodedElements(decoded)
 }

@@ -2,7 +2,8 @@
 
 import { writeFileSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
-import { decode, resetDecoder, displayDecodedElements } from '../lib/ebml.js'
+import { decode } from '../lib/decoder.js'
+import { displayDecodedElements } from '../lib/tools.js'
 
 /**
  * Merge WebM chunks together.
@@ -27,10 +28,7 @@ const merge = async (firstChunkPath, secondChunkPath, otherChunksPaths, options)
   }
 
   const firstChunk = await readFile(firstChunkPath)
-  resetDecoder({
-    debug: false
-  })
-  const { decoded } = decode(firstChunk)
+  const { decoded } = decode(/** @type {import('@ludovicm67/media-tools-utils').Buffer} **/(/** @type {unknown} **/ (firstChunk)))
   if (debug) {
     console.info('\nDecoded first chunk:')
     displayDecodedElements(decoded)
@@ -46,10 +44,7 @@ const merge = async (firstChunkPath, secondChunkPath, otherChunksPaths, options)
   }
 
   const newFile = Buffer.concat([firstChunk, ...otherChunks])
-  resetDecoder({
-    debug: false
-  })
-  const { decoded: newFileDecoded } = decode(newFile)
+  const { decoded: newFileDecoded } = decode(/** @type {import('@ludovicm67/media-tools-utils').Buffer} **/(/** @type {unknown} **/ (newFile)))
   if (debug) {
     console.info('\nDecoded merged chunk (if it looks great, the merge was sucessful):')
     displayDecodedElements(newFileDecoded)
