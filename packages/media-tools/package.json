@@ -9,8 +9,7 @@
     "typings": "tsc",
     "clean": "rimraf *.tgz dist/",
     "build": "npm run typings",
-    "prepack": "npm run build",
-    "test": "true"
+    "prepack": "npm run build"
   },
   "repository": {
     "type": "git",
