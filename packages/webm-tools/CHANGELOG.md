@@ -1,5 +1,15 @@
 # @ludovicm67/webm-tools
 
+## 0.4.0
+
+### Minor Changes
+
+- 121731a: Rewrite the parser, and fix the timestamps on the fly
+
+### Patch Changes
+
+- dc49223: Display timestamp for Block and SimpleBlock, and create a new `display` cli command
+
 ## 0.3.8
 
 ### Patch Changes
