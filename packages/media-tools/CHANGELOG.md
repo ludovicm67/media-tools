@@ -1,5 +1,13 @@
 # @ludovicm67/media-tools
 
+## 0.3.6
+
+### Patch Changes
+
+- Updated dependencies [121731a]
+- Updated dependencies [dc49223]
+  - @ludovicm67/webm-tools@0.4.0
+
 ## 0.3.5
 
 ### Patch Changes
