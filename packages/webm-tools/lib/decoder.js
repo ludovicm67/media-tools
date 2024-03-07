@@ -9,6 +9,9 @@ const STATE_TAG = 0
 const STATE_SIZE = 1
 const STATE_CONTENT = 2
 
+// Define some constants
+const DEFAULT_TIMESTAMP_DELTA = 60
+
 /**
  * Decode a WebM file.
  *
@@ -46,7 +49,7 @@ export const decode = (buffer, options = {}) => {
   ctx.set('lastTimeCodeValue', 0) // Last value of the timecode
   ctx.set('lastTimestampValue', 0) // Last value of the timestamp
   ctx.set('firstBlockDelay', 0) // Delay of the first block
-  ctx.set('timestampDelta', 60) // Delta of the timestamp in ms ; 60 is a good default value (will be updated)
+  ctx.set('timestampDelta', DEFAULT_TIMESTAMP_DELTA) // Delta of the timestamp in ms ; 60 is a good default value (will be updated)
 
   // Used for fixing chunks
   ctx.set('lastStart', 0) // Last start of a tag
@@ -311,8 +314,10 @@ const readDataFromTag = (ctx, tagObj, data) => {
         ctx.set('firstBlockDelay', value - ctx.get('lastTimeCodeValue'))
       }
       value = value - ctx.get('firstBlockDelay')
+      if ((value - ctx.get('lastTimestampValue')) > (DEFAULT_TIMESTAMP_DELTA * 2)) {
+        value = ctx.get('lastTimestampValue') + DEFAULT_TIMESTAMP_DELTA
+      }
       writeSigned(data, p, 2, value)
-      value = readSigned(data.slice(p, p + 2))
       ctx.set('timestampDelta', value - ctx.get('lastTimestampValue'))
       ctx.set('lastTimestampValue', value)
     }
