@@ -28,7 +28,7 @@
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.6.0",
     "husky": "^9.1.7",
-    "lint-staged": "^15.3.0",
+    "lint-staged": "^15.4.1",
     "wsrun": "^5.2.4"
   }
 }
