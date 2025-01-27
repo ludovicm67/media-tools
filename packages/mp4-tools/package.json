@@ -31,7 +31,7 @@
   "license": "MIT",
   "dependencies": {
     "@ludovicm67/media-tools-utils": "^0.1.8",
-    "commander": "^13.0.0"
+    "commander": "^13.1.0"
   },
   "publishConfig": {
     "access": "public"
