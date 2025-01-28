@@ -37,7 +37,7 @@
     "ulid": "^2.3.0"
   },
   "devDependencies": {
-    "playwright": "^1.49.1",
+    "playwright": "^1.50.0",
     "@types/node": "^22.10.7",
     "npm-run-all": "^4.1.5",
     "vite": "^6.0.11"
