@@ -1,5 +1,5 @@
 // @ts-check
-import { monotonicFactory } from 'ulid/dist/index.js'
+import { monotonicFactory } from 'ulid'
 import { MediaTypes, fix as mediaToolsChunkFix, utils } from '@ludovicm67/media-tools'
 
 const audioSourceSelect = /** @type {HTMLSelectElement} */ (document.getElementById('audioSource'))
