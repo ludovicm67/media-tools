@@ -34,7 +34,7 @@
     "@ludovicm67/webm-tools": "^0.4.0",
     "@vitejs/plugin-basic-ssl": "^2.0.0",
     "fastify": "^5.4.0",
-    "ulid": "^2.4.0"
+    "ulid": "^3.0.1"
   },
   "devDependencies": {
     "playwright": "^1.53.0",
