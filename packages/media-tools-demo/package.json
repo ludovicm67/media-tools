@@ -33,7 +33,7 @@
     "@fastify/multipart": "^9.0.3",
     "@ludovicm67/webm-tools": "^0.4.0",
     "@vitejs/plugin-basic-ssl": "^2.1.0",
-    "fastify": "^5.4.0",
+    "fastify": "^5.5.0",
     "ulid": "^3.0.1"
   },
   "devDependencies": {
