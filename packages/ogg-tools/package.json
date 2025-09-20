@@ -30,14 +30,14 @@
   "license": "MIT",
   "dependencies": {
     "@ludovicm67/media-tools-utils": "^0.1.8",
-    "commander": "^14.0.0"
+    "commander": "^14.0.1"
   },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
-    "@types/node": "^22.15.30",
+    "@types/node": "^24.5.2",
     "rimraf": "^6.0.1",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   }
 }
