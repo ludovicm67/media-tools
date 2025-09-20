@@ -1,70 +1,91 @@
 // @ts-check
-import { monotonicFactory } from 'ulid'
-import { MediaTypes, fix as mediaToolsChunkFix, utils } from '@ludovicm67/media-tools'
+import { monotonicFactory } from "ulid";
+import {
+  MediaTypes,
+  fix as mediaToolsChunkFix,
+  utils,
+} from "@ludovicm67/media-tools";
 
-const audioSourceSelect = /** @type {HTMLSelectElement} */ (document.getElementById('audioSource'))
-const getSourceBtn = /** @type {HTMLButtonElement} */ (document.getElementById('getSources'))
+const audioSourceSelect = /** @type {HTMLSelectElement} */ (
+  document.getElementById("audioSource")
+);
+const getSourceBtn = /** @type {HTMLButtonElement} */ (
+  document.getElementById("getSources")
+);
 
 const initSources = async () => {
-  console.log('initSources')
-  const mediaDevicesInfos = await navigator.mediaDevices.getUserMedia({ audio: true })
-  console.log('got audio stream', mediaDevicesInfos)
-  const mediaDevices = await navigator.mediaDevices.enumerateDevices()
-  const audioSources = mediaDevices.filter((device) => device.kind === 'audioinput')
-  console.log('audioSources:', audioSources)
+  console.log("initSources");
+  const mediaDevicesInfos = await navigator.mediaDevices.getUserMedia({
+    audio: true,
+  });
+  console.log("got audio stream", mediaDevicesInfos);
+  const mediaDevices = await navigator.mediaDevices.enumerateDevices();
+  const audioSources = mediaDevices.filter(
+    (device) => device.kind === "audioinput",
+  );
+  console.log("audioSources:", audioSources);
 
   // Remove all options from the select
   while (audioSourceSelect.firstChild) {
-    audioSourceSelect.removeChild(audioSourceSelect.firstChild)
+    audioSourceSelect.removeChild(audioSourceSelect.firstChild);
   }
 
   // Add the new options
-  audioSources.forEach(mic => {
-    const option = document.createElement('option')
-    option.value = mic.deviceId
-    option.textContent = mic.label || `Microphone (${mic.deviceId.substring(0, 8)}...)`
-    audioSourceSelect.appendChild(option)
-  })
+  audioSources.forEach((mic) => {
+    const option = document.createElement("option");
+    option.value = mic.deviceId;
+    option.textContent =
+      mic.label || `Microphone (${mic.deviceId.substring(0, 8)}...)`;
+    audioSourceSelect.appendChild(option);
+  });
   if (audioSources.length > 0) {
-    audioSourceSelect.disabled = false
+    audioSourceSelect.disabled = false;
   }
-}
+};
 
-await initSources()
-getSourceBtn.addEventListener('click', initSources)
+await initSources();
+getSourceBtn.addEventListener("click", initSources);
 
-const ulid = monotonicFactory()
+const ulid = monotonicFactory();
 
-const userId = ulid()
-console.log(`Current user ID=${userId}`)
+const userId = ulid();
+console.log(`Current user ID=${userId}`);
 
 // Configurable variables
-const audioDetectionLevel = 0.005
-const audioDetectionCounter = 5
-const audioMinDetectionCounter = 2
-const audioRequestDataInterval = 5000
+const audioDetectionLevel = 0.005;
+const audioDetectionCounter = 5;
+const audioMinDetectionCounter = 2;
+const audioRequestDataInterval = 5000;
 
 // Internal variables
-let audioStream = null
-let started = false
-let audioLevel = 0.0
-let mediaRecorder = null
-let recordingInterval = null
-let audioChunks = []
-let previousChunk = null
+let audioStream = null;
+let started = false;
+let audioLevel = 0.0;
+let mediaRecorder = null;
+let recordingInterval = null;
+let audioChunks = [];
+let previousChunk = null;
 
 // Check if the browser supports WebM format ; else we try to fallback to MP4
-const isMp4 = !MediaRecorder.isTypeSupported('audio/webm')
-const mimeType = isMp4 ? 'audio/mp4' : 'audio/webm'
-const extension = isMp4 ? 'mp4' : 'webm'
+const isMp4 = !MediaRecorder.isTypeSupported("audio/webm");
+const mimeType = isMp4 ? "audio/mp4" : "audio/webm";
+const extension = isMp4 ? "mp4" : "webm";
 
 // HTML elements from the page
-const startBtn = /** @type {HTMLButtonElement} */ (document.getElementById('startBtn'))
-const stopBtn = /** @type {HTMLButtonElement} */ (document.getElementById('stopBtn'))
-const audioLevelElement = /** @type {HTMLProgressElement} */ (document.getElementById('audioLevel'))
-const enableTranscriptionsElement = /** @type {HTMLInputElement} */ (document.getElementById('enableTranscriptions'))
+const startBtn = /** @type {HTMLButtonElement} */ (
+  document.getElementById("startBtn")
+);
+const stopBtn = /** @type {HTMLButtonElement} */ (
+  document.getElementById("stopBtn")
+);
+const audioLevelElement = /** @type {HTMLProgressElement} */ (
+  document.getElementById("audioLevel")
+);
+const enableTranscriptionsElement = /** @type {HTMLInputElement} */ (
+  document.getElementById("enableTranscriptions")
+);
 
-stopBtn.style.display = 'none'
+stopBtn.style.display = "none";
 
 /**
  * Request the audio stream from the user.
@@ -74,67 +95,67 @@ stopBtn.style.display = 'none'
 const getAudioStream = async () => {
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: {
-      deviceId: audioSourceSelect.value
-    }
-  })
-  audioStream = stream
-  console.log('got audio stream', audioStream)
-  return stream
-}
+      deviceId: audioSourceSelect.value,
+    },
+  });
+  audioStream = stream;
+  console.log("got audio stream", audioStream);
+  return stream;
+};
 
 const handleSendAudio = async () => {
   if (audioChunks.length < 1) {
-    console.warn('no audio chunks to send')
-    return
+    console.warn("no audio chunks to send");
+    return;
   }
 
   // Get a Buffer from the audio chunks
-  const audioBlob = new Blob(audioChunks, { type: mimeType })
+  const audioBlob = new Blob(audioChunks, { type: mimeType });
   if (audioBlob.size < 1) {
-    console.warn('audio blob is empty')
-    return
+    console.warn("audio blob is empty");
+    return;
   }
 
-  const audioBuffer = await utils.blobToArrayBuffer(audioBlob)
+  const audioBuffer = await utils.blobToArrayBuffer(audioBlob);
 
   if (previousChunk) {
     previousChunk = mediaToolsChunkFix(previousChunk, audioBuffer, {
       mediaType: isMp4 ? MediaTypes.MP4 : MediaTypes.WEBM,
-      debug: true
-    })
+      debug: true,
+    });
   } else {
-    previousChunk = audioBuffer
+    previousChunk = audioBuffer;
   }
 
-  const audioToSend = new Blob([previousChunk], { type: mimeType })
+  const audioToSend = new Blob([previousChunk], { type: mimeType });
 
-  const body = new FormData()
-  body.append('audio', audioToSend, `audio.${extension}`)
-  const apiCall = enableTranscriptionsElement.checked ? 'transcribe' : 'audio'
+  const body = new FormData();
+  body.append("audio", audioToSend, `audio.${extension}`);
+  const apiCall = enableTranscriptionsElement.checked ? "transcribe" : "audio";
   const response = await fetch(`/backend/${apiCall}/${userId}`, {
-    method: 'POST',
-    body
-  })
-  const text = await response.text()
-  console.log('\nGOT RESPONSE:')
-  console.log('response:', response)
-  console.log('text:', text)
-  console.log('')
+    method: "POST",
+    body,
+  });
+  const text = await response.text();
+  console.log("\nGOT RESPONSE:");
+  console.log("response:", response);
+  console.log("text:", text);
+  console.log("");
 
   // Send the audio to the debug endpoint
-  const debugBody = new FormData()
-  debugBody.append('audio', audioBlob, `audio.${extension}`)
+  const debugBody = new FormData();
+  debugBody.append("audio", audioBlob, `audio.${extension}`);
   const debugRequest = await fetch(`/backend/debug/${userId}`, {
-    method: 'POST',
-    body: debugBody
-  })
-  const debugResponse = await debugRequest.text()
-  console.log('\nGOT DEBUG RESPONSE:')
-  console.log('debugResponse:', debugResponse)
-  console.log('')
+    method: "POST",
+    body: debugBody,
+  });
+  const debugResponse = await debugRequest.text();
+  console.log("\nGOT DEBUG RESPONSE:");
+  console.log("debugResponse:", debugResponse);
+  console.log("");
 
-  audioChunks = []
-}
+  audioChunks = [];
+};
 
 /**
  * Handle audio level from the audio stream.
@@ -144,24 +165,28 @@ const handleSendAudio = async () => {
  * @param {MediaStream} stream The audio stream to analyze.
  */
 const handleAudioLevel = (stream) => {
-  const audioContext = new AudioContext()
-  const mediaStreamAudioSourceNode = audioContext.createMediaStreamSource(stream)
-  const analyserNode = audioContext.createAnalyser()
-  mediaStreamAudioSourceNode.connect(analyserNode)
+  const audioContext = new AudioContext();
+  const mediaStreamAudioSourceNode =
+    audioContext.createMediaStreamSource(stream);
+  const analyserNode = audioContext.createAnalyser();
+  mediaStreamAudioSourceNode.connect(analyserNode);
 
-  const pcmData = new Float32Array(analyserNode.fftSize)
+  const pcmData = new Float32Array(analyserNode.fftSize);
   const onFrame = () => {
-    analyserNode.getFloatTimeDomainData(pcmData)
-    const sumSquares = pcmData.reduce((sum, amplitude) => sum + amplitude * amplitude, 0.0)
+    analyserNode.getFloatTimeDomainData(pcmData);
+    const sumSquares = pcmData.reduce(
+      (sum, amplitude) => sum + amplitude * amplitude,
+      0.0,
+    );
 
     if (started) {
-      audioLevel = Math.sqrt(sumSquares / pcmData.length)
-      audioLevelElement.value = audioLevel
-      window.requestAnimationFrame(onFrame)
+      audioLevel = Math.sqrt(sumSquares / pcmData.length);
+      audioLevelElement.value = audioLevel;
+      window.requestAnimationFrame(onFrame);
     }
-  }
-  window.requestAnimationFrame(onFrame)
-}
+  };
+  window.requestAnimationFrame(onFrame);
+};
 
 /**
  * Handle the start button click.
@@ -171,28 +196,28 @@ const handleAudioLevel = (stream) => {
  * @returns {Promise<void>}
  */
 const handleStartBtnClick = async () => {
-  started = true
-  console.log('startBtn clicked')
-  stopBtn.style.display = 'block'
-  startBtn.style.display = 'none'
-  audioSourceSelect.disabled = true
-  enableTranscriptionsElement.disabled = true
+  started = true;
+  console.log("startBtn clicked");
+  stopBtn.style.display = "block";
+  startBtn.style.display = "none";
+  audioSourceSelect.disabled = true;
+  enableTranscriptionsElement.disabled = true;
 
-  const stream = await getAudioStream()
-  handleAudioLevel(stream)
+  const stream = await getAudioStream();
+  handleAudioLevel(stream);
 
   mediaRecorder = new MediaRecorder(stream, {
-    mimeType
-  })
-  mediaRecorder.addEventListener('dataavailable', (e) => {
-    audioChunks.push(e.data)
-    handleSendAudio()
-  })
-  mediaRecorder.start()
+    mimeType,
+  });
+  mediaRecorder.addEventListener("dataavailable", (e) => {
+    audioChunks.push(e.data);
+    handleSendAudio();
+  });
+  mediaRecorder.start();
   recordingInterval = setInterval(() => {
-    mediaRecorder.requestData()
-  }, audioRequestDataInterval)
-}
+    mediaRecorder.requestData();
+  }, audioRequestDataInterval);
+};
 
 /**
  * Handle the stop button click.
@@ -202,61 +227,67 @@ const handleStartBtnClick = async () => {
  * @returns {Promise<void>}
  */
 const handleStopBtnClick = async () => {
-  started = false
-  audioLevel = 0.0
-  console.log('stopBtn clicked')
-  stopBtn.disabled = true
-  stopBtn.innerText = 'Refresh to restart the demo! Recorded files are in the "records" folder.'
+  started = false;
+  audioLevel = 0.0;
+  console.log("stopBtn clicked");
+  stopBtn.disabled = true;
+  stopBtn.innerText =
+    'Refresh to restart the demo! Recorded files are in the "records" folder.';
 
   if (mediaRecorder) {
-    mediaRecorder.stop()
+    mediaRecorder.stop();
   }
 
   if (recordingInterval) {
-    clearInterval(recordingInterval)
-    recordingInterval = null
+    clearInterval(recordingInterval);
+    recordingInterval = null;
   }
 
   // Just wait a bit to be sure the last chunk can be sent.
-  await new Promise((resolve) => { setTimeout(resolve, 1000) })
+  await new Promise((resolve) => {
+    setTimeout(resolve, 1000);
+  });
 
   if (mediaRecorder) {
-    mediaRecorder = null
+    mediaRecorder = null;
   }
 
-  audioChunks = []
-  previousChunk = null
+  audioChunks = [];
+  previousChunk = null;
 
-  audioLevelElement.value = 0.0
-}
+  audioLevelElement.value = 0.0;
+};
 
 // Add event listeners to the buttons.
-startBtn?.addEventListener('click', handleStartBtnClick)
-stopBtn?.addEventListener('click', handleStopBtnClick)
+startBtn?.addEventListener("click", handleStartBtnClick);
+stopBtn?.addEventListener("click", handleStopBtnClick);
 
 // Inspect the audio level every 100ms.
-let sameStateCount = 0
-let isSpeaking = false
+let sameStateCount = 0;
+let isSpeaking = false;
 
 const audioLevelInterval = setInterval(() => {
-  const audible = audioLevel > audioDetectionLevel
+  const audible = audioLevel > audioDetectionLevel;
 
   if (audible) {
     if (sameStateCount < audioDetectionCounter) {
-      sameStateCount += 1
+      sameStateCount += 1;
     }
     if (sameStateCount >= audioMinDetectionCounter) {
-      isSpeaking = true
+      isSpeaking = true;
     }
   } else if (sameStateCount > 0) {
-    sameStateCount -= 1
+    sameStateCount -= 1;
   } else {
-    isSpeaking = false
+    isSpeaking = false;
   }
-  console.log('is speaking:', isSpeaking, sameStateCount)
-}, 100)
+  console.log("is speaking:", isSpeaking, sameStateCount);
+}, 100);
 
 // Stop the audio level detection after 15 minutes.
-setTimeout(() => {
-  clearInterval(audioLevelInterval)
-}, 60 * 15 * 1000)
+setTimeout(
+  () => {
+    clearInterval(audioLevelInterval);
+  },
+  60 * 15 * 1000,
+);

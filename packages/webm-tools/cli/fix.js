@@ -1,8 +1,8 @@
 // @ts-check
 
-import { writeFileSync } from 'node:fs'
-import { readFile } from 'node:fs/promises'
-import { fix as fixWebMChunk } from '../lib/index.js'
+import { writeFileSync } from "node:fs";
+import { readFile } from "node:fs/promises";
+import { fix as fixWebMChunk } from "../lib/index.js";
 
 /**
  * Fix a WebM file using the previous chunk.
@@ -14,23 +14,29 @@ import { fix as fixWebMChunk } from '../lib/index.js'
  * @param {Record<string, any>} options Options from the CLI.
  */
 const fix = async (prevChunkPath, brokenChunkPath, options) => {
-  const { debug } = options
-  const outputPath = options.out
+  const { debug } = options;
+  const outputPath = options.out;
 
   if (debug) {
-    console.info('Debug mode enabled')
-    console.log(`> Previous chunk path: ${prevChunkPath}`)
-    console.log(`> Broken chunk path: ${brokenChunkPath}`)
-    console.log(`> Output path: ${outputPath}`)
-    console.log('')
+    console.info("Debug mode enabled");
+    console.log(`> Previous chunk path: ${prevChunkPath}`);
+    console.log(`> Broken chunk path: ${brokenChunkPath}`);
+    console.log(`> Output path: ${outputPath}`);
+    console.log("");
   }
 
-  const prevChunk = /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (/** @type {unknown} */ (await readFile(prevChunkPath)))
-  const brokenChunk = /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (/** @type {unknown} */ (await readFile(brokenChunkPath)))
+  const prevChunk =
+    /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (
+      /** @type {unknown} */ (await readFile(prevChunkPath))
+    );
+  const brokenChunk =
+    /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (
+      /** @type {unknown} */ (await readFile(brokenChunkPath))
+    );
 
-  const newFile = fixWebMChunk(prevChunk, brokenChunk, { debug })
+  const newFile = fixWebMChunk(prevChunk, brokenChunk, { debug });
 
-  writeFileSync(outputPath, newFile)
-}
+  writeFileSync(outputPath, newFile);
+};
 
-export default fix
+export default fix;

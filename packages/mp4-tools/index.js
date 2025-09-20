@@ -1,11 +1,16 @@
 // @ts-check
 
-import { readBoxSize, readBoxType } from './lib/base.js'
+import { readBoxSize, readBoxType } from "./lib/base.js";
 
-import { Buffer, utils } from '@ludovicm67/media-tools-utils'
+import { Buffer, utils } from "@ludovicm67/media-tools-utils";
 
-export { readBoxSize, readBoxType } from './lib/base.js'
-export { parseFtypBox, parseMoovBox, parseMoofBox, parseMdatBox } from './lib/boxes.js'
+export { readBoxSize, readBoxType } from "./lib/base.js";
+export {
+  parseFtypBox,
+  parseMoovBox,
+  parseMoofBox,
+  parseMdatBox,
+} from "./lib/boxes.js";
 
 /**
  * Internal representation of a MP4 file.
@@ -27,60 +32,60 @@ export { parseFtypBox, parseMoovBox, parseMoofBox, parseMdatBox } from './lib/bo
  * @returns {{ filedata: import('@ludovicm67/media-tools-utils').Buffer, rest: import('@ludovicm67/media-tools-utils').Buffer }} The built file and the rest of the file.
  */
 export const buildFile = (data, context) => {
-  let { ftyp, moov, chunks, rest } = data
-  const { ftyp: ftypContext, moov: moovContext } = context || {}
+  let { ftyp, moov, chunks, rest } = data;
+  const { ftyp: ftypContext, moov: moovContext } = context || {};
   if (!ftyp) {
-    ftyp = ftypContext
+    ftyp = ftypContext;
   }
   if (!moov) {
-    moov = moovContext
+    moov = moovContext;
   }
 
   if (!ftyp || !moov || !chunks) {
-    throw new Error('Missing required boxes')
+    throw new Error("Missing required boxes");
   }
 
   if (!Array.isArray(chunks)) {
-    throw new Error('Chunks should be an array')
+    throw new Error("Chunks should be an array");
   }
 
-  const verifiedChunks = []
-  const additionalRest = []
+  const verifiedChunks = [];
+  const additionalRest = [];
   for (let i = 0; i < chunks.length; i += 2) {
-    const firstItem = chunks[i]
+    const firstItem = chunks[i];
 
     // If the first item is not a moof, we need to add it and everything after to the rest
-    if (firstItem.type !== 'moof') {
+    if (firstItem.type !== "moof") {
       for (let j = i; j < chunks.length; j++) {
-        additionalRest.push(chunks[j].data)
+        additionalRest.push(chunks[j].data);
       }
-      break
+      break;
     }
 
     // Make sure we have a second item, as we need a moof followed by a mdat
     if (i + 1 >= chunks.length) {
-      additionalRest.push(firstItem.data)
-      break
+      additionalRest.push(firstItem.data);
+      break;
     }
 
     // Check if the second item exists within the bounds of the array
-    const secondItem = chunks[i + 1]
-    if (secondItem.type !== 'mdat') {
-      throw new Error('Second item is not a mdat')
+    const secondItem = chunks[i + 1];
+    if (secondItem.type !== "mdat") {
+      throw new Error("Second item is not a mdat");
     }
 
-    verifiedChunks.push(firstItem.data)
-    verifiedChunks.push(secondItem.data)
+    verifiedChunks.push(firstItem.data);
+    verifiedChunks.push(secondItem.data);
   }
 
-  const currentRest = rest || Buffer.from([])
-  const filedata = Buffer.concat([ftyp, moov, ...verifiedChunks])
+  const currentRest = rest || Buffer.from([]);
+  const filedata = Buffer.concat([ftyp, moov, ...verifiedChunks]);
 
   return {
     filedata,
-    rest: Buffer.concat([currentRest, ...additionalRest])
-  }
-}
+    rest: Buffer.concat([currentRest, ...additionalRest]),
+  };
+};
 
 /**
  * Parse a MP4 file from a Buffer.
@@ -89,54 +94,54 @@ export const buildFile = (data, context) => {
  * @returns {MP4ParsedFile} The parsed file.
  */
 export const parse = (fileBuffer) => {
-  let currentIndex = 0
+  let currentIndex = 0;
 
   const data = {
     ftyp: null,
     moov: null,
     chunks: [],
-    rest: null
-  }
+    rest: null,
+  };
 
   while (currentIndex < fileBuffer.length) {
-    const boxSize = readBoxSize(fileBuffer, currentIndex)
-    const boxType = readBoxType(fileBuffer, currentIndex)
+    const boxSize = readBoxSize(fileBuffer, currentIndex);
+    const boxType = readBoxType(fileBuffer, currentIndex);
 
     // Prevent the parser from parsing not complete boxes
     if (currentIndex + boxSize > fileBuffer.length) {
-      data.rest = fileBuffer.subarray(currentIndex)
-      break
+      data.rest = fileBuffer.subarray(currentIndex);
+      break;
     }
 
-    const boxData = fileBuffer.subarray(currentIndex, currentIndex + boxSize)
+    const boxData = fileBuffer.subarray(currentIndex, currentIndex + boxSize);
 
     // Handle boxes
     switch (boxType) {
-      case 'ftyp':
-        data.ftyp = boxData
-        break
-      case 'moov':
-        data.moov = boxData
-        break
-      case 'moof':
+      case "ftyp":
+        data.ftyp = boxData;
+        break;
+      case "moov":
+        data.moov = boxData;
+        break;
+      case "moof":
         data.chunks.push({
-          type: 'moof',
-          data: boxData
-        })
-        break
-      case 'mdat':
+          type: "moof",
+          data: boxData,
+        });
+        break;
+      case "mdat":
         data.chunks.push({
-          type: 'mdat',
-          data: boxData
-        })
-        break
+          type: "mdat",
+          data: boxData,
+        });
+        break;
     }
 
-    currentIndex += boxSize
+    currentIndex += boxSize;
   }
 
-  return data
-}
+  return data;
+};
 
 /**
  * @typedef {Object} LibOptions
@@ -154,22 +159,19 @@ export const parse = (fileBuffer) => {
  * @returns {import('@ludovicm67/media-tools-utils').Buffer} The fixed chunk.
  */
 export const fix = (prevChunk, brokenChunk, options) => {
-  const { debug } = options || {}
+  const { debug } = options || {};
 
-  const parsedPrevChunk = parse(prevChunk)
-  const prevChunkRest = parsedPrevChunk.rest || Buffer.from([])
-  const brokenChunkMerge = Buffer.concat([prevChunkRest, brokenChunk])
-  const parsedBrokenChunk = parse(brokenChunkMerge)
-  const { filedata, rest } = buildFile(parsedBrokenChunk, parsedPrevChunk)
+  const parsedPrevChunk = parse(prevChunk);
+  const prevChunkRest = parsedPrevChunk.rest || Buffer.from([]);
+  const brokenChunkMerge = Buffer.concat([prevChunkRest, brokenChunk]);
+  const parsedBrokenChunk = parse(brokenChunkMerge);
+  const { filedata, rest } = buildFile(parsedBrokenChunk, parsedPrevChunk);
 
   if (debug) {
-    console.log('Rest:', rest)
+    console.log("Rest:", rest);
   }
 
-  return filedata
-}
+  return filedata;
+};
 
-export {
-  utils,
-  Buffer
-}
+export { utils, Buffer };

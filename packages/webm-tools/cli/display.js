@@ -1,7 +1,7 @@
 // @ts-check
 
-import { readFile } from 'node:fs/promises'
-import { display as displayWebM } from '../lib/index.js'
+import { readFile } from "node:fs/promises";
+import { display as displayWebM } from "../lib/index.js";
 
 /**
  * Display information about a WebM file.
@@ -10,17 +10,20 @@ import { display as displayWebM } from '../lib/index.js'
  * @param {Record<string, any>} options Options from the CLI.
  */
 const display = async (fileName, options) => {
-  const { debug } = options
+  const { debug } = options;
 
   if (debug) {
-    console.info('Debug mode enabled')
-    console.log(`> File path: ${fileName}`)
-    console.log('')
+    console.info("Debug mode enabled");
+    console.log(`> File path: ${fileName}`);
+    console.log("");
   }
 
-  const fileBuffer = /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (/** @type {unknown} */ (await readFile(fileName)))
+  const fileBuffer =
+    /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (
+      /** @type {unknown} */ (await readFile(fileName))
+    );
 
-  displayWebM(fileBuffer)
-}
+  displayWebM(fileBuffer);
+};
 
-export default display
+export default display;
