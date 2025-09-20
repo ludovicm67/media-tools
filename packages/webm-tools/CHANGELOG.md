@@ -1,5 +1,13 @@
 # @ludovicm67/webm-tools
 
+## 0.4.1
+
+### Patch Changes
+
+- 229b77d: Upgrade dependencies
+- Updated dependencies [229b77d]
+  - @ludovicm67/media-tools-utils@0.1.10
+
 ## 0.4.0
 
 ### Minor Changes

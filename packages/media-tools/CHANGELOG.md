@@ -1,5 +1,16 @@
 # @ludovicm67/media-tools
 
+## 0.3.7
+
+### Patch Changes
+
+- 229b77d: Upgrade dependencies
+- Updated dependencies [229b77d]
+  - @ludovicm67/media-tools-utils@0.1.10
+  - @ludovicm67/webm-tools@0.4.1
+  - @ludovicm67/mp4-tools@0.2.9
+  - @ludovicm67/ogg-tools@0.1.4
+
 ## 0.3.6
 
 ### Patch Changes

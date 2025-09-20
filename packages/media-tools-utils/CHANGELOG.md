@@ -1,5 +1,11 @@
 # @ludovicm67/media-tools-utils
 
+## 0.1.10
+
+### Patch Changes
+
+- 229b77d: Upgrade dependencies
+
 ## 0.1.9
 
 ### Patch Changes
