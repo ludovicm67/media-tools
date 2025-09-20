@@ -1,5 +1,13 @@
 # @ludovicm67/mp4-tools
 
+## 0.2.9
+
+### Patch Changes
+
+- 229b77d: Upgrade dependencies
+- Updated dependencies [229b77d]
+  - @ludovicm67/media-tools-utils@0.1.10
+
 ## 0.2.8
 
 ### Patch Changes
