@@ -1,8 +1,8 @@
 // @ts-check
 
-import { displayDecodedElements } from './tools.js'
-import { decode } from './decoder.js'
-import { Buffer } from '@ludovicm67/media-tools-utils'
+import { displayDecodedElements } from "./tools.js";
+import { decode } from "./decoder.js";
+import { Buffer } from "@ludovicm67/media-tools-utils";
 
 /**
  * @typedef {Object} LibOptions
@@ -20,25 +20,27 @@ import { Buffer } from '@ludovicm67/media-tools-utils'
  * @returns {import('@ludovicm67/media-tools-utils').Buffer} The fixed chunk.
  */
 export const fix = (prevChunk, brokenChunk, options) => {
-  const { debug } = options || {}
+  const { debug } = options || {};
 
-  const { decoded, headerBuffer, lastStartBuffer } = decode(prevChunk)
+  const { decoded, headerBuffer, lastStartBuffer } = decode(prevChunk);
   if (debug) {
-    console.info('\nDecoded previous chunk:')
-    displayDecodedElements(decoded)
-    console.log('')
+    console.info("\nDecoded previous chunk:");
+    displayDecodedElements(decoded);
+    console.log("");
   }
 
-  const newFile = Buffer.concat([headerBuffer, lastStartBuffer, brokenChunk])
-  const { decoded: newFileDecoded, buffer: newFileBuffer } = decode(newFile, { fixTimestamps: true })
+  const newFile = Buffer.concat([headerBuffer, lastStartBuffer, brokenChunk]);
+  const { decoded: newFileDecoded, buffer: newFileBuffer } = decode(newFile, {
+    fixTimestamps: true,
+  });
   if (debug) {
-    console.info('\nDecoded fixed chunk:')
-    displayDecodedElements(newFileDecoded)
-    console.log('')
+    console.info("\nDecoded fixed chunk:");
+    displayDecodedElements(newFileDecoded);
+    console.log("");
   }
 
-  return newFileBuffer
-}
+  return newFileBuffer;
+};
 
 /**
  * Display information of a WebM file.
@@ -47,6 +49,6 @@ export const fix = (prevChunk, brokenChunk, options) => {
  * @returns {void}
  */
 export const display = (fileBuffer) => {
-  const { decoded } = decode(fileBuffer)
-  displayDecodedElements(decoded)
-}
+  const { decoded } = decode(fileBuffer);
+  displayDecodedElements(decoded);
+};

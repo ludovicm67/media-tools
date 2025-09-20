@@ -1,11 +1,11 @@
 // @ts-check
 
-import * as mp4 from '@ludovicm67/mp4-tools'
-import * as ogg from '@ludovicm67/ogg-tools'
-import * as webm from '@ludovicm67/webm-tools'
+import * as mp4 from "@ludovicm67/mp4-tools";
+import * as ogg from "@ludovicm67/ogg-tools";
+import * as webm from "@ludovicm67/webm-tools";
 
 // Export some utils
-import { Buffer, utils } from '@ludovicm67/media-tools-utils'
+import { Buffer, utils } from "@ludovicm67/media-tools-utils";
 
 /**
  * Enum for supported MediaTypes.
@@ -13,10 +13,10 @@ import { Buffer, utils } from '@ludovicm67/media-tools-utils'
  * @enum {string}
  */
 const MediaTypes = {
-  MP4: 'mp4',
-  OGG: 'ogg',
-  WEBM: 'webm'
-}
+  MP4: "mp4",
+  OGG: "ogg",
+  WEBM: "webm",
+};
 
 /**
  * @typedef {Object} MediaToolsOptions
@@ -35,25 +35,18 @@ const MediaTypes = {
  * @returns {import('@ludovicm67/media-tools-utils').Buffer} The fixed chunk.
  */
 export const fix = (prevChunk, brokenChunk, options) => {
-  const { debug, mediaType } = options || {}
+  const { debug, mediaType } = options || {};
 
   switch (mediaType) {
     case MediaTypes.MP4:
-      return mp4.fix(prevChunk, brokenChunk, { debug })
+      return mp4.fix(prevChunk, brokenChunk, { debug });
     case MediaTypes.OGG:
-      return ogg.fix(prevChunk, brokenChunk, { debug })
+      return ogg.fix(prevChunk, brokenChunk, { debug });
     case MediaTypes.WEBM:
-      return webm.fix(prevChunk, brokenChunk, { debug })
+      return webm.fix(prevChunk, brokenChunk, { debug });
     default:
-      throw new Error(`Unsupported media type: '${mediaType}'`)
+      throw new Error(`Unsupported media type: '${mediaType}'`);
   }
-}
+};
 
-export {
-  MediaTypes,
-  mp4,
-  ogg,
-  webm,
-  Buffer,
-  utils
-}
+export { MediaTypes, mp4, ogg, webm, Buffer, utils };

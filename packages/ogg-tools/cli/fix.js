@@ -1,8 +1,8 @@
 // @ts-check
 
-import { writeFileSync } from 'node:fs'
-import { readFile } from 'node:fs/promises'
-import { fix as fixOggChunk } from '../index.js'
+import { writeFileSync } from "node:fs";
+import { readFile } from "node:fs/promises";
+import { fix as fixOggChunk } from "../index.js";
 
 /**
  * Fix a OGG file using the previous chunk.
@@ -14,27 +14,33 @@ import { fix as fixOggChunk } from '../index.js'
  * @param {Record<string, any>} options Options from the CLI.
  */
 const fix = async (prevChunkPath, brokenChunkPath, options) => {
-  const { debug } = options
-  const outputPath = options.out
+  const { debug } = options;
+  const outputPath = options.out;
 
   if (debug) {
-    console.info('Debug mode enabled')
-    console.log(`> Previous chunk path: ${prevChunkPath}`)
-    console.log(`> Broken chunk path: ${brokenChunkPath}`)
-    console.log(`> Output path: ${outputPath}`)
-    console.log('')
+    console.info("Debug mode enabled");
+    console.log(`> Previous chunk path: ${prevChunkPath}`);
+    console.log(`> Broken chunk path: ${brokenChunkPath}`);
+    console.log(`> Output path: ${outputPath}`);
+    console.log("");
   }
 
-  const prevChunk = /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (/** @type {unknown} */ (await readFile(prevChunkPath)))
-  const brokenChunk = /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (/** @type {unknown} */ (await readFile(brokenChunkPath)))
+  const prevChunk =
+    /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (
+      /** @type {unknown} */ (await readFile(prevChunkPath))
+    );
+  const brokenChunk =
+    /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (
+      /** @type {unknown} */ (await readFile(brokenChunkPath))
+    );
 
-  const filedata = fixOggChunk(prevChunk, brokenChunk, { debug })
+  const filedata = fixOggChunk(prevChunk, brokenChunk, { debug });
 
   if (debug) {
-    console.info(`\nWriting fixed chunk to file: '${outputPath}'`)
+    console.info(`\nWriting fixed chunk to file: '${outputPath}'`);
   }
 
-  writeFileSync(outputPath, filedata)
-}
+  writeFileSync(outputPath, filedata);
+};
 
-export default fix
+export default fix;

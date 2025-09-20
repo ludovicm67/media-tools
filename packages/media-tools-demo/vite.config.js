@@ -1,21 +1,19 @@
-import basicSsl from '@vitejs/plugin-basic-ssl'
+import basicSsl from "@vitejs/plugin-basic-ssl";
 
 export default {
-  plugins: [
-    basicSsl()
-  ],
+  plugins: [basicSsl()],
   server: {
     proxy: {
-      '/backend': {
-        target: 'http://127.0.0.1:3000',
+      "/backend": {
+        target: "http://127.0.0.1:3000",
         changeOrigin: false,
         secure: false,
         ws: false,
-        rewrite: (path) => path.replace(/^\/backend/, '')
-      }
-    }
+        rewrite: (path) => path.replace(/^\/backend/, ""),
+      },
+    },
   },
   build: {
-    target: 'ES2022'
-  }
-}
+    target: "ES2022",
+  },
+};

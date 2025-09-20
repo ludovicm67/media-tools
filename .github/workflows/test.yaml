@@ -3,9 +3,9 @@ name: Run Tests
 on:
   push:
     branches:
-      - "**"
+      - '**'
     tags:
-      - "**"
+      - '**'
 
 jobs:
   tests:
@@ -18,7 +18,7 @@ jobs:
       - name: Set up NodeJS
         uses: actions/setup-node@v5
         with:
-          node-version: "lts/*"
+          node-version: 'lts/*'
 
       - name: Install dependencies
         run: npm ci
@@ -37,7 +37,7 @@ jobs:
       - name: Set up NodeJS
         uses: actions/setup-node@v5
         with:
-          node-version: "lts/*"
+          node-version: 'lts/*'
       - name: Install dependencies
         run: npm ci
       - name: Run build of each package
@@ -65,6 +65,6 @@ jobs:
 
       - name: Check if types are complete
         run: |
-          grep -q "as mp4 from '@ludovicm67/mp4-tools'" ./packages/media-tools/dist/index.d.ts
-          grep -q "as ogg from '@ludovicm67/ogg-tools'" ./packages/media-tools/dist/index.d.ts
-          grep -q "as webm from '@ludovicm67/webm-tools'" ./packages/media-tools/dist/index.d.ts
+          grep -q 'as mp4 from "@ludovicm67/mp4-tools"' ./packages/media-tools/dist/index.d.ts
+          grep -q 'as ogg from "@ludovicm67/ogg-tools"' ./packages/media-tools/dist/index.d.ts
+          grep -q 'as webm from "@ludovicm67/webm-tools"' ./packages/media-tools/dist/index.d.ts

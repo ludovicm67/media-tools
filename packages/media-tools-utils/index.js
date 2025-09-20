@@ -1,6 +1,6 @@
 // @ts-check
 
-import { Buffer } from 'buffer/index.js'
+import { Buffer } from "buffer/index.js";
 
 /**
  * Convert a Blob to a Buffer.
@@ -9,15 +9,13 @@ import { Buffer } from 'buffer/index.js'
  * @returns {Promise<import('@ludovicm67/media-tools-utils').Buffer>} The blob as a Buffer.
  */
 export const blobToArrayBuffer = async (blob) => {
-  const arrayBuffer = await blob.arrayBuffer()
-  const buffer = Buffer.from(arrayBuffer)
-  return buffer
-}
+  const arrayBuffer = await blob.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+  return buffer;
+};
 
 export const utils = {
-  blobToArrayBuffer
-}
+  blobToArrayBuffer,
+};
 
-export {
-  Buffer
-}
+export { Buffer };
