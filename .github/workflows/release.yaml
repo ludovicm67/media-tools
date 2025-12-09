@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
+      id-token: write
       contents: write
       pull-requests: write
 
@@ -42,4 +43,3 @@ jobs:
           title: "Merge to release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
