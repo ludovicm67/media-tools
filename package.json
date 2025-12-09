@@ -21,7 +21,7 @@
     ]
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.7",
+    "@changesets/cli": "^2.29.8",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.39.1",
     "eslint": "^9.39.1",
