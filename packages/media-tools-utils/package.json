@@ -38,7 +38,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@types/node": "^25.0.9",
+    "@types/node": "^25.0.10",
     "rimraf": "^6.1.2",
     "typescript": "^5.9.3"
   }
