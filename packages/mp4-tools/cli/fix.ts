@@ -1,5 +1,3 @@
-// @ts-check
-
 import { writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { fix as fixMP4Chunk } from "../index.js";
@@ -9,13 +7,13 @@ import { fix as fixMP4Chunk } from "../index.js";
  * The previous chunk should be a sane chunk.
  * It should be the one that is right before the broken chunk.
  *
- * @param {string} prevChunkPath The path to the previous (sane) chunk.
- * @param {string} brokenChunkPath The path to the broken chunk.
- * @param {Record<string, any>} options Options from the CLI.
+ * @param prevChunkPath The path to the previous (sane) chunk.
+ * @param brokenChunkPath The path to the broken chunk.
+ * @param options Options from the CLI.
  */
-const fix = async (prevChunkPath, brokenChunkPath, options) => {
-  const { debug } = options;
-  const outputPath = options.out;
+const fix = async (prevChunkPath: string, brokenChunkPath: string, options: Record<string, unknown>): Promise<void> => {
+  const debug = options.debug as boolean | undefined;
+  const outputPath = options.out as string;
 
   if (debug) {
     console.info("Debug mode enabled");
@@ -25,14 +23,8 @@ const fix = async (prevChunkPath, brokenChunkPath, options) => {
     console.log("");
   }
 
-  const prevChunk =
-    /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (
-      /** @type {unknown} */ (await readFile(prevChunkPath))
-    );
-  const brokenChunk =
-    /** @type {import('@ludovicm67/media-tools-utils').Buffer} */ (
-      /** @type {unknown} */ (await readFile(brokenChunkPath))
-    );
+  const prevChunk = (await readFile(prevChunkPath)) as unknown as Buffer;
+  const brokenChunk = (await readFile(brokenChunkPath)) as unknown as Buffer;
 
   const filedata = fixMP4Chunk(prevChunk, brokenChunk, { debug });
 

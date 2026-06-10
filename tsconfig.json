@@ -3,19 +3,21 @@
     "**/coverage",
     "**/test",
     "node_modules",
+    "**/dist",
     "**/*.d.ts",
     "**/*.d.cts",
     "**/*.d.mts"
   ],
   "compilerOptions": {
-    "allowJs": true,
     "declaration": true,
-    "emitDeclarationOnly": true,
     "declarationMap": true,
     "esModuleInterop": true,
     "moduleResolution": "NodeNext",
     "module": "NodeNext",
+    "target": "ES2022",
     "outDir": "dist",
-    "composite": true
+    "composite": true,
+    "strict": true,
+    "types": ["node"]
   }
 }

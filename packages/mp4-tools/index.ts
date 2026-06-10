@@ -1,5 +1,3 @@
-// @ts-check
-
 import { readBoxSize, readBoxType } from "./lib/base.js";
 
 import { Buffer, utils } from "@ludovicm67/media-tools-utils";
@@ -12,34 +10,42 @@ export {
   parseMdatBox,
 } from "./lib/boxes.js";
 
-/**
- * Internal representation of a MP4 file.
- *
- * @typedef {Object} MP4ParsedFile
- * @property {import('@ludovicm67/media-tools-utils').Buffer} ftyp The ftyp box.
- * @property {import('@ludovicm67/media-tools-utils').Buffer} moov The moov box.
- * @property {Array<{ type: string, data: import('@ludovicm67/media-tools-utils').Buffer }>} chunks The chunks of the file.
- * @property {import('@ludovicm67/media-tools-utils').Buffer} rest The rest of the file.
- */
+export interface Chunk {
+  type: string;
+  data: Buffer;
+}
+
+/** Internal representation of a MP4 file. */
+export interface MP4ParsedFile {
+  /** The ftyp box. */
+  ftyp: Buffer | null;
+  /** The moov box. */
+  moov: Buffer | null;
+  /** The chunks of the file. */
+  chunks: Chunk[];
+  /** The rest of the file. */
+  rest: Buffer | null;
+}
+
+export interface BuildFileResult {
+  filedata: Buffer;
+  rest: Buffer;
+}
 
 /**
  * Build a MP4 file from the given data.
  * If the data is not complete, the rest of the file will be returned in the `rest` property.
  * If the data is complete, the rest will be empty.
  *
- * @param {MP4ParsedFile} data The data to build the file from.
- * @param {MP4ParsedFile} [context={}] The context to use to build the file, usually the previous parsed chunk.
- * @returns {{ filedata: import('@ludovicm67/media-tools-utils').Buffer, rest: import('@ludovicm67/media-tools-utils').Buffer }} The built file and the rest of the file.
+ * @param data The data to build the file from.
+ * @param context The context to use to build the file, usually the previous parsed chunk.
+ * @returns The built file and the rest of the file.
  */
-export const buildFile = (data, context) => {
+export const buildFile = (data: MP4ParsedFile, context?: Partial<MP4ParsedFile>): BuildFileResult => {
   let { ftyp, moov, chunks, rest } = data;
   const { ftyp: ftypContext, moov: moovContext } = context || {};
-  if (!ftyp) {
-    ftyp = ftypContext;
-  }
-  if (!moov) {
-    moov = moovContext;
-  }
+  if (!ftyp) ftyp = ftypContext ?? null;
+  if (!moov) moov = moovContext ?? null;
 
   if (!ftyp || !moov || !chunks) {
     throw new Error("Missing required boxes");
@@ -49,8 +55,8 @@ export const buildFile = (data, context) => {
     throw new Error("Chunks should be an array");
   }
 
-  const verifiedChunks = [];
-  const additionalRest = [];
+  const verifiedChunks: Buffer[] = [];
+  const additionalRest: Buffer[] = [];
   for (let i = 0; i < chunks.length; i += 2) {
     const firstItem = chunks[i];
 
@@ -90,13 +96,13 @@ export const buildFile = (data, context) => {
 /**
  * Parse a MP4 file from a Buffer.
  *
- * @param {import('@ludovicm67/media-tools-utils').Buffer} fileBuffer The file to parse as a Buffer.
- * @returns {MP4ParsedFile} The parsed file.
+ * @param fileBuffer The file to parse as a Buffer.
+ * @returns The parsed file.
  */
-export const parse = (fileBuffer) => {
+export const parse = (fileBuffer: Buffer): MP4ParsedFile => {
   let currentIndex = 0;
 
-  const data = {
+  const data: MP4ParsedFile = {
     ftyp: null,
     moov: null,
     chunks: [],
@@ -109,11 +115,11 @@ export const parse = (fileBuffer) => {
 
     // Prevent the parser from parsing not complete boxes
     if (currentIndex + boxSize > fileBuffer.length) {
-      data.rest = fileBuffer.subarray(currentIndex);
+      data.rest = fileBuffer.subarray(currentIndex) as Buffer;
       break;
     }
 
-    const boxData = fileBuffer.subarray(currentIndex, currentIndex + boxSize);
+    const boxData = fileBuffer.subarray(currentIndex, currentIndex + boxSize) as Buffer;
 
     // Handle boxes
     switch (boxType) {
@@ -124,16 +130,10 @@ export const parse = (fileBuffer) => {
         data.moov = boxData;
         break;
       case "moof":
-        data.chunks.push({
-          type: "moof",
-          data: boxData,
-        });
+        data.chunks.push({ type: "moof", data: boxData });
         break;
       case "mdat":
-        data.chunks.push({
-          type: "mdat",
-          data: boxData,
-        });
+        data.chunks.push({ type: "mdat", data: boxData });
         break;
     }
 
@@ -143,22 +143,22 @@ export const parse = (fileBuffer) => {
   return data;
 };
 
-/**
- * @typedef {Object} LibOptions
- * @property {boolean} [debug] Whether to enable debug mode or not.
- */
+export interface LibOptions {
+  /** Whether to enable debug mode or not. */
+  debug?: boolean;
+}
 
 /**
  * Fix a MP4 file using the previous chunk.
  * The previous chunk should be a sane chunk.
  * It should be the one that is right before the broken chunk.
  *
- * @param {import('@ludovicm67/media-tools-utils').Buffer} prevChunk Content of the previous (sane) chunk.
- * @param {import('@ludovicm67/media-tools-utils').Buffer} brokenChunk Content of the broken chunk.
- * @param {LibOptions} [options={}] Options.
- * @returns {import('@ludovicm67/media-tools-utils').Buffer} The fixed chunk.
+ * @param prevChunk Content of the previous (sane) chunk.
+ * @param brokenChunk Content of the broken chunk.
+ * @param options Options.
+ * @returns The fixed chunk.
  */
-export const fix = (prevChunk, brokenChunk, options) => {
+export const fix = (prevChunk: Buffer, brokenChunk: Buffer, options?: LibOptions): Buffer => {
   const { debug } = options || {};
 
   const parsedPrevChunk = parse(prevChunk);

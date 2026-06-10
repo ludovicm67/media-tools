@@ -1,13 +1,11 @@
-// @ts-check
-
 /**
  * Read the size of a box from the given buffer.
  *
- * @param {import('@ludovicm67/media-tools-utils').Buffer} buffer The buffer to read from.
- * @param {number} index The index at which to start reading.
- * @returns {number} The size of the box.
+ * @param buffer The buffer to read from.
+ * @param index The index at which to start reading.
+ * @returns The size of the box.
  */
-export const readBoxSize = (buffer, index) => {
+export const readBoxSize = (buffer: Buffer, index: number): number => {
   let size = buffer.readUInt32BE(index);
 
   if (size === 1) {
@@ -25,11 +23,11 @@ export const readBoxSize = (buffer, index) => {
 /**
  * Read the type of a box from the given buffer.
  *
- * @param {import('@ludovicm67/media-tools-utils').Buffer} buffer The buffer to read from.
- * @param {number} index The index at which to start reading.
- * @returns {string} The type of the box.
+ * @param buffer The buffer to read from.
+ * @param index The index at which to start reading.
+ * @returns The type of the box.
  */
-export const readBoxType = (buffer, index) => {
+export const readBoxType = (buffer: Buffer, index: number): string => {
   // The type is the 4 bytes following the size.
   return buffer.toString("ascii", index + 4, index + 8);
 };

@@ -1,43 +1,55 @@
-// @ts-check
-
 import { Buffer, utils } from "@ludovicm67/media-tools-utils";
 
 const OGG_FIXED_HEADER_SIZE = 27; // Fixed part of the OGG page header
 
-/**
- * OGG page type.
- *
- * @typedef {"Unknown" | "Opus Head" | "Opus Tags" | "Vorbis Identification Header" | "Vorbis Comment Header" | "Vorbis Setup Header" | "Theora Identification Header" | "Theora Comment Header" | "Theora Setup Header" | "Speex Audio"} OGGPageType
- */
+export type OGGPageType =
+  | "Unknown"
+  | "Opus Head"
+  | "Opus Tags"
+  | "Vorbis Identification Header"
+  | "Vorbis Comment Header"
+  | "Vorbis Setup Header"
+  | "Theora Identification Header"
+  | "Theora Comment Header"
+  | "Theora Setup Header"
+  | "Speex Audio";
 
-/**
- * Internal representation of a OGG page.
- *
- * @typedef {Object} OGGPage
- * @property {OGGPageType} type The type of the page.
- * @property {boolean} isMetadata Whether the page is a metadata page or not.
- * @property {import('@ludovicm67/media-tools-utils').Buffer} content The content of the page.
- */
+/** Internal representation of a OGG page. */
+export interface OGGPage {
+  /** The type of the page. */
+  type: OGGPageType;
+  /** Whether the page is a metadata page or not. */
+  isMetadata: boolean;
+  /** The content of the page. */
+  content: Buffer;
+  length: number;
+}
 
-/**
- * Internal representation of a OGG file.
- *
- * @typedef {Object} OGGParsedFile
- * @property {Array<OGGPage>} pages The pages of the file.
- * @property {import('@ludovicm67/media-tools-utils').Buffer} rest The rest of the file.
- * @property {boolean} isIncomplete Whether the file is incomplete or not.
- */
+/** Internal representation of a OGG file. */
+export interface OGGParsedFile {
+  /** The pages of the file. */
+  pages: OGGPage[];
+  /** The rest of the file. */
+  rest: Buffer;
+  /** Whether the file is incomplete or not. */
+  isIncomplete: boolean;
+}
+
+export interface BuildFileResult {
+  filedata: Buffer;
+  rest: Buffer;
+}
 
 /**
  * Build a OGG file from the given data.
  * If the data is not complete, the rest of the file will be returned in the `rest` property.
  * If the data is complete, the rest will be empty.
  *
- * @param {OGGParsedFile} data The data to build the file from.
- * @param {OGGParsedFile} [context] The context to use to build the file, usually the previous parsed chunk.
- * @returns {{ filedata: import('@ludovicm67/media-tools-utils').Buffer, rest: import('@ludovicm67/media-tools-utils').Buffer }} The built file and the rest of the file.
+ * @param data The data to build the file from.
+ * @param context The context to use to build the file, usually the previous parsed chunk.
+ * @returns The built file and the rest of the file.
  */
-export const buildFile = (data, context) => {
+export const buildFile = (data: OGGParsedFile, context?: OGGParsedFile): BuildFileResult => {
   const { pages: currentPages, rest } = data;
   const { pages: firstPages, rest: firstRest } = context || {
     pages: [],
@@ -68,22 +80,19 @@ export const buildFile = (data, context) => {
     ...currentDataPages,
   ]);
 
-  return {
-    filedata,
-    rest,
-  };
+  return { filedata, rest };
 };
 
 /**
  * Parse a OGG file from a Buffer.
  *
- * @param {import('@ludovicm67/media-tools-utils').Buffer} fileBuffer The file to parse as a Buffer.
- * @returns {OGGParsedFile} The parsed file.
+ * @param fileBuffer The file to parse as a Buffer.
+ * @returns The parsed file.
  */
-export const parse = (fileBuffer) => {
+export const parse = (fileBuffer: Buffer): OGGParsedFile => {
   let position = 0;
   let isIncomplete = false;
-  const oggPages = [];
+  const oggPages: OGGPage[] = [];
 
   while (position + OGG_FIXED_HEADER_SIZE < fileBuffer.length) {
     // Check if the current position is the start of an OGG page
@@ -114,7 +123,7 @@ export const parse = (fileBuffer) => {
     const pageData = fileBuffer.slice(position, position + pageSize);
 
     // Check the first few bytes of the first packet for a known type
-    let type = /** @type {OGGPageType} */ ("Unknown");
+    let type: OGGPageType = "Unknown";
     if (pageData.length > headerSize + 8) {
       const packetStart = headerSize;
       const packetSignature = pageData
@@ -160,22 +169,22 @@ export const parse = (fileBuffer) => {
   };
 };
 
-/**
- * @typedef {Object} LibOptions
- * @property {boolean} [debug] Whether to enable debug mode or not.
- */
+export interface LibOptions {
+  /** Whether to enable debug mode or not. */
+  debug?: boolean;
+}
 
 /**
  * Fix a OGG file using the previous chunk.
  * The previous chunk should be a sane chunk.
  * It should be the one that is right before the broken chunk.
  *
- * @param {import('@ludovicm67/media-tools-utils').Buffer} prevChunk Content of the previous (sane) chunk.
- * @param {import('@ludovicm67/media-tools-utils').Buffer} brokenChunk Content of the broken chunk.
- * @param {LibOptions} [options={}] Options.
- * @returns {import('@ludovicm67/media-tools-utils').Buffer} The fixed chunk.
+ * @param prevChunk Content of the previous (sane) chunk.
+ * @param brokenChunk Content of the broken chunk.
+ * @param options Options.
+ * @returns The fixed chunk.
  */
-export const fix = (prevChunk, brokenChunk, options) => {
+export const fix = (prevChunk: Buffer, brokenChunk: Buffer, options?: LibOptions): Buffer => {
   const { debug } = options || {};
 
   const parsedPrevChunk = parse(prevChunk);

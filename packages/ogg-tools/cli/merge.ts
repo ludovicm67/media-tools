@@ -1,5 +1,3 @@
-// @ts-check
-
 import { writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 
@@ -7,19 +5,19 @@ import { readFile } from "node:fs/promises";
  * Merge OGG chunks together.
  * The first chunk should be a sane chunk.
  *
- * @param {string} firstChunkPath Path to the first chunk of the file.
- * @param {string} secondChunkPath Path to the second chunk of the file.
- * @param {string[]} otherChunksPaths Other chunks to merge together.
- * @param {Record<string, any>} options Options from the CLI.
+ * @param firstChunkPath Path to the first chunk of the file.
+ * @param secondChunkPath Path to the second chunk of the file.
+ * @param otherChunksPaths Other chunks to merge together.
+ * @param options Options from the CLI.
  */
 const merge = async (
-  firstChunkPath,
-  secondChunkPath,
-  otherChunksPaths,
-  options,
-) => {
-  const debug = options.debug;
-  const outputPath = options.out;
+  firstChunkPath: string,
+  secondChunkPath: string,
+  otherChunksPaths: string[],
+  options: Record<string, unknown>,
+): Promise<void> => {
+  const debug = options.debug as boolean | undefined;
+  const outputPath = options.out as string;
 
   if (debug) {
     console.info("Debug mode enabled");
@@ -32,15 +30,15 @@ const merge = async (
 
   const firstChunk = await readFile(firstChunkPath);
 
-  const otherChunks = [];
+  const otherChunks: Buffer[] = [];
   const secondChunk = await readFile(secondChunkPath);
-  otherChunks.push(secondChunk);
+  otherChunks.push(secondChunk as unknown as Buffer);
   for (const otherChunkPath of otherChunksPaths) {
     const otherChunk = await readFile(otherChunkPath);
-    otherChunks.push(otherChunk);
+    otherChunks.push(otherChunk as unknown as Buffer);
   }
 
-  const newFile = Buffer.concat([firstChunk, ...otherChunks]);
+  const newFile = Buffer.concat([firstChunk as unknown as Buffer, ...otherChunks]);
 
   writeFileSync(outputPath, newFile);
 };

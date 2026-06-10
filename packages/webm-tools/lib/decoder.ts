@@ -1,5 +1,3 @@
-// @ts-check
-
 import { Buffer } from "@ludovicm67/media-tools-utils";
 import schema from "./ebml-schema.js";
 import {
@@ -22,26 +20,64 @@ const STATE_CONTENT = 2;
 // Define some constants
 const DEFAULT_TIMESTAMP_DELTA = 60;
 
+export interface DecodeOptions {
+  fixTimestamps?: boolean;
+  debug?: boolean;
+}
+
+export interface SchemaInfo {
+  type: string | null;
+  name: string;
+  description?: string;
+  level?: number;
+  minver?: number;
+  multiple?: boolean;
+  webm?: boolean;
+}
+
+export interface TagObject {
+  tag: number;
+  tagStr: string;
+  type: string | null;
+  name: string;
+  start: number;
+  end: number;
+  dataSize?: number;
+  data?: Buffer;
+  discardable?: boolean;
+  keyframe?: boolean;
+  payload?: Buffer | null;
+  track?: number | null;
+  value?: number | string | Date | null;
+}
+
+export type EBMLEvent = ["start" | "end" | "tag", TagObject];
+
+export interface DecodeResult {
+  decoded: EBMLEvent[];
+  headerBuffer: Buffer;
+  lastStartBuffer: Buffer;
+  buffer: Buffer;
+}
+
 /**
  * Decode a WebM file.
  *
- * @param {import('@ludovicm67/media-tools-utils').Buffer} buffer Buffer to decode
+ * @param buffer Buffer to decode
+ * @param options Decode options
+ * @returns Decoded result
  */
-export const decode = (buffer, options = {}) => {
+export const decode = (buffer: Buffer, options: DecodeOptions = {}): DecodeResult => {
   const internalBuffer = Buffer.from(buffer);
   let fixTimestamps = false;
   let debug = false;
 
   if (options) {
-    if (options.fixTimestamps) {
-      fixTimestamps = true;
-    }
-    if (options.debug) {
-      debug = true;
-    }
+    if (options.fixTimestamps) fixTimestamps = true;
+    if (options.debug) debug = true;
   }
 
-  const ctx = new Map();
+  const ctx = new Map<string, unknown>();
 
   // Options
   ctx.set("debug", debug);
@@ -66,7 +102,7 @@ export const decode = (buffer, options = {}) => {
   ctx.set("isHeader", false); // Is it the header?
   ctx.set("endOfHeader", 0); // End of the header
 
-  while (ctx.get("cursor") < buffer.length) {
+  while ((ctx.get("cursor") as number) < buffer.length) {
     let isValid = false;
 
     switch (ctx.get("state")) {
@@ -86,61 +122,51 @@ export const decode = (buffer, options = {}) => {
     }
   }
 
-  const headerBuffer = internalBuffer.slice(0, ctx.get("endOfHeader"));
-  const lastStartBuffer = internalBuffer.slice(ctx.get("lastStart"));
-  const decoded = ctx.get("decoded");
+  const headerBuffer = internalBuffer.slice(0, ctx.get("endOfHeader") as number);
+  const lastStartBuffer = internalBuffer.slice(ctx.get("lastStart") as number);
+  const decoded = ctx.get("decoded") as EBMLEvent[];
 
   ctx.clear();
 
-  return {
-    decoded,
-    headerBuffer,
-    lastStartBuffer,
-    buffer: internalBuffer,
-  };
+  return { decoded, headerBuffer, lastStartBuffer, buffer: internalBuffer };
 };
 
 /**
  * Read a tag from the buffer.
  *
- * @param {Map} ctx Context.
- * @returns {boolean} Are we in a valid state?
+ * @param ctx Context.
+ * @returns Are we in a valid state?
  */
-const readTag = (ctx) => {
-  // Check if we are at the end of the buffer
-  if (ctx.get("cursor") >= ctx.get("buffer").length) {
-    return false;
-  }
+const readTag = (ctx: Map<string, unknown>): boolean => {
+  const cursor = ctx.get("cursor") as number;
+  const buf = ctx.get("buffer") as Buffer;
 
-  ctx.set("lastStart", ctx.get("cursor"));
-  const tag = readVint(ctx.get("buffer"), ctx.get("cursor"));
-  if (tag === null) {
-    return false;
-  }
+  // Check if we are at the end of the buffer
+  if (cursor >= buf.length) return false;
+
+  ctx.set("lastStart", cursor);
+  const tag = readVint(buf, cursor);
+  if (tag === null) return false;
 
   const { value, length } = tag;
 
-  const tagStr = readHexString(
-    ctx.get("buffer"),
-    ctx.get("cursor"),
-    ctx.get("cursor") + length,
-  );
+  const tagStr = readHexString(buf, cursor, cursor + length);
   const tagNum = Number.parseInt(tagStr, 16);
-  ctx.set("cursor", ctx.get("cursor") + length);
+  ctx.set("cursor", cursor + length);
   ctx.set("state", STATE_SIZE);
 
   const schemaInfo = getSchemaInfo(tagNum);
 
-  const tagObj = {
+  const tagObj: TagObject = {
     tag: value,
     tagStr,
     type: schemaInfo.type,
     name: schemaInfo.name,
-    start: ctx.get("lastStart"),
-    end: ctx.get("lastStart") + length,
+    start: ctx.get("lastStart") as number,
+    end: (ctx.get("lastStart") as number) + length,
   };
 
-  ctx.get("tagStack").push(tagObj);
+  (ctx.get("tagStack") as TagObject[]).push(tagObj);
 
   return true;
 };
@@ -148,24 +174,20 @@ const readTag = (ctx) => {
 /**
  * Read a size from the buffer.
  *
- * @param {Map} ctx Context.
- * @returns {boolean} Are we in a valid state?
+ * @param ctx Context.
+ * @returns Are we in a valid state?
  */
-const readSize = (ctx) => {
+const readSize = (ctx: Map<string, unknown>): boolean => {
+  const cursor = ctx.get("cursor") as number;
+  const buf = ctx.get("buffer") as Buffer;
+
   // Check if we are at the end of the buffer
-  if (ctx.get("cursor") >= ctx.get("buffer").length) {
-    return false;
-  }
+  if (cursor >= buf.length) return false;
 
-  const tagStack = ctx.get("tagStack");
-  const buffer = ctx.get("buffer");
-  const cursor = ctx.get("cursor");
-
+  const tagStack = ctx.get("tagStack") as TagObject[];
   const tagObj = tagStack[tagStack.length - 1];
-  const size = readVint(buffer, cursor);
-  if (size === null) {
-    return false;
-  }
+  const size = readVint(buf, cursor);
+  if (size === null) return false;
 
   ctx.set("cursor", cursor + size.length);
   ctx.set("state", STATE_CONTENT);
@@ -183,12 +205,11 @@ const readSize = (ctx) => {
 /**
  * Read content from the buffer.
  *
- * @param {Map} ctx Context.
- * @returns {boolean} Are we in a valid state?
+ * @param ctx Context.
+ * @returns Are we in a valid state?
  */
-const readContent = (ctx) => {
-  const tagStack = ctx.get("tagStack");
-
+const readContent = (ctx: Map<string, unknown>): boolean => {
+  const tagStack = ctx.get("tagStack") as TagObject[];
   const currentElement = tagStack[tagStack.length - 1];
   const { type, dataSize } = currentElement;
 
@@ -198,25 +219,22 @@ const readContent = (ctx) => {
     return true;
   }
 
-  const cursor = ctx.get("cursor");
+  const cursor = ctx.get("cursor") as number;
+  const buf = ctx.get("buffer") as Buffer;
 
   // Check if we are at the end of the buffer
-  if (ctx.get("buffer").length < cursor + dataSize) {
-    return false;
-  }
+  if (buf.length < cursor + (dataSize ?? 0)) return false;
 
-  const data = ctx.get("buffer").slice(cursor, cursor + dataSize);
+  const data = buf.slice(cursor, cursor + (dataSize ?? 0));
   handleEBMLElement(ctx, ["tag", readDataFromTag(ctx, currentElement, data)]);
   tagStack.pop();
 
-  ctx.set("cursor", ctx.get("cursor") + dataSize);
+  ctx.set("cursor", (ctx.get("cursor") as number) + (dataSize ?? 0));
   ctx.set("state", STATE_TAG);
 
   while (tagStack.length > 0) {
     const topElement = tagStack[tagStack.length - 1];
-    if (ctx.get("total") < topElement.end) {
-      break;
-    }
+    if ((ctx.get("total") as number) < topElement.end) break;
     handleEBMLElement(ctx, ["end", topElement]);
     tagStack.pop();
   }
@@ -227,12 +245,12 @@ const readContent = (ctx) => {
 /**
  * Get the schema information from a tag.
  *
- * @param {number} tag Tag to get the schema information from
- * @returns {*} Schema information
+ * @param tag Tag to get the schema information from
+ * @returns Schema information
  */
-const getSchemaInfo = (tag) => {
+const getSchemaInfo = (tag: number): SchemaInfo => {
   if (Number.isInteger(tag) && schema.has(tag)) {
-    return schema.get(tag);
+    return schema.get(tag) as SchemaInfo;
   }
 
   return {
@@ -249,10 +267,11 @@ const getSchemaInfo = (tag) => {
 /**
  * Handle EBML element.
  *
- * @param {any} element EBML element.
+ * @param ctx Context.
+ * @param element EBML element.
  */
-const handleEBMLElement = (ctx, element) => {
-  const debug = ctx.get("debug");
+const handleEBMLElement = (ctx: Map<string, unknown>, element: EBMLEvent): void => {
+  const debug = ctx.get("debug") as boolean;
   const [kind, e] = element;
   if (kind === "start" && e.name === "EBML") {
     ctx.set("isHeader", true);
@@ -260,29 +279,29 @@ const handleEBMLElement = (ctx, element) => {
   if (debug) {
     console.debug(element);
   }
-  ctx.get("decoded").push(element);
+  (ctx.get("decoded") as EBMLEvent[]).push(element);
 
-  const isHeader = ctx.get("isHeader");
+  const isHeader = ctx.get("isHeader") as boolean;
   if (isHeader && kind === "end" && e.name === "Cluster") {
     ctx.set("isHeader", false);
-    ctx.set("endOfHeader", ctx.get("cursor"));
+    ctx.set("endOfHeader", ctx.get("cursor") as number);
     if (debug) {
       console.debug(`got end of header at byte ${ctx.get("endOfHeader")}`);
     }
   }
 };
 
-const readDataFromTag = (ctx, tagObj, data) => {
+const readDataFromTag = (ctx: Map<string, unknown>, tagObj: TagObject, data: Buffer): TagObject => {
   const { type, name } = tagObj;
-  let { track } = tagObj;
-  let discardable = tagObj.discardable || false;
-  let keyframe = tagObj.keyframe || false;
-  let payload = null;
-  let value;
+  let track = tagObj.track;
+  let discardable = tagObj.discardable ?? false;
+  let keyframe = tagObj.keyframe ?? false;
+  let payload: Buffer | null = null;
+  let value: number | string | Date | null | undefined;
 
   switch (type) {
     case "u":
-      value = readUnsigned(data);
+      value = readUnsigned(data) as number;
       break;
     case "f":
       value = readFloat(data);
@@ -303,15 +322,15 @@ const readDataFromTag = (ctx, tagObj, data) => {
       break;
   }
 
-  const fixTimestamps = ctx.get("fixTimestamps");
-  const isFirstBlock = ctx.get("isFirstBlock");
+  const fixTimestamps = ctx.get("fixTimestamps") as boolean;
+  const isFirstBlock = ctx.get("isFirstBlock") as boolean;
 
   if (fixTimestamps && name === "Timecode") {
-    const lastTimestampValue = ctx.get("lastTimestampValue");
+    const lastTimestampValue = ctx.get("lastTimestampValue") as number;
     value = isFirstBlock
       ? lastTimestampValue
-      : lastTimestampValue + ctx.get("timestampDelta");
-    writeUnsigned(data, 0, value);
+      : lastTimestampValue + (ctx.get("timestampDelta") as number);
+    writeUnsigned(data, 0, value as number);
     ctx.set("lastTimeCodeValue", value);
     ctx.set("lastTimestampValue", value);
     ctx.set("firstBlockDelay", 0);
@@ -319,10 +338,8 @@ const readDataFromTag = (ctx, tagObj, data) => {
 
   if (name === "SimpleBlock" || name === "Block") {
     let p = 0;
-    const { length, value: trak } = readVint(data, p) || {
-      length: 0,
-      value: null,
-    };
+    const vintResult = readVint(data, p);
+    const { length, value: trak } = vintResult ?? { length: 0, value: null };
     p += length;
     track = trak;
     value = readSigned(data.slice(p, p + 2));
@@ -330,14 +347,14 @@ const readDataFromTag = (ctx, tagObj, data) => {
     if (fixTimestamps) {
       if (isFirstBlock) {
         ctx.set("isFirstBlock", false);
-        ctx.set("firstBlockDelay", value - ctx.get("lastTimeCodeValue"));
+        ctx.set("firstBlockDelay", (value as number) - (ctx.get("lastTimeCodeValue") as number));
       }
-      value = value - ctx.get("firstBlockDelay");
-      if (value - ctx.get("lastTimestampValue") > DEFAULT_TIMESTAMP_DELTA * 2) {
-        value = ctx.get("lastTimestampValue") + DEFAULT_TIMESTAMP_DELTA;
+      value = (value as number) - (ctx.get("firstBlockDelay") as number);
+      if ((value as number) - (ctx.get("lastTimestampValue") as number) > DEFAULT_TIMESTAMP_DELTA * 2) {
+        value = (ctx.get("lastTimestampValue") as number) + DEFAULT_TIMESTAMP_DELTA;
       }
-      writeSigned(data, p, 2, value);
-      ctx.set("timestampDelta", value - ctx.get("lastTimestampValue"));
+      writeSigned(data, p, 2, value as number);
+      ctx.set("timestampDelta", (value as number) - (ctx.get("lastTimestampValue") as number));
       ctx.set("lastTimestampValue", value);
     }
 
@@ -347,7 +364,7 @@ const readDataFromTag = (ctx, tagObj, data) => {
       discardable = Boolean(data[length + 2] & 0x01);
     }
     p += 1;
-    payload = data.subarray(p);
+    payload = data.subarray(p) as Buffer;
   }
 
   return {
