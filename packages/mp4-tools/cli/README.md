@@ -9,6 +9,8 @@ Go to the previous directory and install the dependencies:
 cd ../
 # Install the dependencies
 npm install
+# Build the packages
+npm run build
 # Go back to this directory
 cd -
 ```

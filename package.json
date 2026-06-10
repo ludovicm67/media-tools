@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint . --quiet",
+    "pretest": "npm run build --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "clean": "npm run clean --workspaces --if-present",
     "release": "changeset publish",

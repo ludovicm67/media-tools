@@ -25,6 +25,12 @@
     "dist",
     "CHANGELOG.md"
   ],
+  "keywords": [
+    "webm",
+    "tools",
+    "cli",
+    "media"
+  ],
   "license": "MIT",
   "dependencies": {
     "@ludovicm67/media-tools-utils": "^0.1.10",
