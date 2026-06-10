@@ -1,5 +1,3 @@
-// @ts-check
-
 import { Command } from "commander";
 import fix from "./fix.js";
 import merge from "./merge.js";

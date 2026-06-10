@@ -1,5 +1,3 @@
-// @ts-check
-
 import * as mp4 from "@ludovicm67/mp4-tools";
 import * as ogg from "@ludovicm67/ogg-tools";
 import * as webm from "@ludovicm67/webm-tools";
@@ -10,31 +8,33 @@ import { Buffer, utils } from "@ludovicm67/media-tools-utils";
 /**
  * Enum for supported MediaTypes.
  * @readonly
- * @enum {string}
  */
-const MediaTypes = {
+export const MediaTypes = {
   MP4: "mp4",
   OGG: "ogg",
   WEBM: "webm",
-};
+} as const;
 
-/**
- * @typedef {Object} MediaToolsOptions
- * @property {boolean} [debug] Whether to enable debug mode or not.
- * @property {MediaTypes} [mediaType] The media type to use.
- */
+export type MediaTypeValue = typeof MediaTypes[keyof typeof MediaTypes];
+
+export interface MediaToolsOptions {
+  /** Whether to enable debug mode or not. */
+  debug?: boolean;
+  /** The media type to use. */
+  mediaType?: MediaTypeValue;
+}
 
 /**
  * Fix a media file using the previous chunk.
  * The previous chunk should be a sane chunk.
  * It should be the one that is right before the broken chunk.
  *
- * @param {import('@ludovicm67/media-tools-utils').Buffer} prevChunk Content of the previous (sane) chunk.
- * @param {import('@ludovicm67/media-tools-utils').Buffer} brokenChunk Content of the broken chunk.
- * @param {MediaToolsOptions} [options={}] Options.
- * @returns {import('@ludovicm67/media-tools-utils').Buffer} The fixed chunk.
+ * @param prevChunk Content of the previous (sane) chunk.
+ * @param brokenChunk Content of the broken chunk.
+ * @param options Options.
+ * @returns The fixed chunk.
  */
-export const fix = (prevChunk, brokenChunk, options) => {
+export const fix = (prevChunk: Buffer, brokenChunk: Buffer, options?: MediaToolsOptions): Buffer => {
   const { debug, mediaType } = options || {};
 
   switch (mediaType) {
@@ -49,4 +49,4 @@ export const fix = (prevChunk, brokenChunk, options) => {
   }
 };
 
-export { MediaTypes, mp4, ogg, webm, Buffer, utils };
+export { mp4, ogg, webm, Buffer, utils };

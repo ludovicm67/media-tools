@@ -1,5 +1,3 @@
-// @ts-check
-
 import { writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { decode } from "../lib/decoder.js";
@@ -9,19 +7,19 @@ import { displayDecodedElements } from "../lib/tools.js";
  * Merge WebM chunks together.
  * The first chunk should be a sane chunk.
  *
- * @param {string} firstChunkPath Path to the first chunk of the file.
- * @param {string} secondChunkPath Path to the second chunk of the file.
- * @param {string[]} otherChunksPaths Other chunks to merge together.
- * @param {Record<string, any>} options Options from the CLI.
+ * @param firstChunkPath Path to the first chunk of the file.
+ * @param secondChunkPath Path to the second chunk of the file.
+ * @param otherChunksPaths Other chunks to merge together.
+ * @param options Options from the CLI.
  */
 const merge = async (
-  firstChunkPath,
-  secondChunkPath,
-  otherChunksPaths,
-  options,
-) => {
-  const debug = options.debug;
-  const outputPath = options.out;
+  firstChunkPath: string,
+  secondChunkPath: string,
+  otherChunksPaths: string[],
+  options: Record<string, unknown>,
+): Promise<void> => {
+  const debug = options.debug as boolean | undefined;
+  const outputPath = options.out as string;
 
   if (debug) {
     console.info("Debug mode enabled");
@@ -33,31 +31,23 @@ const merge = async (
   }
 
   const firstChunk = await readFile(firstChunkPath);
-  const { decoded } = decode(
-    /** @type {import('@ludovicm67/media-tools-utils').Buffer} **/ (
-      /** @type {unknown} **/ (firstChunk)
-    ),
-  );
+  const { decoded } = decode(firstChunk as unknown as Buffer);
   if (debug) {
     console.info("\nDecoded first chunk:");
     displayDecodedElements(decoded);
     console.log("");
   }
 
-  const otherChunks = [];
+  const otherChunks: Buffer[] = [];
   const secondChunk = await readFile(secondChunkPath);
-  otherChunks.push(secondChunk);
+  otherChunks.push(secondChunk as unknown as Buffer);
   for (const otherChunkPath of otherChunksPaths) {
     const otherChunk = await readFile(otherChunkPath);
-    otherChunks.push(otherChunk);
+    otherChunks.push(otherChunk as unknown as Buffer);
   }
 
-  const newFile = Buffer.concat([firstChunk, ...otherChunks]);
-  const { decoded: newFileDecoded } = decode(
-    /** @type {import('@ludovicm67/media-tools-utils').Buffer} **/ (
-      /** @type {unknown} **/ (newFile)
-    ),
-  );
+  const newFile = Buffer.concat([firstChunk as unknown as Buffer, ...otherChunks]);
+  const { decoded: newFileDecoded } = decode(newFile as unknown as Buffer);
   if (debug) {
     console.info(
       "\nDecoded merged chunk (if it looks great, the merge was sucessful):",

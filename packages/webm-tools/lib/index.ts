@@ -1,25 +1,23 @@
-// @ts-check
-
 import { displayDecodedElements } from "./tools.js";
 import { decode } from "./decoder.js";
 import { Buffer } from "@ludovicm67/media-tools-utils";
 
-/**
- * @typedef {Object} LibOptions
- * @property {boolean} [debug] Whether to enable debug mode or not.
- */
+export interface LibOptions {
+  /** Whether to enable debug mode or not. */
+  debug?: boolean;
+}
 
 /**
  * Fix a WebM file using the previous chunk.
  * The previous chunk should be a sane chunk.
  * It should be the one that is right before the broken chunk.
  *
- * @param {import('@ludovicm67/media-tools-utils').Buffer} prevChunk Content of the previous (sane) chunk.
- * @param {import('@ludovicm67/media-tools-utils').Buffer} brokenChunk Content of the broken chunk.
- * @param {LibOptions} [options={}] Options.
- * @returns {import('@ludovicm67/media-tools-utils').Buffer} The fixed chunk.
+ * @param prevChunk Content of the previous (sane) chunk.
+ * @param brokenChunk Content of the broken chunk.
+ * @param options Options.
+ * @returns The fixed chunk.
  */
-export const fix = (prevChunk, brokenChunk, options) => {
+export const fix = (prevChunk: Buffer, brokenChunk: Buffer, options?: LibOptions): Buffer => {
   const { debug } = options || {};
 
   const { decoded, headerBuffer, lastStartBuffer } = decode(prevChunk);
@@ -45,10 +43,9 @@ export const fix = (prevChunk, brokenChunk, options) => {
 /**
  * Display information of a WebM file.
  *
- * @param {import('@ludovicm67/media-tools-utils').Buffer} fileBuffer Content of the file to display.
- * @returns {void}
+ * @param fileBuffer Content of the file to display.
  */
-export const display = (fileBuffer) => {
+export const display = (fileBuffer: Buffer): void => {
   const { decoded } = decode(fileBuffer);
   displayDecodedElements(decoded);
 };

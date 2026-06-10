@@ -2,13 +2,13 @@
   "name": "@ludovicm67/media-tools",
   "version": "0.3.7",
   "description": "Media tools",
-  "main": "index.js",
+  "main": "dist/index.js",
   "type": "module",
   "types": "dist/index.d.ts",
   "scripts": {
     "typings": "tsc",
     "clean": "rimraf *.tgz dist/",
-    "build": "npm run typings",
+    "build": "npm run clean && npm run typings",
     "prepack": "npm run build"
   },
   "repository": {
@@ -22,7 +22,6 @@
   },
   "files": [
     "dist",
-    "index.js",
     "CHANGELOG.md"
   ],
   "keywords": [
@@ -44,6 +43,6 @@
   "devDependencies": {
     "@types/node": "^25.9.2",
     "rimraf": "^6.1.3",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   }
 }

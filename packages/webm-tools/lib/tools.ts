@@ -1,12 +1,12 @@
-// @ts-check
+import type { EBMLEvent } from "./decoder.js";
 
 /**
  * Format a number of milliseconds to a string.
  *
- * @param {number} milliseconds Milliseconds to format
- * @returns {string} Formatted string
+ * @param milliseconds Milliseconds to format
+ * @returns Formatted string
  */
-const formatMilliseconds = (milliseconds) => {
+const formatMilliseconds = (milliseconds: number): string => {
   const hours = Math.floor(milliseconds / 3600000); // 1 hour = 3600000 milliseconds
   milliseconds = milliseconds % 3600000;
 
@@ -25,7 +25,7 @@ const formatMilliseconds = (milliseconds) => {
   return `${hoursString}:${minutesString}:${secondsString}.${nanosecondsString}`;
 };
 
-export const displayDecodedElements = (decodedElements) => {
+export const displayDecodedElements = (decodedElements: EBMLEvent[]): void => {
   let indent = 0;
   let lastTimecodeValue = 0;
   for (const item of decodedElements) {
@@ -41,12 +41,12 @@ export const displayDecodedElements = (decodedElements) => {
 
     switch (element.name) {
       case "Timecode":
-        additionalInfo = `timestamp ${formatMilliseconds(element.value)}`;
-        lastTimecodeValue = element.value;
+        additionalInfo = `timestamp ${formatMilliseconds(element.value as number)}`;
+        lastTimecodeValue = element.value as number;
         break;
       case "SimpleBlock":
       case "Block":
-        additionalInfo = `track number ${element.track}, timestamp ${formatMilliseconds(lastTimecodeValue + element.value)}`;
+        additionalInfo = `track number ${element.track}, timestamp ${formatMilliseconds(lastTimecodeValue + (element.value as number))}`;
         break;
       default:
         break;
