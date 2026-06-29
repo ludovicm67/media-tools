@@ -1,5 +1,16 @@
 # @ludovicm67/mp4-tools
 
+## 1.0.0
+
+### Major Changes
+
+- b3897b9: Convert code base to TypeScript.
+
+### Patch Changes
+
+- Updated dependencies [b3897b9]
+  - @ludovicm67/media-tools-utils@1.0.0
+
 ## 0.2.9
 
 ### Patch Changes
