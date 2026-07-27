@@ -1,5 +1,11 @@
 # @ludovicm67/mp4-tools
 
+## 1.0.1
+
+### Patch Changes
+
+- 5ac05a1: Add a `#!/usr/bin/env node` shebang to the CLI entry points so the published `bin` executables run with Node instead of being interpreted as shell scripts (which caused `syntax error near unexpected token '('` and `import: unable to open X server` errors when run via `npx`).
+
 ## 1.0.0
 
 ### Major Changes

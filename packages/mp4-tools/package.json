@@ -1,6 +1,6 @@
 {
   "name": "@ludovicm67/mp4-tools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MP4 tools",
   "main": "dist/index.js",
   "type": "module",
