@@ -1,6 +1,6 @@
 {
   "name": "@ludovicm67/media-tools",
-  "version": "0.3.7",
+  "version": "1.0.0",
   "description": "Media tools",
   "main": "dist/index.js",
   "type": "module",
@@ -31,10 +31,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@ludovicm67/media-tools-utils": "^0.1.10",
-    "@ludovicm67/mp4-tools": "^0.2.9",
-    "@ludovicm67/ogg-tools": "^0.1.4",
-    "@ludovicm67/webm-tools": "^0.4.1",
+    "@ludovicm67/media-tools-utils": "^1.0.0",
+    "@ludovicm67/mp4-tools": "^1.0.0",
+    "@ludovicm67/ogg-tools": "^1.0.0",
+    "@ludovicm67/webm-tools": "^1.0.0",
     "buffer": "^6.0.3"
   },
   "publishConfig": {

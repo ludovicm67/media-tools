@@ -1,6 +1,6 @@
 {
   "name": "@ludovicm67/ogg-tools",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "description": "OGG tools",
   "main": "dist/index.js",
   "type": "module",
@@ -33,7 +33,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@ludovicm67/media-tools-utils": "^0.1.10",
+    "@ludovicm67/media-tools-utils": "^1.0.0",
     "commander": "^15.0.0"
   },
   "publishConfig": {
