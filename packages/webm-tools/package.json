@@ -2,42 +2,42 @@
   "name": "@ludovicm67/webm-tools",
   "version": "1.0.1",
   "description": "WebM tools",
-  "main": "dist/index.js",
-  "type": "module",
-  "types": "dist/index.d.ts",
-  "bin": "dist/cli/index.js",
-  "scripts": {
-    "typings": "tsc",
-    "clean": "rimraf dist/",
-    "build": "npm run typings",
-    "prepack": "npm run build"
+  "keywords": [
+    "cli",
+    "media",
+    "tools",
+    "webm"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Ludovic Muller",
+    "url": "https://ludovic-muller.fr/"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ludovicm67/media-tools.git",
     "directory": "packages/webm-tools"
   },
-  "author": {
-    "name": "Ludovic Muller",
-    "url": "https://ludovic-muller.fr/"
-  },
+  "bin": "dist/cli/index.js",
   "files": [
     "dist",
     "CHANGELOG.md"
   ],
-  "keywords": [
-    "webm",
-    "tools",
-    "cli",
-    "media"
-  ],
-  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "typings": "tsc",
+    "clean": "rimraf dist/",
+    "build": "npm run typings",
+    "prepack": "npm run build"
+  },
   "dependencies": {
     "@ludovicm67/media-tools-utils": "^1.0.0",
     "commander": "^15.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",

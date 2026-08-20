@@ -22,10 +22,7 @@ export const browsers = [
     browser: chromium,
     options: {
       headless: true,
-      args: [
-        "--use-fake-device-for-media-stream",
-        "--use-fake-ui-for-media-stream",
-      ],
+      args: ["--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream"],
     },
     permissions: ["camera", "microphone"],
   },
@@ -52,9 +49,6 @@ const runTests = async () => {
 
     await page.click("text=Stop");
     await waitSeconds(2);
-    // eslint-disable-next-line no-useless-catch
-  } catch (error) {
-    throw error;
   } finally {
     console.log("Closing the browser");
     await instance.close();

@@ -15,7 +15,7 @@ export const MediaTypes = {
   WEBM: "webm",
 } as const;
 
-export type MediaTypeValue = typeof MediaTypes[keyof typeof MediaTypes];
+export type MediaTypeValue = (typeof MediaTypes)[keyof typeof MediaTypes];
 
 export interface MediaToolsOptions {
   /** Whether to enable debug mode or not. */
@@ -34,7 +34,11 @@ export interface MediaToolsOptions {
  * @param options Options.
  * @returns The fixed chunk.
  */
-export const fix = (prevChunk: Buffer, brokenChunk: Buffer, options?: MediaToolsOptions): Buffer => {
+export const fix = (
+  prevChunk: Buffer,
+  brokenChunk: Buffer,
+  options?: MediaToolsOptions,
+): Buffer => {
   const { debug, mediaType } = options || {};
 
   switch (mediaType) {

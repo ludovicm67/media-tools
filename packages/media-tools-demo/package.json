@@ -1,10 +1,25 @@
 {
   "name": "@ludovicm67/media-tools-demo",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "description": "Audio recording demo app",
-  "main": "main.js",
+  "keywords": [
+    "audio",
+    "demo",
+    "recording"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Ludovic Muller",
+    "url": "https://ludovic-muller.fr/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ludovicm67/media-tools.git",
+    "directory": "packages/media-tools-demo"
+  },
   "type": "module",
+  "main": "main.js",
   "scripts": {
     "start": "run-p dev server",
     "server": "node --watch server.js",
@@ -13,33 +28,18 @@
     "preview": "vite preview",
     "test": "node test.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ludovicm67/media-tools.git",
-    "directory": "packages/media-tools-demo"
-  },
-  "author": {
-    "name": "Ludovic Muller",
-    "url": "https://ludovic-muller.fr/"
-  },
-  "keywords": [
-    "audio",
-    "recording",
-    "demo"
-  ],
-  "license": "MIT",
   "dependencies": {
-    "@fastify/cors": "^11.2.0",
+    "@fastify/cors": "^11.3.0",
     "@fastify/multipart": "^10.1.1",
     "@ludovicm67/webm-tools": "^1.0.1",
     "@vitejs/plugin-basic-ssl": "^2.3.0",
-    "fastify": "^5.12.0",
+    "fastify": "^5.12.1",
     "ulid": "^3.0.2"
   },
   "devDependencies": {
-    "playwright": "^1.62.1",
     "@types/node": "^26.2.0",
     "npm-run-all": "^4.1.5",
+    "playwright": "^1.62.1",
     "vite": "^8.2.2"
   }
 }

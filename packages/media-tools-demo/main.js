@@ -1,17 +1,9 @@
 // @ts-check
 import { monotonicFactory } from "ulid";
-import {
-  MediaTypes,
-  fix as mediaToolsChunkFix,
-  utils,
-} from "@ludovicm67/media-tools";
+import { MediaTypes, fix as mediaToolsChunkFix, utils } from "@ludovicm67/media-tools";
 
-const audioSourceSelect = /** @type {HTMLSelectElement} */ (
-  document.getElementById("audioSource")
-);
-const getSourceBtn = /** @type {HTMLButtonElement} */ (
-  document.getElementById("getSources")
-);
+const audioSourceSelect = /** @type {HTMLSelectElement} */ (document.getElementById("audioSource"));
+const getSourceBtn = /** @type {HTMLButtonElement} */ (document.getElementById("getSources"));
 
 const initSources = async () => {
   console.log("initSources");
@@ -20,9 +12,7 @@ const initSources = async () => {
   });
   console.log("got audio stream", mediaDevicesInfos);
   const mediaDevices = await navigator.mediaDevices.enumerateDevices();
-  const audioSources = mediaDevices.filter(
-    (device) => device.kind === "audioinput",
-  );
+  const audioSources = mediaDevices.filter((device) => device.kind === "audioinput");
   console.log("audioSources:", audioSources);
 
   // Remove all options from the select
@@ -34,8 +24,7 @@ const initSources = async () => {
   audioSources.forEach((mic) => {
     const option = document.createElement("option");
     option.value = mic.deviceId;
-    option.textContent =
-      mic.label || `Microphone (${mic.deviceId.substring(0, 8)}...)`;
+    option.textContent = mic.label || `Microphone (${mic.deviceId.substring(0, 8)}...)`;
     audioSourceSelect.appendChild(option);
   });
   if (audioSources.length > 0) {
@@ -72,12 +61,8 @@ const mimeType = isMp4 ? "audio/mp4" : "audio/webm";
 const extension = isMp4 ? "mp4" : "webm";
 
 // HTML elements from the page
-const startBtn = /** @type {HTMLButtonElement} */ (
-  document.getElementById("startBtn")
-);
-const stopBtn = /** @type {HTMLButtonElement} */ (
-  document.getElementById("stopBtn")
-);
+const startBtn = /** @type {HTMLButtonElement} */ (document.getElementById("startBtn"));
+const stopBtn = /** @type {HTMLButtonElement} */ (document.getElementById("stopBtn"));
 const audioLevelElement = /** @type {HTMLProgressElement} */ (
   document.getElementById("audioLevel")
 );
@@ -166,18 +151,14 @@ const handleSendAudio = async () => {
  */
 const handleAudioLevel = (stream) => {
   const audioContext = new AudioContext();
-  const mediaStreamAudioSourceNode =
-    audioContext.createMediaStreamSource(stream);
+  const mediaStreamAudioSourceNode = audioContext.createMediaStreamSource(stream);
   const analyserNode = audioContext.createAnalyser();
   mediaStreamAudioSourceNode.connect(analyserNode);
 
   const pcmData = new Float32Array(analyserNode.fftSize);
   const onFrame = () => {
     analyserNode.getFloatTimeDomainData(pcmData);
-    const sumSquares = pcmData.reduce(
-      (sum, amplitude) => sum + amplitude * amplitude,
-      0.0,
-    );
+    const sumSquares = pcmData.reduce((sum, amplitude) => sum + amplitude * amplitude, 0.0);
 
     if (started) {
       audioLevel = Math.sqrt(sumSquares / pcmData.length);
@@ -231,8 +212,7 @@ const handleStopBtnClick = async () => {
   audioLevel = 0.0;
   console.log("stopBtn clicked");
   stopBtn.disabled = true;
-  stopBtn.innerText =
-    'Refresh to restart the demo! Recorded files are in the "records" folder.';
+  stopBtn.innerText = 'Refresh to restart the demo! Recorded files are in the "records" folder.';
 
   if (mediaRecorder) {
     mediaRecorder.stop();

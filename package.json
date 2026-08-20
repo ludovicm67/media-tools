@@ -1,11 +1,16 @@
 {
   "name": "media-tools",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "description": "Root package to handle all media-tools packages",
+  "workspaces": [
+    "packages/*"
+  ],
   "type": "module",
   "scripts": {
-    "lint": "eslint . --quiet",
+    "lint": "oxlint",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
     "pretest": "npm run build --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "clean": "npm run clean --workspaces --if-present",
@@ -13,27 +18,17 @@
     "prepare": "husky",
     "build": "npm run clean && npm run build --workspaces --if-present"
   },
-  "workspaces": [
-    "packages/*"
-  ],
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix --quiet"
-    ]
-  },
   "devDependencies": {
     "@changesets/cli": "^3.0.1",
-    "@eslint/eslintrc": "^3.3.6",
-    "@eslint/js": "^9.39.2",
-    "eslint": "^9.39.2",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-n": "^18.2.2",
-    "eslint-plugin-prettier": "^5.5.6",
-    "eslint-plugin-promise": "^7.3.0",
-    "globals": "^17.11.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.3.0",
-    "prettier": "^3.9.6"
+    "oxfmt": "^0.64.0",
+    "oxlint": "^1.79.0"
+  },
+  "lint-staged": {
+    "*.{js,mjs,ts}": [
+      "oxfmt",
+      "oxlint --fix"
+    ]
   }
 }

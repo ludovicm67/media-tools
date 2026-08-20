@@ -9,8 +9,7 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       webm: true,
-      description:
-        "Contains all possible strings to use for the chapter display.",
+      description: "Contains all possible strings to use for the chapter display.",
     },
   ],
   [
@@ -50,8 +49,7 @@ const schema = new Map([
       type: "s",
       mandatory: true,
       minver: 1,
-      description:
-        "An ID corresponding to the codec, see the codec page for more info.",
+      description: "An ID corresponding to the codec, see the codec page for more info.",
       multiple: false,
       webm: false,
     },
@@ -109,8 +107,7 @@ const schema = new Map([
       type: "u",
       minver: 1,
       webm: false,
-      description:
-        "Timestamp of the end of Chapter (timestamp excluded, not scaled).",
+      description: "Timestamp of the end of Chapter (timestamp excluded, not scaled).",
       multiple: false,
     },
   ],
@@ -135,8 +132,7 @@ const schema = new Map([
       type: "u",
       mandatory: true,
       webm: false,
-      description:
-        "The Position of the Cluster containing the referenced Block.",
+      description: "The Position of the Cluster containing the referenced Block.",
       minver: 0,
       multiple: false,
     },
@@ -211,8 +207,7 @@ const schema = new Map([
       mandatory: true,
       default: 1,
       minver: 1,
-      description:
-        "The minimum DocType version an interpreter has to support to read this file.",
+      description: "The minimum DocType version an interpreter has to support to read this file.",
       multiple: false,
       webm: false,
     },
@@ -240,8 +235,7 @@ const schema = new Map([
       mandatory: true,
       default: 1,
       minver: 1,
-      description:
-        "The version of DocType interpreter used to create the file.",
+      description: "The version of DocType interpreter used to create the file.",
       multiple: false,
       webm: false,
     },
@@ -267,8 +261,7 @@ const schema = new Map([
       level: 2,
       type: "d",
       minver: 1,
-      description:
-        "Date of the origin of timestamp (value 0), i.e. production date.",
+      description: "Date of the origin of timestamp (value 0), i.e. production date.",
       multiple: false,
       webm: false,
     },
@@ -385,8 +378,7 @@ const schema = new Map([
       level: 3,
       type: "b",
       webm: false,
-      description:
-        "A binary value that a track/codec can refer to when the attachment is needed.",
+      description: "A binary value that a track/codec can refer to when the attachment is needed.",
       multiple: false,
     },
   ],
@@ -527,8 +519,7 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       webm: false,
-      description:
-        "Settings for one content encoding like compression or encryption.",
+      description: "Settings for one content encoding like compression or encryption.",
     },
   ],
   [
@@ -552,8 +543,7 @@ const schema = new Map([
       type: "b",
       multiple: true,
       webm: false,
-      description:
-        "An element ID whose data will be used to compute the signature.",
+      description: "An element ID whose data will be used to compute the signature.",
     },
   ],
   [
@@ -604,8 +594,7 @@ const schema = new Map([
       multiple: true,
       minver: 1,
       webm: false,
-      description:
-        "A tuple of corresponding ID used by chapter codecs to represent this segment.",
+      description: "A tuple of corresponding ID used by chapter codecs to represent this segment.",
     },
   ],
   [
@@ -720,8 +709,7 @@ const schema = new Map([
       minver: 1,
       webm: false,
       default: "und",
-      description:
-        "Specifies the language of the tag specified, in the Matroska languages form.",
+      description: "Specifies the language of the tag specified, in the Matroska languages form.",
     },
   ],
   [
@@ -831,8 +819,7 @@ const schema = new Map([
       minver: 1,
       webm: false,
       default: 50,
-      description:
-        "A number to indicate the logical level of the target (see TargetType).",
+      description: "A number to indicate the logical level of the target (see TargetType).",
     },
   ],
   [
@@ -938,8 +925,7 @@ const schema = new Map([
       minver: 1,
       webm: false,
       range: "not 0",
-      description:
-        "The EditionUID to play from the segment linked in ChapterSegmentUID.",
+      description: "The EditionUID to play from the segment linked in ChapterSegmentUID.",
     },
   ],
   [
@@ -1009,8 +995,7 @@ const schema = new Map([
       webm: false,
       default: 0,
       range: "0-1",
-      description:
-        "If a flag is set (1) the edition should be used as the default one. (1 bit)",
+      description: "If a flag is set (1) the edition should be used as the default one. (1 bit)",
     },
   ],
   [
@@ -1037,8 +1022,7 @@ const schema = new Map([
       minver: 1,
       webm: false,
       range: "not 0",
-      description:
-        "A unique ID to identify the edition. It's useful for tagging an edition.",
+      description: "A unique ID to identify the edition. It's useful for tagging an edition.",
     },
   ],
   [
@@ -1159,8 +1143,7 @@ const schema = new Map([
       webm: false,
       default: 1,
       range: "not 0",
-      description:
-        "Number of the referenced Block of Track X in the specified Cluster.",
+      description: "Number of the referenced Block of Track X in the specified Cluster.",
     },
   ],
   [
@@ -1246,8 +1229,7 @@ const schema = new Map([
       mandatory: true,
       multiple: true,
       minver: 1,
-      description:
-        "Contain positions for different tracks corresponding to the timestamp.",
+      description: "Contain positions for different tracks corresponding to the timestamp.",
     },
   ],
   [
@@ -1270,8 +1252,7 @@ const schema = new Map([
       mandatory: true,
       multiple: true,
       minver: 1,
-      description:
-        "Contains all information relative to a seek point in the segment.",
+      description: "Contains all information relative to a seek point in the segment.",
     },
   ],
   [
@@ -1321,8 +1302,7 @@ const schema = new Map([
       type: "b",
       minver: 1,
       webm: false,
-      description:
-        "This is the ID of the private key the data was signed with.",
+      description: "This is the ID of the private key the data was signed with.",
     },
   ],
   [
@@ -1490,8 +1470,7 @@ const schema = new Map([
       multiple: true,
       minver: 3,
       webm: false,
-      description:
-        "Contains a video plane track that need to be combined to create this 3D track",
+      description: "Contains a video plane track that need to be combined to create this 3D track",
     },
   ],
   [
@@ -1526,8 +1505,7 @@ const schema = new Map([
       level: 4,
       type: "b",
       webm: false,
-      description:
-        "Table of horizontal angles for each successive channel, see appendix.",
+      description: "Table of horizontal angles for each successive channel, see appendix.",
     },
   ],
   [
@@ -1554,8 +1532,7 @@ const schema = new Map([
       minver: 1,
       default: "Sampling Frequency",
       range: "> 0",
-      description:
-        "Real output sampling frequency in Hz (used for SBR techniques).",
+      description: "Real output sampling frequency in Hz (used for SBR techniques).",
     },
   ],
   [
@@ -1683,8 +1660,7 @@ const schema = new Map([
       type: "u",
       minver: 1,
       default: 0,
-      description:
-        "The number of video pixels to remove on the right of the image.",
+      description: "The number of video pixels to remove on the right of the image.",
     },
   ],
   [
@@ -1696,8 +1672,7 @@ const schema = new Map([
       type: "u",
       minver: 1,
       default: 0,
-      description:
-        "The number of video pixels to remove on the left of the image.",
+      description: "The number of video pixels to remove on the left of the image.",
     },
   ],
   [
@@ -1709,8 +1684,7 @@ const schema = new Map([
       type: "u",
       minver: 1,
       default: 0,
-      description:
-        "The number of video pixels to remove at the top of the image.",
+      description: "The number of video pixels to remove at the top of the image.",
     },
   ],
   [
@@ -1841,8 +1815,7 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       webm: false,
-      description:
-        "The chapter codec using this ID (0: Matroska Script, 1: DVD-menu).",
+      description: "The chapter codec using this ID (0: Matroska Script, 1: DVD-menu).",
     },
   ],
   [
@@ -1965,8 +1938,7 @@ const schema = new Map([
       type: "s",
       minver: 1,
       default: "eng",
-      description:
-        "Specifies the language of the track in the Matroska languages form.",
+      description: "Specifies the language of the track in the Matroska languages form.",
     },
   ],
   [
@@ -2165,8 +2137,7 @@ const schema = new Map([
       type: "m",
       multiple: true,
       minver: 1,
-      description:
-        "A top-level block of information with many tracks described.",
+      description: "A top-level block of information with many tracks described.",
     },
   ],
   [
@@ -2250,8 +2221,7 @@ const schema = new Map([
       level: 5,
       type: "u",
       default: 0,
-      description:
-        "The ID of the BlockAdditional element (0 is the main Block).",
+      description: "The ID of the BlockAdditional element (0 is the main Block).",
     },
   ],
   [
@@ -2335,8 +2305,7 @@ const schema = new Map([
       level: 3,
       type: "i",
       webm: false,
-      description:
-        "Relative position of the data that should be in position of the virtual block.",
+      description: "Relative position of the data that should be in position of the virtual block.",
     },
   ],
   [
@@ -2387,8 +2356,7 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       webm: false,
-      description:
-        "Interpreted by the codec as it wishes (using the BlockAddID).",
+      description: "Interpreted by the codec as it wishes (using the BlockAddID).",
     },
   ],
   [
@@ -2486,8 +2454,7 @@ const schema = new Map([
       level: 2,
       type: "u",
       minver: 1,
-      description:
-        "Size of the previous Cluster, in octets. Can be useful for backward playing.",
+      description: "Size of the previous Cluster, in octets. Can be useful for backward playing.",
     },
   ],
   [
@@ -2526,8 +2493,7 @@ const schema = new Map([
       type: "u",
       mandatory: true,
       minver: 1,
-      description:
-        "Absolute timestamp of the cluster (based on TimecodeScale).",
+      description: "Absolute timestamp of the cluster (based on TimecodeScale).",
     },
   ],
   [
@@ -2538,8 +2504,7 @@ const schema = new Map([
       type: "m",
       multiple: true,
       minver: 1,
-      description:
-        "The lower level element containing the (monolithic) Block structure.",
+      description: "The lower level element containing the (monolithic) Block structure.",
     },
   ],
   [
@@ -2611,8 +2576,7 @@ const schema = new Map([
       mandatory: true,
       minver: 1,
       webm: false,
-      description:
-        "The chapter codec using this ID (0: Matroska Script, 1: DVD-menu).",
+      description: "The chapter codec using this ID (0: Matroska Script, 1: DVD-menu).",
     },
   ],
   [
@@ -2648,8 +2612,7 @@ const schema = new Map([
       minver: 1,
       webm: false,
       bytesize: 16,
-      description:
-        "A unique ID to identify the next chained segment (128 bits).",
+      description: "A unique ID to identify the next chained segment (128 bits).",
     },
   ],
   [
@@ -2672,8 +2635,7 @@ const schema = new Map([
       minver: 1,
       webm: false,
       bytesize: 16,
-      description:
-        "A unique ID to identify the previous chained segment (128 bits).",
+      description: "A unique ID to identify the previous chained segment (128 bits).",
     },
   ],
   [
@@ -2699,8 +2661,7 @@ const schema = new Map([
       mandatory: true,
       multiple: true,
       minver: 1,
-      description:
-        "Contains miscellaneous general information and statistics on the file.",
+      description: "Contains miscellaneous general information and statistics on the file.",
     },
   ],
   [
@@ -2771,8 +2732,7 @@ const schema = new Map([
       level: 1,
       type: "m",
       webm: false,
-      description:
-        "Contains elements that will be used to compute the signature.",
+      description: "Contains elements that will be used to compute the signature.",
     },
   ],
   [
@@ -2885,8 +2845,7 @@ const schema = new Map([
       mandatory: true,
       default: 1,
       minver: 1,
-      description:
-        "The minimum EBML version a parser has to support to read this file.",
+      description: "The minimum EBML version a parser has to support to read this file.",
     },
   ],
   [

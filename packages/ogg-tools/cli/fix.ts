@@ -11,7 +11,11 @@ import { fix as fixOggChunk } from "../index.js";
  * @param brokenChunkPath The path to the broken chunk.
  * @param options Options from the CLI.
  */
-const fix = async (prevChunkPath: string, brokenChunkPath: string, options: Record<string, unknown>): Promise<void> => {
+const fix = async (
+  prevChunkPath: string,
+  brokenChunkPath: string,
+  options: Record<string, unknown>,
+): Promise<void> => {
   const debug = options.debug as boolean | undefined;
   const outputPath = options.out as string;
 

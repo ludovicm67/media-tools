@@ -59,7 +59,10 @@ export const readHexString = (buff: Buffer, start = 0, end = buff.byteLength): s
  * @param a2 Second array
  * @returns concatenated arrays
  */
-export const concatenate = (a1: Buffer | null | undefined, a2: Buffer | null | undefined): Buffer => {
+export const concatenate = (
+  a1: Buffer | null | undefined,
+  a2: Buffer | null | undefined,
+): Buffer => {
   // both null or undefined
   if (!a1 && !a2) {
     return Buffer.from([]);
