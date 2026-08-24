@@ -17,6 +17,10 @@
     "url": "git+https://github.com/ludovicm67/media-tools.git",
     "directory": "packages/media-tools"
   },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/ludovicm67"
+  },
   "files": [
     "dist",
     "CHANGELOG.md"
