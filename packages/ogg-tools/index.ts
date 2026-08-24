@@ -65,20 +65,13 @@ export const buildFile = (data: OGGParsedFile, context?: OGGParsedFile): BuildFi
     .filter((page) => page.isMetadata)
     .map((page) => page.content);
 
-  const metadataPages = Buffer.concat([
-    ...firstMetadataPages,
-    ...currentMetadataPages,
-  ]);
+  const metadataPages = Buffer.concat([...firstMetadataPages, ...currentMetadataPages]);
 
   if (metadataPages.length === 0) {
     throw new Error("Missing metadata pages");
   }
 
-  const filedata = Buffer.concat([
-    metadataPages,
-    firstRest,
-    ...currentDataPages,
-  ]);
+  const filedata = Buffer.concat([metadataPages, firstRest, ...currentDataPages]);
 
   return { filedata, rest };
 };
@@ -126,9 +119,7 @@ export const parse = (fileBuffer: Buffer): OGGParsedFile => {
     let type: OGGPageType = "Unknown";
     if (pageData.length > headerSize + 8) {
       const packetStart = headerSize;
-      const packetSignature = pageData
-        .slice(packetStart, packetStart + 8)
-        .toString();
+      const packetSignature = pageData.slice(packetStart, packetStart + 8).toString();
 
       // Support for Opus, Vorbis, Theora, and Speex
       if (packetSignature.startsWith("OpusHead")) {

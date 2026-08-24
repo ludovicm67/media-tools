@@ -1,7 +1,8 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFile, readdir, unlink } from "node:fs/promises";
-import { exec } from "node:child_process";
+import { spawn } from "node:child_process";
+import net from "node:net";
 import { chromium } from "playwright";
 
 import { webm } from "@ludovicm67/media-tools";
@@ -16,16 +17,78 @@ const waitSeconds = async (seconds) => {
   await new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 };
 
+/**
+ * Ask the OS for a currently-free TCP port.
+ *
+ * @returns {Promise<number>} An available port number.
+ */
+const getFreePort = () =>
+  new Promise((resolve, reject) => {
+    const srv = net.createServer();
+    srv.unref();
+    srv.on("error", reject);
+    srv.listen(0, "127.0.0.1", () => {
+      const { port } = srv.address();
+      srv.close(() => resolve(port));
+    });
+  });
+
+/**
+ * Navigate to the dev server, retrying until it is up, then wait until the app
+ * has finished initializing (the `data-app-ready` marker set by main.js).
+ * This replaces fixed sleeps and removes the cold-start race.
+ *
+ * @param {import("playwright").Page} page
+ * @param {string} url
+ * @param {number} timeoutMs
+ */
+const gotoWhenReady = async (page, url, timeoutMs = 60000) => {
+  const deadline = Date.now() + timeoutMs;
+  for (;;) {
+    try {
+      await page.goto(url, { waitUntil: "load" });
+      break;
+    } catch (error) {
+      if (Date.now() > deadline) {
+        throw error;
+      }
+      await waitSeconds(0.5);
+    }
+  }
+  await page.waitForSelector("html[data-app-ready='true']", {
+    timeout: Math.max(1000, deadline - Date.now()),
+  });
+};
+
+/**
+ * Terminate the whole `npm run start` process tree (npm -> run-p -> vite/node),
+ * not just the top-level npm process. Relies on the child being spawned as a
+ * process-group leader (`detached: true`).
+ *
+ * @param {import("node:child_process").ChildProcess} app
+ */
+const stopApp = (app) => {
+  if (app.pid === undefined) {
+    return;
+  }
+  try {
+    process.kill(-app.pid, "SIGTERM");
+  } catch {
+    try {
+      app.kill("SIGTERM");
+    } catch {
+      // Process already gone.
+    }
+  }
+};
+
 export const browsers = [
   {
     name: "Chromium",
     browser: chromium,
     options: {
       headless: true,
-      args: [
-        "--use-fake-device-for-media-stream",
-        "--use-fake-ui-for-media-stream",
-      ],
+      args: ["--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream"],
     },
     permissions: ["camera", "microphone"],
   },
@@ -33,18 +96,18 @@ export const browsers = [
 
 const browser = browsers[0];
 
-const runTests = async () => {
+const runTests = async (url) => {
   console.log("Launching the browser…");
   const instance = await browser.browser.launch(browser.options);
 
-  await waitSeconds(2);
-
   try {
-    const context = await instance.newContext({ ignoreHTTPSErrors: true });
-    const page = await context.newPage({ permissions: browser.permissions });
-    const url = "https://localhost:5173/";
-    await page.goto(url);
-    await waitSeconds(1);
+    const context = await instance.newContext({
+      ignoreHTTPSErrors: true,
+      permissions: browser.permissions,
+    });
+    const page = await context.newPage();
+
+    await gotoWhenReady(page, url);
 
     await page.click("text=Start");
 
@@ -52,9 +115,6 @@ const runTests = async () => {
 
     await page.click("text=Stop");
     await waitSeconds(2);
-    // eslint-disable-next-line no-useless-catch
-  } catch (error) {
-    throw error;
   } finally {
     console.log("Closing the browser");
     await instance.close();
@@ -72,26 +132,36 @@ const arrayDifference = (array1, array2) => {
 
 const main = async () => {
   const errors = [];
-  const app = exec("npm run start");
+
+  // Pin dedicated, collision-free ports for both the dev server and backend so
+  // the test never clashes with other processes on the default 5173 / 3000.
+  const vitePort = await getFreePort();
+  const backendPort = await getFreePort();
+  const url = `https://localhost:${vitePort}/`;
+
+  const app = spawn("npm", ["run", "start"], {
+    cwd: currentDir,
+    env: { ...process.env, VITE_PORT: String(vitePort), BACKEND_PORT: String(backendPort) },
+    detached: true, // own process group, so stopApp() can kill the whole tree
+    stdio: ["ignore", "inherit", "inherit"],
+  });
 
   const recordsPath = join(currentDir, "records");
   const filesBefore = await getFiles(recordsPath);
-
-  await waitSeconds(3);
 
   let exitCode = 0;
 
   try {
     // Run tests
-    await runTests();
+    await runTests(url);
     console.log("Browser run was successful!");
   } catch (error) {
     console.log("Some errors during browser run…");
     errors.push(error.message);
     exitCode = 1;
   } finally {
-    // Stop the app
-    app.kill();
+    // Stop the whole app process tree
+    stopApp(app);
   }
 
   const filesAfter = await getFiles(recordsPath);

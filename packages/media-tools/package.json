@@ -2,43 +2,47 @@
   "name": "@ludovicm67/media-tools",
   "version": "1.0.0",
   "description": "Media tools",
-  "main": "dist/index.js",
-  "type": "module",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "typings": "tsc",
-    "clean": "rimraf *.tgz dist/",
-    "build": "npm run clean && npm run typings",
-    "prepack": "npm run build"
+  "keywords": [
+    "media",
+    "parser",
+    "tools"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Ludovic Muller",
+    "url": "https://ludovic-muller.fr/"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ludovicm67/media-tools.git",
     "directory": "packages/media-tools"
   },
-  "author": {
-    "name": "Ludovic Muller",
-    "url": "https://ludovic-muller.fr/"
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/ludovicm67"
   },
   "files": [
     "dist",
     "CHANGELOG.md"
   ],
-  "keywords": [
-    "media",
-    "tools",
-    "parser"
-  ],
-  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "typings": "tsc",
+    "clean": "rimraf *.tgz dist/",
+    "build": "npm run clean && npm run typings",
+    "prepack": "npm run build"
+  },
   "dependencies": {
     "@ludovicm67/media-tools-utils": "^1.0.0",
     "@ludovicm67/mp4-tools": "^1.0.0",
     "@ludovicm67/ogg-tools": "^1.0.0",
     "@ludovicm67/webm-tools": "^1.0.0",
     "buffer": "^6.0.3"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",

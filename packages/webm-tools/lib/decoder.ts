@@ -350,7 +350,10 @@ const readDataFromTag = (ctx: Map<string, unknown>, tagObj: TagObject, data: Buf
         ctx.set("firstBlockDelay", (value as number) - (ctx.get("lastTimeCodeValue") as number));
       }
       value = (value as number) - (ctx.get("firstBlockDelay") as number);
-      if ((value as number) - (ctx.get("lastTimestampValue") as number) > DEFAULT_TIMESTAMP_DELTA * 2) {
+      if (
+        (value as number) - (ctx.get("lastTimestampValue") as number) >
+        DEFAULT_TIMESTAMP_DELTA * 2
+      ) {
         value = (ctx.get("lastTimestampValue") as number) + DEFAULT_TIMESTAMP_DELTA;
       }
       writeSigned(data, p, 2, value as number);

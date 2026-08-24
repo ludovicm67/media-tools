@@ -3,12 +3,7 @@ import { readBoxSize, readBoxType } from "./lib/base.js";
 import { Buffer, utils } from "@ludovicm67/media-tools-utils";
 
 export { readBoxSize, readBoxType } from "./lib/base.js";
-export {
-  parseFtypBox,
-  parseMoovBox,
-  parseMoofBox,
-  parseMdatBox,
-} from "./lib/boxes.js";
+export { parseFtypBox, parseMoovBox, parseMoofBox, parseMdatBox } from "./lib/boxes.js";
 
 export interface Chunk {
   type: string;
@@ -41,7 +36,10 @@ export interface BuildFileResult {
  * @param context The context to use to build the file, usually the previous parsed chunk.
  * @returns The built file and the rest of the file.
  */
-export const buildFile = (data: MP4ParsedFile, context?: Partial<MP4ParsedFile>): BuildFileResult => {
+export const buildFile = (
+  data: MP4ParsedFile,
+  context?: Partial<MP4ParsedFile>,
+): BuildFileResult => {
   let { ftyp, moov, chunks, rest } = data;
   const { ftyp: ftypContext, moov: moovContext } = context || {};
   if (!ftyp) ftyp = ftypContext ?? null;

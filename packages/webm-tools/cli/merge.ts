@@ -49,9 +49,7 @@ const merge = async (
   const newFile = Buffer.concat([firstChunk as unknown as Buffer, ...otherChunks]);
   const { decoded: newFileDecoded } = decode(newFile as unknown as Buffer);
   if (debug) {
-    console.info(
-      "\nDecoded merged chunk (if it looks great, the merge was sucessful):",
-    );
+    console.info("\nDecoded merged chunk (if it looks great, the merge was sucessful):");
     displayDecodedElements(newFileDecoded);
     console.log("");
 

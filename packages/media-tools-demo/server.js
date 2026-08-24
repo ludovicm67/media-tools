@@ -84,7 +84,8 @@ server.post("/debug/:userId", async (request, reply) => {
 });
 
 // Run the server!
-server.listen({ port: 3000, host: "0.0.0.0" }, (err, _address) => {
+const backendPort = Number(process.env.BACKEND_PORT) || 3000;
+server.listen({ port: backendPort, host: "0.0.0.0" }, (err, _address) => {
   if (err) {
     // @ts-ignore
     console.error(err);
