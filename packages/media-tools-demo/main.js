@@ -242,6 +242,11 @@ const handleStopBtnClick = async () => {
 startBtn?.addEventListener("click", handleStartBtnClick);
 stopBtn?.addEventListener("click", handleStopBtnClick);
 
+// Signal that initialization is complete and the buttons are wired up.
+// The e2e test waits for this marker instead of a fixed delay, which avoids
+// a cold-start race where a click could land before the listeners exist.
+document.documentElement.dataset.appReady = "true";
+
 // Inspect the audio level every 100ms.
 let sameStateCount = 0;
 let isSpeaking = false;
