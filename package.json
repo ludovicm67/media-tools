@@ -19,7 +19,7 @@
     "build": "npm run clean && npm run build --workspaces --if-present"
   },
   "devDependencies": {
-    "@changesets/cli": "^3.0.1",
+    "@changesets/cli": "^3.0.2",
     "husky": "^9.1.7",
     "lint-staged": "^17.4.1",
     "oxfmt": "^0.66.0",
