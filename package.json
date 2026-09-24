@@ -22,8 +22,8 @@
     "@changesets/cli": "^3.0.2",
     "husky": "^9.1.7",
     "lint-staged": "^17.5.1",
-    "oxfmt": "^0.68.0",
-    "oxlint": "^1.83.0"
+    "oxfmt": "^0.69.0",
+    "oxlint": "^1.84.0"
   },
   "lint-staged": {
     "*.{js,mjs,ts}": [
