@@ -29,7 +29,7 @@
     "test": "node test.js"
   },
   "dependencies": {
-    "@fastify/cors": "^11.3.0",
+    "@fastify/cors": "^11.3.1",
     "@fastify/multipart": "^10.1.2",
     "@ludovicm67/webm-tools": "^1.0.1",
     "@vitejs/plugin-basic-ssl": "^2.3.0",
