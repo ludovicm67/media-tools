@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@ludovicm67/media-tools-utils": "^1.0.0",
-    "commander": "^15.0.0"
+    "commander": "^15.1.0"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
